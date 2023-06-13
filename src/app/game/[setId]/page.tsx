@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import Game from "@/components/content/game/Game";
-import Providers from "@/components/content/game/GameProvider";
+import Game from "@/game/Game";
+import GameProvider from "@/game/GameProvider";
 import { SongType } from "@/types/musicApi/Song";
 import { Database } from "@/types/supabase";
 import { createClient } from "@supabase/supabase-js";
@@ -36,9 +36,9 @@ const SetPage = async ({
   const songsData = (await response.json()) as SongType;
 
   return (
-    <Providers>
+    <GameProvider>
       <Game setDetails={setDetails} songs={songsData.data} />
-    </Providers>
+    </GameProvider>
   );
 };
 
