@@ -6,3 +6,21 @@
   background-color: #4a40d6;
   color: white;
 }
+
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(55, 55, 55);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(76, 76, 76);
+  border-radius: 10px;
+}
