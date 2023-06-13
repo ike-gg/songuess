@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/Footer/Footer";
 import Navbar from "@/components/layout/Navbar/Navbar";
 
 export default function IndexLayout({
@@ -6,11 +7,14 @@ export default function IndexLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-100 via-white to-white bg-screen bg-no-repeat">
-      <div className="mx-auto max-w-screen-xl">
-        <Navbar />
-        {children}
+    <div className="mx-auto max-w-screen-xl">
+      <div className="h-[300vh]">
+        <div className="sticky top-0">
+          <Navbar />
+          {children}
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

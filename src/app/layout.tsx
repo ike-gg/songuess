@@ -7,7 +7,6 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
-import Navbar from "@/components/layout/Navbar/Navbar";
 import "./globals.css";
 
 export default function RootLayout({
@@ -17,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body>{children}</body>
+      <body className="bg-zinc-950 text-zinc-100">{children}</body>
     </html>
   );
 }
