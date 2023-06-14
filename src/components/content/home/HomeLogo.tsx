@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import Logo from "../../ui/Logo";
+import AnimatedLogo from "@/components/ui/AnimatedLogo";
 
 const HomeLogo = () => {
   return (
@@ -10,9 +10,9 @@ const HomeLogo = () => {
       drag
       dragSnapToOrigin
       dragConstraints={{ bottom: 0, left: 0, right: 0, top: 0 }}
-      className="text-8xl hover:cursor-grab active:cursor-grabbing md:text-[8rem]"
+      className="z-50 text-8xl hover:cursor-grab active:cursor-grabbing md:text-[8rem]"
     >
-      <Logo />
+      <AnimatedLogo />
     </motion.span>
   );
 };
