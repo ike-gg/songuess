@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import SetPreview from "@/components/content/sets/SetPreview";
+import SetPreview from "@/components/sets/SetPreview";
 import getAlbumsArtistsFromSet from "@/lib/getAlbumsArtistsFromSet";
 import { Database } from "@/types/supabase";
 import { createClient } from "@supabase/supabase-js";

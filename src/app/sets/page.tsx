@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import SetSelector from "@/components/content/sets/SetSelector";
+import SetSelector from "@/components/sets/SetSelector";
 import useUserDataServer from "@/lib/getUserDataServer";
 import { Database } from "@/types/supabase";
 import { createClient } from "@supabase/supabase-js";

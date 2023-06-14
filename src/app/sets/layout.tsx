@@ -6,9 +6,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <section className="max-h-screen">
       <Navbar displayLinks={false} />
-      <div className="mx-auto mb-60 max-w-3xl px-4">{children}</div>
-    </div>
+      <div className="mx-auto max-w-3xl px-4">{children}</div>
+    </section>
   );
 }
