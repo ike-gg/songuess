@@ -1,9 +1,10 @@
+import Badge from "@/components/ui/content/Badge";
 import LinkButton from "../../ui/LinkButton";
-import { RxPlay, RxBookmark, RxPerson } from "react-icons/rx";
+import { RxPerson } from "react-icons/rx";
 
 const HomeButtons = () => {
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-wrap justify-center gap-3">
       <LinkButton href="/sets" icon={<RxPerson />}>
         Solo Mode
       </LinkButton>
