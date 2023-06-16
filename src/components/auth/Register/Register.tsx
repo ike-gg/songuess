@@ -27,14 +27,12 @@ export default function Register() {
         },
       },
     });
-    console.log(data);
     router.refresh();
   };
 
   useEffect(() => {
     const fetchUser = async () => {
       const user = await supabase.auth.getSession();
-      console.log(user);
     };
     fetchUser();
   });

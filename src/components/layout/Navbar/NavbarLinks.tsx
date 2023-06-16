@@ -21,7 +21,7 @@ const NavbarLinks = () => {
       {links.map(({ href, label }) => {
         return (
           <Link
-            className="text-indigo-950 opacity-40 transition-opacity hover:opacity-100"
+            className="opacity-40 transition-opacity hover:opacity-100"
             key={label}
             href={href}
           >
