@@ -13,7 +13,7 @@ const BackButton = ({ children, href, className }: Props) => {
     <Link
       href={href}
       className={twMerge(
-        "flex items-center gap-2 text-sm text-neutral-300 hover:text-neutral-500",
+        "flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-400",
         className
       )}
     >
