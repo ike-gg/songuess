@@ -10,7 +10,7 @@ const Card = ({ children, className }: Props) => {
   return (
     <div
       className={twMerge(
-        "relative flex flex-col gap-4 overflow-hidden rounded-lg border border-neutral-100 bg-white p-4 shadow-lg shadow-neutral-200/50 md:p-6",
+        "group relative flex flex-col gap-4 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 p-4 md:gap-5 md:p-6",
         className
       )}
     >
