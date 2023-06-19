@@ -22,8 +22,9 @@ const ExtendingParagraph = ({ children, className, limit = 30 }: Props) => {
         if (isOpen) setIsOpen(false);
       }}
       className={twMerge(
-        "rounded-lg border-2 border-transparent leading-snug text-neutral-400 transition-all",
-        isOpen && "cursor-pointer bg-neutral-100 p-4 hover:bg-neutral-200/50",
+        "rounded-lg border-2 border-transparent leading-snug transition-all",
+        isOpen &&
+          "cursor-pointer bg-zinc-700 p-4 leading-normal hover:bg-zinc-700/75",
         className
       )}
     >
@@ -33,7 +34,7 @@ const ExtendingParagraph = ({ children, className, limit = 30 }: Props) => {
           {"... "}
           <span
             onClick={() => setIsOpen(true)}
-            className="cursor-pointer font-medium capitalize text-neutral-700 underline"
+            className="cursor-pointer font-medium capitalize text-zinc-500 underline"
           >
             read more
           </span>

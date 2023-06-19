@@ -8,7 +8,7 @@ interface Props {
 
 const SubHeader = ({ children, className }: Props) => {
   return (
-    <h2 className={twMerge("text-lg font-medium text-neutral-800", className)}>
+    <h2 className={twMerge("text-lg font-medium opacity-90", className)}>
       {children}
     </h2>
   );
