@@ -23,11 +23,11 @@ const LinkButton = ({
   return (
     <a
       className={twMerge(
-        "flex items-center justify-center gap-2 rounded-md border shadow-md transition-all hover:-translate-y-0.5",
+        "flex items-center justify-center gap-2 whitespace-nowrap rounded-lg transition-all",
         variant === "primary" &&
-          "border-indigo-700 bg-indigo-600 text-indigo-100 shadow-indigo-200 hover:bg-indigo-800",
+          " bg-indigo-600 text-indigo-100 hover:bg-indigo-800",
         variant === "secondary" &&
-          "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300",
+          " bg-zinc-800 text-zinc-300 hover:bg-zinc-800/75",
         size === "small" && "px-3 py-1.5",
         size === "medium" && "px-4 py-2",
         size === "large" && "px-5 py-3",
@@ -37,7 +37,7 @@ const LinkButton = ({
       {...props}
     >
       {children}
-      {Icon && <span className="flex text-lg">{Icon}</span>}
+      {Icon && <span className="flex text-xl">{Icon}</span>}
     </a>
   );
 };
