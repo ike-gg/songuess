@@ -3,7 +3,6 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import gameReducer from "./gameSlice";
-import roundReducer from "./roundSlice";
 
 const persistConfig = {
   key: "root",
@@ -12,7 +11,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   game: gameReducer,
-  round: roundReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
