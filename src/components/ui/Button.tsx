@@ -22,6 +22,7 @@ const Button = ({
       {...props}
       className={twMerge(
         "flex items-center justify-center gap-2 rounded-lg transition-all",
+        "disabled:opacity-50",
         variant === "primary" &&
           " bg-indigo-600 text-indigo-100 hover:bg-indigo-800",
         variant === "secondary" &&
