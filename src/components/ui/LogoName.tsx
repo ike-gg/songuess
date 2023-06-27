@@ -1,7 +1,7 @@
 import Logo from "@/components/ui/Logo";
 import Link from "next/link";
 
-const NavbarLogo = () => {
+const LogoName = () => {
   return (
     <Link href="/" className="flex items-center gap-2 text-lg font-medium">
       <span className="text-3xl">
@@ -14,4 +14,4 @@ const NavbarLogo = () => {
   );
 };
 
-export default NavbarLogo;
+export default LogoName;

@@ -1,7 +1,7 @@
 import NavbarUser from "./NavbarUser";
 import NavbarLinks from "./NavbarLinks";
-import NavbarLogo from "./NavbarLogo";
 import { twMerge } from "tailwind-merge";
+import LogoName from "@/components/ui/LogoName";
 
 interface Props {
   displayLinks?: boolean;
@@ -15,7 +15,7 @@ const Navbar = ({ displayLinks = true }: Props) => {
         !displayLinks && "grid-cols-2"
       )}
     >
-      <NavbarLogo />
+      <LogoName />
       {displayLinks && <NavbarLinks />}
       {/* @ts-expect-error Async Server Component */}
       <NavbarUser />
