@@ -3,6 +3,15 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.mzstatic.com",
+        port: "",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
