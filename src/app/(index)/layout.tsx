@@ -8,12 +8,8 @@ export default function IndexLayout({
 }) {
   return (
     <div className="mx-auto max-w-screen-xl">
-      <div className="h-[300vh]">
-        <div className="sticky top-0">
-          <Navbar />
-          {children}
-        </div>
-      </div>
+      <Navbar />
+      {children}
       <Footer />
     </div>
   );

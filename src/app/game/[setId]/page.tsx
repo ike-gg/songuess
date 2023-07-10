@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import Game from "@/game/Game";
-import GameProvider from "@/game/GameProvider";
+import Game from "@/features/game/Game";
+import GameProvider from "@/features/game/GameProvider";
 import { SongType } from "@/types/musicApi/Song";
 import { Database } from "@/types/supabase";
 import { createClient } from "@supabase/supabase-js";
