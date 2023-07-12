@@ -4,13 +4,12 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
 import type { Database } from "../../../types/supabase";
-import RegisterForm from "./RegisterForm";
+import RegisterForm from "./SignupForm";
 import { useEffect, useState } from "react";
 
-export default function Register() {
+export default function Signup() {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
-  const [user, setUser] = useState<any>();
 
   const handleSignUp = async (
     username: string,

@@ -3,24 +3,27 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/ui/Button";
-import LinkButton from "@/components/ui/LinkButton";
-import InlineLink from "@/components/ui/InlineLink";
-import { RxLockClosed, RxEnvelopeClosed } from "react-icons/rx";
+import { RxLockClosed, RxEnvelopeClosed, RxPerson } from "react-icons/rx";
 import { motion } from "framer-motion";
-import Card from "@/components/ui/wrappers/Card/Card";
+import Card from "@/components/ui/Card/Card";
 
 interface Props {
-  handleSignIn: (email: string, password: string) => Promise<void>;
+  handleSignUp: (
+    username: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
 }
 
 const schema = z.object({
+  username: z.string().min(5, "Minimum 5 characters"),
   email: z.string().email("Provide valid email"),
-  password: z.string().min(8, "Minimal 8 characters"),
+  password: z.string().min(8, "Minimum 8 characters"),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const LoginForm = ({ handleSignIn }: Props) => {
+const SignupForm = ({ handleSignUp }: Props) => {
   const {
     register,
     handleSubmit,
@@ -31,9 +34,19 @@ const LoginForm = ({ handleSignIn }: Props) => {
 
   return (
     <motion.form
-      onSubmit={handleSubmit((e) => handleSignIn(e.email, e.password))}
+      onSubmit={handleSubmit((e) =>
+        handleSignUp(e.username, e.email, e.password)
+      )}
     >
-      <Card className="flex flex-col gap-2">
+      <Card>
+        <Input
+          label={"Username"}
+          placeholder={"Type your username"}
+          type={"text"}
+          error={errors.username?.message}
+          icon={<RxPerson />}
+          {...register("username")}
+        />
         <Input
           label={"Email"}
           placeholder={"Type your email"}
@@ -50,19 +63,14 @@ const LoginForm = ({ handleSignIn }: Props) => {
           icon={<RxLockClosed />}
           {...register("password")}
         />
-        <InlineLink
-          href="/"
-          className="mb-2 mt-6 text-center text-sm text-neutral-600 underline"
-        >
-          Forget password?
-        </InlineLink>
-        <Button>Log in</Button>
-        <LinkButton href="/register" size="small" variant="secondary">
-          Create account
-        </LinkButton>
+        <br />
+        <Button>Sign up</Button>
+        <Button href="/login" size="small" variant="secondary">
+          User already? Sign in
+        </Button>
       </Card>
     </motion.form>
   );
 };
 
-export default LoginForm;
+export default SignupForm;

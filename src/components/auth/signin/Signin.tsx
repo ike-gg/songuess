@@ -4,9 +4,9 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
 import type { Database } from "../../../types/supabase";
-import LoginForm from "./LoginForm";
+import LoginForm from "./SigninForm";
 
-export default function Login() {
+export default function Signin() {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
 
@@ -20,9 +20,18 @@ export default function Login() {
     }
   };
 
+  const handleSpotify = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "spotify",
+      options: {
+        redirectTo: `${location.origin}/auth/callback`,
+      },
+    });
+  };
+
   return (
     <div className="mx-auto mt-12 w-full p-5 md:max-w-md">
-      <LoginForm handleSignIn={handleSignIn} />
+      <LoginForm handleSignIn={handleSignIn} handleSpotify={handleSpotify} />
     </div>
   );
 }

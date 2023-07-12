@@ -3,28 +3,24 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/ui/Button";
-import LinkButton from "@/components/ui/LinkButton";
-import { RxLockClosed, RxEnvelopeClosed, RxPerson } from "react-icons/rx";
+import { RxLockClosed, RxEnvelopeClosed } from "react-icons/rx";
 import { motion } from "framer-motion";
-import Card from "@/components/ui/wrappers/Card/Card";
+import Card from "@/components/ui/Card/Card";
+import Divider from "@/components/ui/Divider";
 
 interface Props {
-  handleSignUp: (
-    username: string,
-    email: string,
-    password: string
-  ) => Promise<void>;
+  handleSignIn: (email: string, password: string) => Promise<void>;
+  handleSpotify: () => Promise<void>;
 }
 
 const schema = z.object({
-  username: z.string().min(5, "Minimum 5 characters"),
   email: z.string().email("Provide valid email"),
-  password: z.string().min(8, "Minimum 8 characters"),
+  password: z.string().min(8, "Minimal 8 characters"),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const RegisterForm = ({ handleSignUp }: Props) => {
+const LoginForm = ({ handleSignIn, handleSpotify }: Props) => {
   const {
     register,
     handleSubmit,
@@ -35,19 +31,13 @@ const RegisterForm = ({ handleSignUp }: Props) => {
 
   return (
     <motion.form
-      onSubmit={handleSubmit((e) =>
-        handleSignUp(e.username, e.email, e.password)
-      )}
+      onSubmit={handleSubmit((e) => handleSignIn(e.email, e.password))}
     >
-      <Card>
-        <Input
-          label={"Username"}
-          placeholder={"Type your username"}
-          type={"text"}
-          error={errors.username?.message}
-          icon={<RxPerson />}
-          {...register("username")}
-        />
+      <Card className="flex flex-col gap-2">
+        <Button type="button" variant="spotify" onClick={handleSpotify}>
+          Login with Spotify
+        </Button>
+        <Divider>OR</Divider>
         <Input
           label={"Email"}
           placeholder={"Type your email"}
@@ -64,14 +54,19 @@ const RegisterForm = ({ handleSignUp }: Props) => {
           icon={<RxLockClosed />}
           {...register("password")}
         />
-        <br />
-        <Button>Sign up</Button>
-        <LinkButton href="/login" size="small" variant="secondary">
-          User already? Sign in
-        </LinkButton>
+        <a
+          href="/"
+          className="mb-2 mt-6 text-center text-sm text-neutral-600 underline"
+        >
+          Forget password?
+        </a>
+        <Button type="submit">Log in</Button>
+        <Button href="/register" size="small" variant="secondary">
+          Create account
+        </Button>
       </Card>
     </motion.form>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
