@@ -1,7 +1,7 @@
-import LinkButton from "@/components/ui/LinkButton";
 import { FiLogIn } from "react-icons/fi";
 import useUserDataServer from "@/lib/getUserDataServer";
 import { RxPerson } from "react-icons/rx";
+import Button from "@/components/ui/Button";
 
 const NavbarUser = async () => {
   const user = await useUserDataServer();
@@ -9,23 +9,23 @@ const NavbarUser = async () => {
   return (
     <div className="flex justify-end gap-2">
       {user && (
-        <LinkButton
+        <Button
           size="small"
           href="/user"
           variant="secondary"
           icon={<RxPerson />}
         >
           {user.username || "User"}
-        </LinkButton>
+        </Button>
       )}
       {!user && (
         <>
-          <LinkButton size="small" href="/login" variant="secondary">
-            Log in
-          </LinkButton>
-          <LinkButton size="small" icon={<FiLogIn />} href="/register">
+          <Button size="small" href="/signin" variant="secondary">
+            Sign in
+          </Button>
+          <Button size="small" icon={<FiLogIn />} href="/signup">
             Sign up
-          </LinkButton>
+          </Button>
         </>
       )}
     </div>
