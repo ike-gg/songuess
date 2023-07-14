@@ -1,16 +1,14 @@
-import Badge from "@/components/ui/content/Badge";
-import LinkButton from "../../ui/LinkButton";
 import { RxPerson } from "react-icons/rx";
+import Button from "@/components/ui/Button";
 
 const HomeButtons = () => {
   return (
     <div className="flex flex-wrap justify-center gap-3">
-      <LinkButton href="/sets" icon={<RxPerson />}>
+      <Button href="/sets" icon={<RxPerson />}>
         Solo Mode
-      </LinkButton>
-      <LinkButton
+      </Button>
+      <Button
         disabled
-        href=""
         icon={
           <>
             <RxPerson />
@@ -20,7 +18,7 @@ const HomeButtons = () => {
         variant="secondary"
       >
         Play with friends
-      </LinkButton>
+      </Button>
     </div>
   );
 };
