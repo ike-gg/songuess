@@ -27,7 +27,7 @@ const usePagination = <T>({ items, itemsPerPage }: PaginationOptions<T>) => {
   const nextPage = () =>
     setCurrentPage((p) => {
       const newPage = p + 1;
-      if (newPage > pagedItems.length) return p;
+      if (newPage >= pagedItems.length) return p;
       return newPage;
     });
 
