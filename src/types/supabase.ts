@@ -3,69 +3,54 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[]
 
 export interface Database {
   public: {
     Tables: {
-      countries: {
-        Row: {
-          continent: Database["public"]["Enums"]["continents"] | null
-          id: number
-          iso2: string
-          iso3: string | null
-          local_name: string | null
-          name: string | null
-        }
-        Insert: {
-          continent?: Database["public"]["Enums"]["continents"] | null
-          id?: number
-          iso2: string
-          iso3?: string | null
-          local_name?: string | null
-          name?: string | null
-        }
-        Update: {
-          continent?: Database["public"]["Enums"]["continents"] | null
-          id?: number
-          iso2?: string
-          iso3?: string | null
-          local_name?: string | null
-          name?: string | null
-        }
-      }
       sets: {
         Row: {
-          cover: string
+          cover: string | null
           created_at: string | null
           description: string | null
           featured: boolean
           id: string
           name: string
           owner: string
+          private: boolean
           songs: string[]
         }
         Insert: {
-          cover: string
+          cover?: string | null
           created_at?: string | null
           description?: string | null
           featured: boolean
           id?: string
           name: string
-          owner: string
+          owner?: string
+          private?: boolean
           songs: string[]
         }
         Update: {
-          cover?: string
+          cover?: string | null
           created_at?: string | null
           description?: string | null
           featured?: boolean
           id?: string
           name?: string
           owner?: string
+          private?: boolean
           songs?: string[]
         }
+        Relationships: [
+          {
+            foreignKeyName: "sets_owner_fkey"
+            columns: ["owner"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       users: {
         Row: {
@@ -89,6 +74,14 @@ export interface Database {
           username?: string | null
           website?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
