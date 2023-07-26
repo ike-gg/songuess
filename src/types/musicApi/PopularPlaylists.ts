@@ -6,7 +6,7 @@ export interface PopularPlaylists {
       name: string;
       data: {
         id: string;
-        type: "albums";
+        type: "playlists";
         attributes: PlaylistAttributes;
       }[];
     }[];

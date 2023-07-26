@@ -24,6 +24,7 @@ export interface SongAttributes {
   durationInMillis: number;
   editorialNotes?: EditorialNotes;
   genreNames: string[];
+  isrc: string;
   name: string;
   previews: {
     url: string;

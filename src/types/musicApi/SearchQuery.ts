@@ -1,7 +1,7 @@
 import { AlbumAttributes } from "./Album";
 import { ArtistAttributes } from "./Artist";
-import { ArtistsRelationship } from "./Common";
 import { MusicVideoAttributes } from "./MusicVideo";
+import { PlaylistAttributes } from "./Playlist";
 import { SongAttributes } from "./Song";
 
 interface SearchQueryAlbums {
@@ -10,7 +10,7 @@ interface SearchQueryAlbums {
   attributes: AlbumAttributes;
 }
 
-interface SearchQuerySongs {
+export interface SearchQuerySong {
   id: string;
   type: "songs";
   attributes: SongAttributes;
@@ -28,12 +28,19 @@ interface SearchQueryMusicVideos {
   attributes: MusicVideoAttributes;
 }
 
+export interface SearchQueryPlaylist {
+  id: string;
+  type: "playlists";
+  attributes: PlaylistAttributes;
+}
+
 export interface SearchQuery {
   results: {
     artists?: { data: SearchQueryArtists[] };
     albums?: { data: SearchQueryAlbums[] };
-    songs?: { data: SearchQuerySongs[] };
+    songs?: { data: SearchQuerySong[] };
     ["music-videos"]?: { data: SearchQueryMusicVideos[] };
+    playlists?: { data: SearchQueryPlaylist[] };
   };
 }
 
@@ -41,4 +48,4 @@ export type SearchResults =
   | SearchQueryAlbums
   | SearchQueryArtists
   | SearchQueryMusicVideos
-  | SearchQuerySongs;
+  | SearchQuerySong;
