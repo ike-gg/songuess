@@ -24,8 +24,7 @@ const Tooltip = ({ children }: Props) => {
           <Content
             sideOffset={4}
             className={twMerge(
-              "inline-flex max-w-xs items-center rounded-md px-3 py-2.5 text-center text-sm leading-tight shadow-xl shadow-zinc-900",
-              "bg-zinc-700"
+              "inline-flex max-w-xs items-center rounded-md bg-zinc-700 px-3.5 py-3 text-center text-sm leading-tight shadow-xl shadow-zinc-900"
             )}
           >
             <Arrow className="fill-current text-zinc-700" />

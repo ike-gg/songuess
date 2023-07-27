@@ -31,8 +31,8 @@ const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
       )}
       <div
         className={twMerge(
-          "mb-1 flex items-center gap-3 rounded-md border border-zinc-800/50 bg-zinc-800 p-1 px-3 transition-colors",
-          error && "border-red-900/60 bg-red-900/20"
+          "mb-1 flex items-center gap-3 rounded-md border border-transparent bg-zinc-800 p-1 px-3 transition-colors hover:border-zinc-600",
+          error && "border-red-900/60 bg-red-900/20 hover:border-red-800"
         )}
       >
         {loading && !error && <CgSpinner className="animate-spin" />}

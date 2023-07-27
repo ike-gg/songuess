@@ -30,15 +30,18 @@ const Button = forwardRef<HTMLButtonElement, Props>(
   ) => {
     const classes = twMerge(
       "whitespace-nowrap flex items-center justify-center gap-1.5 rounded-lg transition-all duration-300 ",
-      "disabled:opacity-50",
+      "disabled:opacity-50 border-2 border-transparent",
       variant === "primary" &&
-        "bg-indigo-700 text-indigo-100 hover:bg-indigo-800",
-      variant === "secondary" && " bg-zinc-800 text-zinc-300 hover:bg-zinc-700",
+        "bg-indigo-700 text-indigo-100 hover:bg-indigo-800 active:border-indigo-600",
+      variant === "secondary" &&
+        " bg-zinc-800 text-zinc-300 hover:bg-zinc-700 active:border-zinc-600",
       variant === "transparent" &&
         "bg-black/10 text-inherit opacity-75 hover:opacity-100",
-      variant === "spotify" && "bg-spotify-500 text-white",
-      variant === "apple" && "bg-apple-500 text-apple-50",
-      size === "small" && "text-sm px-2.5 py-1.5",
+      variant === "spotify" &&
+        "bg-spotify-500 text-white hover:bg-spotify-700 active:border-spotify-500",
+      variant === "apple" &&
+        "bg-apple-500 hover:bg-apple-700 active:border-apple-500 text-apple-50",
+      size === "small" && "text-sm px-2.5 py-1",
       size === "medium" && "px-4 py-2",
       size === "large" && "px-5 py-3",
       className

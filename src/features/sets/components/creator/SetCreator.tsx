@@ -26,6 +26,7 @@ import parseArtwork from "@/utils/parseArtwork";
 import { useRouter } from "next/navigation";
 import sleep from "@/utils/sleep";
 import Paragraph from "@/components/ui/content/Paragraph";
+import Tooltip from "@/components/ui/Tooltip";
 
 const schema = z.object({
   name: z.string().trim().min(6, "Minimal 6 characters"),
@@ -157,7 +158,15 @@ const SetCreator = ({ values }: Props) => {
       <Divider>trakclist</Divider>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <Paragraph>Playlist inludes {songsAdded.length} songs.</Paragraph>
+          <div>
+            <Paragraph className="flex items-center gap-2">
+              <Tooltip>Minimum 5 tracks, maximum 100 tracks per set.</Tooltip>
+              Playlist inludes {songsAdded.length} songs.
+            </Paragraph>
+            {errors.songs?.message && (
+              <ErrorParagraph>{errors.songs.message}</ErrorParagraph>
+            )}
+          </div>
           <SetMusicSearch used={playlist} clickHandler={clickHandler} />
         </div>
         <div className="flex h-fit flex-wrap gap-3 overflow-y-scroll">
@@ -175,9 +184,6 @@ const SetCreator = ({ values }: Props) => {
             );
           })}
         </div>
-        {errors.songs?.message && (
-          <ErrorParagraph>{errors.songs.message}</ErrorParagraph>
-        )}
       </div>
       <CardFooter className="flex flex-row items-center justify-end">
         <Button
