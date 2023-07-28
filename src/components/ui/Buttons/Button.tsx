@@ -7,7 +7,13 @@ import Link from "next/link";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
   href?: string;
-  variant?: "primary" | "secondary" | "transparent" | "spotify" | "apple";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "transparent"
+    | "spotify"
+    | "apple"
+    | "white";
   loading?: boolean;
   size?: "small" | "medium" | "large";
   icon?: ReactNode;
@@ -41,6 +47,8 @@ const Button = forwardRef<HTMLButtonElement, Props>(
         "bg-spotify-500 text-white hover:bg-spotify-700 active:border-spotify-500",
       variant === "apple" &&
         "bg-apple-500 hover:bg-apple-700 active:border-apple-500 text-apple-50",
+      variant === "white" &&
+        "bg-zinc-50 text-zinc-950 hover:bg-zinc-300 active:border-zinc-50",
       size === "small" && "text-sm px-2.5 py-1",
       size === "medium" && "px-4 py-1.5",
       size === "large" && "px-5 py-3",

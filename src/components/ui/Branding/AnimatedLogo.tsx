@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import Motion from "../../providers/Motion";
 
 interface Props {
-  shadow?: boolean;
+  className?: string;
 }
-const AnimatedLogo = ({ shadow = false }: Props) => {
+const AnimatedLogo = ({ className }: Props) => {
   return (
     <Motion>
       <motion.svg
@@ -15,7 +15,7 @@ const AnimatedLogo = ({ shadow = false }: Props) => {
         viewBox="0 0 256 256"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="rounded-[1.75rem]"
+        className={className}
         initial={{
           scale: 2.5,
           y: 60,
