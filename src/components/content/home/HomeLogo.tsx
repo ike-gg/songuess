@@ -1,8 +1,7 @@
 "use client";
 
+import { AnimatedLogo } from "@/components/ui";
 import { motion } from "framer-motion";
-
-import AnimatedLogo from "@/components/ui/AnimatedLogo";
 
 const HomeLogo = () => {
   return (

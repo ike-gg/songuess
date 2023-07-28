@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 
 interface Props {
@@ -99,4 +101,4 @@ const CircleProgress = ({
   );
 };
 
-export default CircleProgress;
+export { CircleProgress };

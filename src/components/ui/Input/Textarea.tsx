@@ -1,8 +1,10 @@
+"use client";
+
 import { HTMLProps, ReactNode, forwardRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-import ErrorParagraph from "./content/ErrorParagraph";
-import Tooltip from "./Tooltip";
+import { ErrorParagraph } from "../Content";
+import { Tooltip } from "../Tooltip";
 
 interface Props extends HTMLProps<HTMLTextAreaElement> {
   label: string;
@@ -44,4 +46,4 @@ const Textarea = forwardRef<HTMLTextAreaElement, Props>((inputProps, ref) => {
 
 Textarea.displayName = "textarea";
 
-export default Textarea;
+export { Textarea };

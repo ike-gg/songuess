@@ -1,10 +1,8 @@
-import Heading from "@/components/ui/content/Heading";
 import GameCard from "../GameCard";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import Paragraph from "@/components/ui/content/Paragraph";
-import Button from "@/components/ui/Button";
 import { gameActions } from "@/features/game/store/gameSlice";
 import SongItem from "@/components/music/SongItem";
+import { Button, Heading, Paragraph } from "@/components/ui";
 
 const Results = () => {
   const { points, playlist } = useAppSelector((state) => state.game);

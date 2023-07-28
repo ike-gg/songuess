@@ -19,7 +19,7 @@ const getSongsByISRC = async (isrc: string[]) => {
   for (const song of data) {
     const { isrc } = song.attributes;
     if (uniqueISRC.includes(isrc)) continue;
-    // if (song.attributes.previews.length === 0) continue;
+    if (song.attributes.previews.length === 0) continue;
     songs.push(song);
     uniqueISRC.push(isrc);
   }

@@ -1,16 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import BackButton from "@/components/ui/BackButton";
-import Badge from "@/components/ui/content/Badge";
-import Heading from "@/components/ui/content/Heading";
-import Paragraph from "@/components/ui/content/Paragraph";
-import SubHeader from "@/components/ui/content/SubHeader";
+import {
+  BackButton,
+  Badge,
+  Button,
+  CardFooter,
+  ExtendingParagraph,
+  Heading,
+  Paragraph,
+  SubHeader,
+} from "@/components/ui";
 import { Database } from "@/types/supabase";
 import { usePathname, useRouter } from "next/navigation";
-import CardFooter from "@/components/ui/Card/CardFooter";
-import Button from "@/components/ui/Button";
-import ExtendingParagraph from "@/components/ui/content/ExtendingParagraph";
+
 import { RxCopy, RxPlay, RxShare2 } from "react-icons/rx";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];

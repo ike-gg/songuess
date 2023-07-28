@@ -8,9 +8,8 @@ import { stringSimilarity } from "string-similarity-js";
 import { gameActions } from "@/features/game/store/gameSlice";
 import addAlpha from "@/utils/addAlphaHex";
 import parseDiacriticalChars from "@/utils/parseDiacriticalChars";
-import MotionWrapper from "@/components/ui/wrappers/MotionWrapper";
-import Paragraph from "@/components/ui/content/Paragraph";
 import { isIOS } from "react-device-detect";
+import { MotionWrapper, Paragraph } from "@/components/ui";
 
 interface Props {
   onGuess?: () => void;

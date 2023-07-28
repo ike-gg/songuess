@@ -1,9 +1,8 @@
-import Button from "@/components/ui/Button";
-import MotionWrapper from "@/components/ui/wrappers/MotionWrapper";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
+import { Button, MotionWrapper } from "@/components/ui";
 
 const FooterPanel = () => {
   const { points, round } = useAppSelector((state) => state.game);

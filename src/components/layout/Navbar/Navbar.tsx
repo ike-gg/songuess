@@ -1,7 +1,7 @@
 import NavbarUser from "./NavbarUser";
 import NavbarLinks from "./NavbarLinks";
 import { twMerge } from "tailwind-merge";
-import LogoName from "@/components/ui/LogoName";
+import { LogoName } from "@/components/ui";
 
 interface Props {
   displayLinks?: boolean;

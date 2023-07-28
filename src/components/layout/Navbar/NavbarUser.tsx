@@ -1,7 +1,7 @@
 import { FiLogIn } from "react-icons/fi";
 import useUserDataServer from "@/lib/getUserDataServer";
 import { RxPerson } from "react-icons/rx";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui";
 
 const NavbarUser = async () => {
   const user = await useUserDataServer();

@@ -1,8 +1,7 @@
 "use client";
 
 import PlaylistItem from "@/components/music/PlaylistItem";
-import CardItem from "@/components/ui/Card/CardItem";
-import Input from "@/components/ui/Input";
+import { CardItem, Input } from "@/components/ui";
 import { sets } from "@/constants/routes";
 import useDebounceQuery from "@/hooks/useDebounceQuery";
 import usePlaylistQuery from "@/hooks/usePlaylistQuery";

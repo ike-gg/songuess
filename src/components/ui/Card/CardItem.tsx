@@ -17,4 +17,4 @@ const CardItem = ({ href, children }: Props) => {
   );
 };
 
-export default CardItem;
+export {CardItem};

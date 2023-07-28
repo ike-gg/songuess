@@ -1,7 +1,5 @@
 "use client";
 
-import Divider from "@/components/ui/Divider";
-import Input from "@/components/ui/Input";
 import {
   RxGlobe,
   RxInfoCircled,
@@ -13,20 +11,24 @@ import SetMusicSearch from "./SetMusicSearch";
 import { useEffect, useState } from "react";
 import { SearchQuerySong } from "@/types/musicApi/SearchQuery";
 import SongItem from "@/components/music/SongItem";
-import Textarea from "@/components/ui/Textarea";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/supabase";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ErrorParagraph from "@/components/ui/content/ErrorParagraph";
-import CardFooter from "@/components/ui/Card/CardFooter";
-import Button from "@/components/ui/Button";
 import parseArtwork from "@/utils/parseArtwork";
 import { useRouter } from "next/navigation";
 import sleep from "@/utils/sleep";
-import Paragraph from "@/components/ui/content/Paragraph";
-import Tooltip from "@/components/ui/Tooltip";
+import {
+  Button,
+  CardFooter,
+  Divider,
+  ErrorParagraph,
+  Input,
+  Paragraph,
+  Textarea,
+} from "@/components/ui";
+import { Tooltip } from "@radix-ui/react-tooltip";
 
 const schema = z.object({
   name: z.string().trim().min(6, "Minimal 6 characters"),

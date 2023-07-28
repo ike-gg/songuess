@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Motion from "../providers/Motion";
+import Motion from "../../providers/Motion";
 
 interface Props {
   shadow?: boolean;
@@ -72,4 +72,4 @@ const AnimatedLogo = ({ shadow = false }: Props) => {
   );
 };
 
-export default AnimatedLogo;
+export { AnimatedLogo };

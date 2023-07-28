@@ -3,13 +3,11 @@
 
 import { SongType } from "@/types/musicApi/Song";
 import { Database } from "@/types/supabase";
-import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import { useEffect } from "react";
 import Preparing from "./components/stages/Preparing";
 import InGame from "./components/stages/InGame";
-import Button from "@/components/ui/Button";
 import Results from "./components/stages/Results";
 import Motion from "../../components/providers/Motion";
 

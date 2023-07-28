@@ -1,18 +1,19 @@
 import SongItem from "@/components/music/SongItem";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
 import useDebounceQuery from "@/hooks/useDebounceQuery";
 import { SearchQuerySong } from "@/types/musicApi/SearchQuery";
 import { useState } from "react";
 import { RxCheck, RxMagnifyingGlass, RxMinus, RxPlus } from "react-icons/rx";
 import * as Dialog from "@radix-ui/react-dialog";
 import { twMerge } from "tailwind-merge";
-import Card from "@/components/ui/Card/Card";
-import Heading from "@/components/ui/content/Heading";
-import Paragraph from "@/components/ui/content/Paragraph";
-import CardFooter from "@/components/ui/Card/CardFooter";
 import useSongQuery from "@/hooks/useSongQuery";
-import { CgSpinner } from "react-icons/cg";
+import {
+  Button,
+  Card,
+  CardFooter,
+  Heading,
+  Input,
+  Paragraph,
+} from "@/components/ui";
 
 interface Props {
   clickHandler: (s: SearchQuerySong) => void;

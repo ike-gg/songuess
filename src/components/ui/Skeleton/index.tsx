@@ -15,4 +15,4 @@ const Skeleton = ({ className }: Props) => {
   );
 };
 
-export default Skeleton;
+export { Skeleton };

@@ -23,4 +23,4 @@ const BackButton = ({ children, href, className }: Props) => {
   );
 };
 
-export default BackButton;
+export { BackButton };

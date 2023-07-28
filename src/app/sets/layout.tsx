@@ -1,5 +1,5 @@
 import Navbar from "@/components/layout/Navbar/Navbar";
-import Card from "@/components/ui/Card/Card";
+import { Card } from "@/components/ui";
 
 export default function SetsLayout({
   children,

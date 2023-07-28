@@ -1,11 +1,9 @@
-import Input from "@/components/ui/Input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Button from "@/components/ui/Button";
 import { RxLockClosed, RxEnvelopeClosed, RxPerson } from "react-icons/rx";
 import { motion } from "framer-motion";
-import Card from "@/components/ui/Card/Card";
+import { Button, Card, Input } from "@/components/ui";
 
 interface Props {
   handleSignUp: (

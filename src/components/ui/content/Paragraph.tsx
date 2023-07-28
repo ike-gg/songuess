@@ -14,4 +14,4 @@ const Paragraph = ({ children, className, ...props }: Props) => {
   );
 };
 
-export default Paragraph;
+export { Paragraph };

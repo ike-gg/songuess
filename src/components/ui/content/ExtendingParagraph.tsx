@@ -1,7 +1,9 @@
+"use client";
+
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import Paragraph from "./Paragraph";
 import trimTextByWords from "@/utils/trimTextByWords";
+import { Paragraph } from "./Paragraph";
 
 interface Props {
   children: string;
@@ -46,4 +48,4 @@ const ExtendingParagraph = ({ children, className, limit = 30 }: Props) => {
   );
 };
 
-export default ExtendingParagraph;
+export { ExtendingParagraph };

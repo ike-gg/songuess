@@ -21,4 +21,4 @@ const Divider = ({ children, className }: Props) => {
   );
 };
 
-export default Divider;
+export { Divider };

@@ -19,4 +19,4 @@ const CardFooter = ({ children, className }: Props) => {
   );
 };
 
-export default CardFooter;
+export { CardFooter };

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Provider,
   Root,
@@ -36,4 +38,4 @@ const Tooltip = ({ children }: Props) => {
   );
 };
 
-export default Tooltip;
+export { Tooltip };

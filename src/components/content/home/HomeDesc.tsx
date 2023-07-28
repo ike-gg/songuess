@@ -1,4 +1,4 @@
-import Paragraph from "@/components/ui/content/Paragraph";
+import { Paragraph } from "@/components/ui";
 
 const HomeDesc = () => {
   return (

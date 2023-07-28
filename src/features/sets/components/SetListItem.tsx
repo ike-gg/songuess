@@ -1,11 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import Paragraph from "@/components/ui/content/Paragraph";
-import SubHeader from "@/components/ui/content/SubHeader";
 import { Database } from "@/types/supabase";
-import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import CardItem from "@/components/ui/Card/CardItem";
+import { CardItem, Paragraph, SubHeader } from "@/components/ui";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
 

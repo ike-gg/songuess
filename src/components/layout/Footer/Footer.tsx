@@ -1,5 +1,4 @@
-import LogoName from "@/components/ui/LogoName";
-import Heading from "@/components/ui/content/Heading";
+import { Heading, LogoName } from "@/components/ui";
 
 const Footer = () => {
   return (

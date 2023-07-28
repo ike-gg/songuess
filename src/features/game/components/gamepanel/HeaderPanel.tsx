@@ -1,6 +1,3 @@
-import Button from "@/components/ui/Button";
-import CircleProgress from "@/components/ui/CircleProgress";
-import MotionWrapper from "@/components/ui/wrappers/MotionWrapper";
 import { useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import parseArtwork from "@/utils/parseArtwork";
@@ -8,6 +5,7 @@ import useCountdown from "@bradgarropy/use-countdown";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { CircleProgress, MotionWrapper } from "@/components/ui";
 
 const HeaderPanel = () => {
   const dispatch = useDispatch();

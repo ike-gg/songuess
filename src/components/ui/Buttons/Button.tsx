@@ -29,7 +29,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
     ref
   ) => {
     const classes = twMerge(
-      "whitespace-nowrap flex items-center justify-center gap-1.5 rounded-lg transition-all duration-300 ",
+      "whitespace-nowrap flex items-center justify-center gap-1.5 rounded-lg transition-all duration-300 w-fit",
       "disabled:opacity-50 border-2 border-transparent",
       variant === "primary" &&
         "bg-indigo-700 text-indigo-100 hover:bg-indigo-800 active:border-indigo-600",
@@ -42,7 +42,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
       variant === "apple" &&
         "bg-apple-500 hover:bg-apple-700 active:border-apple-500 text-apple-50",
       size === "small" && "text-sm px-2.5 py-1",
-      size === "medium" && "px-4 py-2",
+      size === "medium" && "px-4 py-1.5",
       size === "large" && "px-5 py-3",
       className
     );
@@ -85,4 +85,4 @@ const Button = forwardRef<HTMLButtonElement, Props>(
 
 Button.displayName = "xd";
 
-export default Button;
+export { Button };

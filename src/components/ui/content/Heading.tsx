@@ -12,4 +12,4 @@ const Heading = ({ children, className }: Props) => {
   );
 };
 
-export default Heading;
+export { Heading };

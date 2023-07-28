@@ -43,4 +43,4 @@ const AnimatedText = ({ children, className }: Props) => {
   );
 };
 
-export default AnimatedText;
+export { AnimatedText };

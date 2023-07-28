@@ -1,5 +1,5 @@
+import { Button } from "@/components/ui";
 import { RxPerson } from "react-icons/rx";
-import Button from "@/components/ui/Button";
 
 const HomeButtons = () => {
   return (

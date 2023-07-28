@@ -1,5 +1,5 @@
-import Logo from "@/components/ui/Logo";
 import Link from "next/link";
+import { Logo } from "./Logo";
 
 const LogoName = () => {
   return (
@@ -14,4 +14,4 @@ const LogoName = () => {
   );
 };
 
-export default LogoName;
+export { LogoName };

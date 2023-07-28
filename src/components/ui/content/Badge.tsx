@@ -19,4 +19,4 @@ const Badge = ({ children, className }: Props) => {
   );
 };
 
-export default Badge;
+export { Badge };

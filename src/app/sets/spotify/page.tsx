@@ -1,8 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import BackButton from "@/components/ui/BackButton";
-import CardItem from "@/components/ui/Card/CardItem";
+import {
+  Badge,
+  CardItem,
+  Heading,
+  Paragraph,
+  BackButton,
+} from "@/components/ui";
 import { sets } from "@/constants/routes";
 import getUserPlaylistsSpotify from "@/lib/spotify/getUserPlaylistsSpotify";
+import removeTags from "@/utils/removeTags";
 
 const SetSpotifyPage = async () => {
   const userPlaylists = await getUserPlaylistsSpotify();
@@ -10,32 +16,41 @@ const SetSpotifyPage = async () => {
   return (
     <>
       <BackButton href="/sets/create">Back to set creator</BackButton>
-      {userPlaylists.items.map((playlist) => {
-        return (
-          <CardItem
-            key={playlist.id}
-            href={sets.create.spotifyPlaylist(playlist.id)}
-          >
-            <div className="flex items-center gap-3 rounded transition-all duration-150">
-              <img
-                src={playlist.images[0].url}
-                className="h-12 w-12 rounded-md bg-zinc-700"
-                alt={`cover of xd playlist`}
-              />
-              <div className="flex shrink flex-col gap-1 leading-none">
-                <span className="font-semibold line-clamp-2">
-                  {playlist.name}
-                </span>
-                {
-                  <span className="font-lights pb-0.5 opacity-60 line-clamp-1">
-                    {playlist.description}
-                  </span>
-                }
+      <div>
+        <Heading className="flex items-center gap-2">
+          Import your playlist from Spotify <Badge>BETA</Badge>
+        </Heading>
+        <Paragraph>
+          Keep in mind that the feature is in beta. Currently limited to only
+          take up to 50 first tracks from the playlist.
+        </Paragraph>
+      </div>
+      <div className="flex flex-col gap-3">
+        {userPlaylists.items.map((playlist) => {
+          const { description: _desc, id, images, name, tracks } = playlist;
+          const description = removeTags(_desc);
+
+          return (
+            <CardItem key={id} href={sets.create.spotifyPlaylist(id)}>
+              <div className="flex items-center gap-3 rounded transition-all duration-150">
+                <img
+                  src={images[0].url}
+                  className="h-12 w-12 rounded-md bg-zinc-700"
+                  alt={`cover of xd playlist`}
+                />
+                <div className="flex shrink flex-col gap-1 leading-none">
+                  <span className="font-semibold line-clamp-2">{name}</span>
+                  {
+                    <span className="font-lights pb-0.5 opacity-60 line-clamp-1">
+                      {description}
+                    </span>
+                  }
+                </div>
               </div>
-            </div>
-          </CardItem>
-        );
-      })}
+            </CardItem>
+          );
+        })}
+      </div>
     </>
   );
 };

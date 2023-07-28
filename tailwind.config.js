@@ -83,6 +83,5 @@ module.exports = {
   plugins: [
     require("prettier-plugin-tailwindcss"),
     require("tailwindcss-animate"),
-    require("@tailwindcss/line-clamp"),
   ],
 };

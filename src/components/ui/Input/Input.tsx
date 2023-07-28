@@ -1,10 +1,12 @@
+"use client";
+
 import { HTMLProps, ReactNode, forwardRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-import Tooltip from "./Tooltip";
-import ErrorParagraph from "./content/ErrorParagraph";
+import { Tooltip } from "../Tooltip";
 import { RxExclamationTriangle } from "react-icons/rx";
 import { CgSpinner } from "react-icons/cg";
+import { ErrorParagraph } from "../Content";
 
 interface Props extends HTMLProps<HTMLInputElement> {
   label: string;
@@ -63,4 +65,4 @@ const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
 
 Input.displayName = "input";
 
-export default Input;
+export { Input };

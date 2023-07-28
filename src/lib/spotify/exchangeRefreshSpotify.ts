@@ -38,8 +38,6 @@ const exchangeRefreshSpotify = async () => {
     scope: string;
   };
 
-  console.log(data.access_token);
-
   return data;
 };
 

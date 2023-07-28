@@ -4,11 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { forwardRef } from "react";
 import GuessInput from "../GuessInput";
 import { gameActions } from "@/features/game/store/gameSlice";
-import Paragraph from "@/components/ui/content/Paragraph";
-import Heading from "@/components/ui/content/Heading";
 import HeaderPanel from "./HeaderPanel";
-import MotionWrapper from "@/components/ui/wrappers/MotionWrapper";
 import FooterPanel from "./FooterPanel";
+import { Heading, MotionWrapper, Paragraph } from "@/components/ui";
 
 const GamePanel = forwardRef<HTMLInputElement>((_, ref) => {
   const { round, points } = useAppSelector((state) => state.game);

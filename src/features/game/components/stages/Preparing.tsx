@@ -1,12 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import Button from "@/components/ui/Button";
-import Badge from "@/components/ui/content/Badge";
-import Heading from "@/components/ui/content/Heading";
-import Paragraph from "@/components/ui/content/Paragraph";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import GameCard from "../GameCard";
-import BackButton from "@/components/ui/BackButton";
+import { BackButton, Badge, Button, Heading, Paragraph } from "@/components/ui";
 
 const Preparing = () => {
   const { maxRounds, roundTime, set } = useAppSelector((state) => state.game);

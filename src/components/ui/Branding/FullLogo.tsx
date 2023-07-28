@@ -1,4 +1,4 @@
-import Logo from "./Logo";
+import { Logo } from "./Logo";
 
 const FullLogo = () => {
   return (
@@ -11,4 +11,4 @@ const FullLogo = () => {
   );
 };
 
-export default FullLogo;
+export { FullLogo };

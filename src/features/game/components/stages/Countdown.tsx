@@ -1,10 +1,9 @@
 import GameCard from "../GameCard";
 import useCountdown from "@bradgarropy/use-countdown";
-import Paragraph from "@/components/ui/content/Paragraph";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
-import CircleProgress from "@/components/ui/CircleProgress";
 import { useEffect } from "react";
+import { CircleProgress, Paragraph } from "@/components/ui";
 
 const Countdown = () => {
   const dispatch = useAppDispatch();

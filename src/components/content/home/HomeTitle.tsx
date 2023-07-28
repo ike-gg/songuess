@@ -1,4 +1,4 @@
-import AnimatedText from "@/components/ui/AnimatedText";
+import { AnimatedText } from "@/components/ui";
 
 const HomeTitle = () => {
   return (

@@ -1,4 +1,6 @@
-import { motion, AnimatePresence } from "framer-motion";
+"use client";
+
+import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
@@ -21,4 +23,4 @@ const ErrorParagraph = ({ children, className }: Props) => {
   );
 };
 
-export default ErrorParagraph;
+export { ErrorParagraph };

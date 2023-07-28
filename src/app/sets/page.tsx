@@ -24,9 +24,6 @@ const SetsPage = async () => {
     .select("*")
     .eq("owner", user?.id);
 
-  console.log(user?.id);
-  console.log(personalSets);
-
   const preparedSets: SetSelectorProps["sets"] = {
     featured: featuredSets ?? [],
     community: communitySets ?? [],

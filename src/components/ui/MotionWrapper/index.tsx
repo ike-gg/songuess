@@ -1,3 +1,5 @@
+"use client";
+
 import { HTMLMotionProps, motion } from "framer-motion";
 import { ReactNode } from "react";
 
@@ -26,4 +28,4 @@ const MotionWrapper = ({
   );
 };
 
-export default MotionWrapper;
+export { MotionWrapper };

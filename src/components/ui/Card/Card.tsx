@@ -19,4 +19,4 @@ const Card = ({ children, className }: Props) => {
   );
 };
 
-export default Card;
+export { Card };

@@ -1,5 +1,4 @@
-import Skeleton from "@/components/ui/Skeleton";
-import CardFooter from "@/components/ui/Card/CardFooter";
+import { CardFooter, Skeleton } from "@/components/ui";
 
 const SetCreateLoading = async () => {
   return (

@@ -1,20 +1,18 @@
 import SetCreator, {
   ProvidedValuesSetCreator,
 } from "@/features/sets/components/creator/SetCreator";
-import Heading from "@/components/ui/content/Heading";
 import { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import getPlaylistDetails from "@/lib/getPlaylistDetails";
 import parseArtwork from "@/utils/parseArtwork";
-import BackButton from "@/components/ui/BackButton";
-import Button from "@/components/ui/Button";
 import { SongType } from "@/types/musicApi/Song";
 import getUrlAuthSpotify from "@/lib/spotify/getUrlAuthSpotify";
 import getPlaylistSpotify from "@/lib/spotify/getPlaylistSpotify";
 import getSongsByISRC from "@/lib/getSongsByISRC";
-import { SearchQuerySong } from "@/types/musicApi/SearchQuery";
+import removeTags from "@/utils/removeTags";
+import { BackButton, Button, Heading } from "@/components/ui";
 
 interface SearchParams {
   playlistid?: string;
@@ -87,7 +85,9 @@ const CreateSetPage = async ({
 
   if (spotifyplaylistid) {
     const playlist = await getPlaylistSpotify(spotifyplaylistid);
-    const { description, images, name, tracks } = playlist;
+    const { description: _desc, images, name, tracks } = playlist;
+    const description = removeTags(_desc);
+
     const tracksISRC = tracks.items
       .filter((t) => t.track.external_ids.isrc)
       .map((t) => t.track.external_ids.isrc) as string[];

@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import Countdown from "./Countdown";
 import Guessing from "./Guessing";
-import Button from "@/components/ui/Button";
 import { RxExit } from "react-icons/rx";
 import { gameActions } from "@/features/game/store/gameSlice";
+import { Button } from "@/components/ui";
 
 const InGame = () => {
   const { round } = useAppSelector((state) => state.game);

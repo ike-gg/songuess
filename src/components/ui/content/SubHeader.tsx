@@ -14,4 +14,4 @@ const SubHeader = ({ children, className }: Props) => {
   );
 };
 
-export default SubHeader;
+export { SubHeader };

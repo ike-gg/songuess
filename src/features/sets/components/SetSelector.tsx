@@ -4,12 +4,9 @@ import { Database } from "@/types/supabase";
 import SetListItem from "./SetListItem";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import Heading from "@/components/ui/content/Heading";
-import Paragraph from "@/components/ui/content/Paragraph";
 import usePagination from "@/hooks/usePagination";
 import { RxPlus } from "react-icons/rx";
-import Button from "@/components/ui/Button";
-import BackButton from "@/components/ui/BackButton";
+import { BackButton, Button, Heading, Paragraph } from "@/components/ui";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
 
