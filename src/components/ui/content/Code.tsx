@@ -11,7 +11,7 @@ const Code = ({ children, className, footer }: Props) => {
   return (
     <code
       className={twMerge(
-        "rounded-md border border-zinc-700 bg-zinc-800 p-3",
+        "break-all rounded-md border border-zinc-700 bg-zinc-800 p-3",
         className
       )}
     >
