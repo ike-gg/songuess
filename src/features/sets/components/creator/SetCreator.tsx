@@ -27,8 +27,8 @@ import {
   Input,
   Paragraph,
   Textarea,
+  Tooltip,
 } from "@/components/ui";
-import { Tooltip } from "@radix-ui/react-tooltip";
 
 const schema = z.object({
   name: z.string().trim().min(6, "Minimal 6 characters"),
