@@ -7,3 +7,4 @@ export * from "./Heading";
 export * from "./Paragraph";
 export * from "./SubHeader";
 export * from "./Code";
+export * from "./ErrorBlock";

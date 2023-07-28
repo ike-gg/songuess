@@ -1,21 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  children: string;
+  children: ReactNode;
   className?: string;
+  animate?: boolean;
 }
 
-const ErrorParagraph = ({ children, className }: Props) => {
+const ErrorParagraph = ({ children, className, animate = true }: Props) => {
   const error = children;
 
   return (
     <motion.p
-      initial={{ height: 0, opacity: 0 }}
-      animate={{ height: "auto", opacity: 1 }}
-      exit={{ height: 0, opacity: 0 }}
+      initial={animate && { height: 0, opacity: 0 }}
+      animate={animate && { height: "auto", opacity: 1 }}
+      exit={animate ? { height: 0, opacity: 0, padding: 0 } : {}}
       className={twMerge("text-sm font-medium text-red-500", className)}
     >
       {error}
