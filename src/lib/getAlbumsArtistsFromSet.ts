@@ -5,6 +5,11 @@ const getAlbumsArtistsFromSet = async (songsId: string[]) => {
   const response = await fetch(
     `https://harmony-backend.vercel.app/api/getSongs?ids=${ids}`
   );
+
+  if (!response.ok) {
+    throw new Error("Fetching artists and albums failed.");
+  }
+
   const { data: songDetails } = (await response.json()) as {
     data: {
       attributes: {
