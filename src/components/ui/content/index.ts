@@ -8,3 +8,4 @@ export * from "./Paragraph";
 export * from "./SubHeader";
 export * from "./Code";
 export * from "./ErrorBlock";
+export * from "./SuccessBlock";
