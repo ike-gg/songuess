@@ -25,4 +25,4 @@ const ErrorBlock = ({ children, className }: Props) => {
   );
 };
 
-export default ErrorBlock;
+export { ErrorBlock };

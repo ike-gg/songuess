@@ -2,9 +2,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RxEnvelopeClosed } from "react-icons/rx";
-import { BackButton, Button, Input, Paragraph } from "@/components/ui";
-import ErrorBlock from "@/components/ui/Content/ErrorBlock";
-import SuccessBlock from "@/components/ui/Content/SuccessBlock";
+import {
+  BackButton,
+  Button,
+  ErrorBlock,
+  Input,
+  Paragraph,
+  SuccessBlock,
+} from "@/components/ui";
 
 interface Props {
   handleRecovery: (email: string) => Promise<void>;

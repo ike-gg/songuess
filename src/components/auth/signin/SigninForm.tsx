@@ -2,9 +2,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RxLockClosed, RxEnvelopeClosed } from "react-icons/rx";
-import { Button, Divider, Input } from "@/components/ui";
+import { Button, Divider, ErrorBlock, Input } from "@/components/ui";
 import Link from "next/link";
-import ErrorBlock from "@/components/ui/Content/ErrorBlock";
 
 interface Props {
   handleSignIn: (email: string, password: string) => Promise<void>;

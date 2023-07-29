@@ -25,4 +25,4 @@ const SuccessBlock = ({ children, className }: Props) => {
   );
 };
 
-export default SuccessBlock;
+export {SuccessBlock};
