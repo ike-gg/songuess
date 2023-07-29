@@ -3,8 +3,7 @@
 import { HTMLProps, ReactNode, forwardRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-import { ErrorParagraph } from "../Content";
-import { Tooltip } from "../Tooltip";
+import { ErrorParagraph, Tooltip } from "@/components/ui";
 
 interface Props extends HTMLProps<HTMLTextAreaElement> {
   label: string;

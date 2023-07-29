@@ -3,10 +3,9 @@
 import { HTMLProps, ReactNode, forwardRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-import { Tooltip } from "../Tooltip";
 import { RxExclamationTriangle } from "react-icons/rx";
 import { CgSpinner } from "react-icons/cg";
-import { ErrorParagraph } from "../Content";
+import { ErrorParagraph, Tooltip } from "@/components/ui";
 
 interface Props extends HTMLProps<HTMLInputElement> {
   label: string;
