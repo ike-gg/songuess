@@ -1,5 +1,5 @@
 export * from "./Card";
-export * from "./Content";
+export * from "./ContentComponents";
 export * from "./Branding";
 export * from "./CircleProgress";
 export * from "./Input";
