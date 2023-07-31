@@ -29,6 +29,7 @@ import {
   Textarea,
   Tooltip,
 } from "@/components/ui";
+import useFeedback from "@/hooks/useFeedback";
 
 const schema = z.object({
   name: z.string().trim().min(6, "Minimal 6 characters"),
@@ -51,9 +52,13 @@ export interface ProvidedValuesSetCreator
 
 interface Props {
   values?: ProvidedValuesSetCreator;
+  existingId?: string;
 }
 
-const SetCreator = ({ values }: Props) => {
+const SetCreator = ({ values, existingId }: Props) => {
+  const updateMode = existingId ? true : false;
+
+  const { setError, error, setLoading, loading } = useFeedback();
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const [playlist, setPlaylist] = useState<SearchQuerySong[]>(
@@ -63,7 +68,7 @@ const SetCreator = ({ values }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     setValue,
     watch,
   } = useForm<FormData>({
@@ -97,6 +102,7 @@ const SetCreator = ({ values }: Props) => {
   };
 
   const handleSetSubmit: SubmitHandler<FormData> = async (form: FormData) => {
+    setLoading(true);
     const {
       name,
       songs,
@@ -108,25 +114,36 @@ const SetCreator = ({ values }: Props) => {
       coverProvided ??
       parseArtwork(playlist[0].attributes.artwork).artworkUrl.large;
 
-    const { data, error } = await supabase
-      .from("sets")
-      .insert({
-        featured: false,
-        name,
-        songs,
-        cover,
-        description,
-        private: setPrivate,
-      })
-      .select();
+    const { data, error } = updateMode
+      ? await supabase
+          .from("sets")
+          .update({
+            name,
+            songs,
+            cover,
+            description,
+            private: setPrivate,
+          })
+          .eq("id", existingId)
+          .select()
+      : await supabase
+          .from("sets")
+          .insert({
+            featured: false,
+            name,
+            songs,
+            cover,
+            description,
+            private: setPrivate,
+          })
+          .select();
 
-    if (!error && data) {
-      router.replace(`/sets/${data[0].id}`);
+    if (error) {
+      setError(error.message);
+      return;
     }
 
-    await sleep(10000);
-
-    throw "wtf!";
+    router.replace(`/sets/${data[0].id}`);
   };
 
   return (
@@ -197,10 +214,11 @@ const SetCreator = ({ values }: Props) => {
         </Button>
         <Button
           type="submit"
-          loading={isSubmitting}
-          icon={!isSubmitting && <RxPencil2 />}
+          loading={loading}
+          icon={!loading && <RxPencil2 />}
         >
-          {isSubmitting ? "Creating set..." : "Create set"}
+          {!updateMode && "Create set"}
+          {updateMode && "Update set"}
         </Button>
       </CardFooter>
     </form>

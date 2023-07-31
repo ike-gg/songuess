@@ -10,6 +10,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
     | "primary"
     | "secondary"
+    | "danger"
     | "transparent"
     | "spotify"
     | "apple"
@@ -45,6 +46,8 @@ const Button = forwardRef<HTMLButtonElement, Props>(
         "bg-black/10 text-inherit opacity-75 hover:opacity-100",
       variant === "spotify" &&
         "bg-spotify-500 text-white hover:bg-spotify-700 active:border-spotify-500",
+      variant === "danger" &&
+        "bg-red-600 text-white hover:bg-red-800 active:border-red-600",
       variant === "apple" &&
         "bg-apple-500 hover:bg-apple-700 active:border-apple-500 text-apple-50",
       variant === "white" &&
