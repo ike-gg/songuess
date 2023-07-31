@@ -2,7 +2,7 @@
 
 import PlaylistItem from "@/components/music/PlaylistItem";
 import { CardItem, Input } from "@/components/ui";
-import { sets } from "@/constants/routes";
+import { routes } from "@/constants";
 import useDebounceQuery from "@/hooks/useDebounceQuery";
 import usePlaylistQuery from "@/hooks/usePlaylistQuery";
 import { SearchQueryPlaylist } from "@/types/musicApi/SearchQuery";
@@ -37,7 +37,7 @@ const SetImportPlaylist = ({ defaultPlaylists }: Props) => {
         {playlists.map((playlist) => {
           const { attributes, id } = playlist;
           return (
-            <CardItem href={sets.create.amPlaylist(id)} key={id}>
+            <CardItem href={routes.sets.create.amPlaylist(id)} key={id}>
               <PlaylistItem showArtwork playlistData={attributes}>
                 {<RxArrowRight />}
               </PlaylistItem>

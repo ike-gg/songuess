@@ -1,15 +1,15 @@
 import { cookies } from "next/headers";
 import getAuthBufferSpotify from "./getAuthBufferSpotify";
 import { redirect } from "next/navigation";
-import { sets } from "@/constants/routes";
 import { decrypt } from "@/utils/crypto";
+import { routes } from "@/constants";
 
 const exchangeRefreshSpotify = async () => {
   const { get } = cookies();
   const spotifyCredentials = get("spotify");
 
   if (!spotifyCredentials) {
-    redirect(sets.create.blank);
+    redirect(routes.sets.create.blank);
   }
 
   const { value: refreshTokenEncrypted } = spotifyCredentials;
