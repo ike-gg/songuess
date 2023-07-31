@@ -4,7 +4,8 @@ import { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
 const useUserClient = () => {
-  const [userData, setUserData] = useState<User>();
+  const [userData, setUserData] =
+    useState<Database["public"]["Tables"]["users"]["Row"]>();
   const [loading, setLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
 
@@ -12,21 +13,39 @@ const useUserClient = () => {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const { data: userData, error } = await supabase.auth.getUser();
+      //fetching auth details
+      const { data: dataAuth, error: errorAuth } =
+        await supabase.auth.getUser();
+
+      if (errorAuth) {
+        setIsLogged(false);
+        setLoading(false);
+        return;
+      }
+
+      //fetching user profile
+      const { data: dataUser, error: errorUser } = await supabase
+        .from("users")
+        .select()
+        .eq("id", dataAuth.user.id)
+        .single();
+
       setLoading(false);
-      if (error) {
+
+      if (errorUser || !dataUser) {
         setIsLogged(false);
         return;
       }
+
       setIsLogged(true);
-      setUserData(userData.user);
+      setUserData(dataUser);
     };
     getCurrentUser();
   }, [supabase]);
 
   const shorthands = {
-    username: userData?.user_metadata.name,
-    avatar: userData?.user_metadata.avatar_url,
+    username: userData?.username,
+    avatar: userData?.avatar_url,
   };
 
   return {
