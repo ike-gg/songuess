@@ -19,7 +19,7 @@ const Tooltip = ({ children }: Props) => {
   return (
     <Provider>
       <Root delayDuration={50}>
-        <Trigger>
+        <Trigger type="button">
           <RxInfoCircled className="text-zinc-500 transition-colors hover:text-zinc-300" />
         </Trigger>
         <Portal>
