@@ -42,15 +42,18 @@ const CreateSetPage = async ({
       const playlistDetails = await getPlaylistDetails(playlistid);
 
       const { attributes, relationships } = playlistDetails.data[0];
-      const { name, artwork, description } = attributes;
+      const { name, artwork, description: _desc } = attributes;
       const {
         artworkUrl: { large },
       } = parseArtwork(artwork);
+
+      const description = _desc?.standard && removeTags(_desc.standard);
+
       providedData = {
         name,
         playlist: relationships.tracks.data,
         cover: large,
-        description: description?.standard,
+        description: description,
       };
     } catch (error) {
       console.log(error);
