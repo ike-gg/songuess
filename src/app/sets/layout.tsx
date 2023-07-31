@@ -9,7 +9,7 @@ export default function SetsLayout({
   return (
     <section className="max-h-screen">
       <Navbar displayLinks={false} />
-      <div className="mx-auto max-w-4xl px-4">
+      <div className="mx-auto max-w-4xl px-4 pb-10">
         <Card>{children}</Card>
       </div>
     </section>
