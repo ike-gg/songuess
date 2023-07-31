@@ -1,4 +1,4 @@
-import { sets } from "@/constants/routes";
+import { routes } from "@/constants";
 import getAccessTokenSpotify from "@/lib/spotify/getAccessTokenSpotify";
 import { encrypt } from "@/utils/crypto";
 import { NextResponse } from "next/server";
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get("code");
 
   if (!code) {
-    return NextResponse.redirect(requestUrl.origin + sets.create.blank);
+    return NextResponse.redirect(requestUrl.origin + routes.sets.create.blank);
   }
 
   try {
@@ -19,11 +19,13 @@ export async function GET(request: NextRequest) {
 
     const encryptedRefreshToken = encrypt(refresh_token);
 
-    const response = NextResponse.redirect(requestUrl.origin + sets.spotify);
+    const response = NextResponse.redirect(
+      requestUrl.origin + routes.sets.spotify
+    );
 
     response.cookies.set("spotify", encryptedRefreshToken);
     return response;
   } catch (error) {
-    return NextResponse.redirect(requestUrl.origin + sets.create.blank);
+    return NextResponse.redirect(requestUrl.origin + routes.sets.create.blank);
   }
 }

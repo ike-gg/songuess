@@ -6,7 +6,7 @@ import {
   Paragraph,
   BackButton,
 } from "@/components/ui";
-import { sets } from "@/constants/routes";
+import { routes } from "@/constants/routes";
 import getUserPlaylistsSpotify from "@/lib/spotify/getUserPlaylistsSpotify";
 import removeTags from "@/utils/removeTags";
 
@@ -31,7 +31,7 @@ const SetSpotifyPage = async () => {
           const description = removeTags(_desc);
 
           return (
-            <CardItem key={id} href={sets.create.spotifyPlaylist(id)}>
+            <CardItem key={id} href={routes.sets.create.spotifyPlaylist(id)}>
               <div className="flex items-center gap-3 rounded transition-all duration-150">
                 <img
                   src={images[0].url}
@@ -39,9 +39,9 @@ const SetSpotifyPage = async () => {
                   alt={`cover of xd playlist`}
                 />
                 <div className="flex shrink flex-col gap-1 leading-none">
-                  <span className="font-semibold line-clamp-2">{name}</span>
+                  <span className="line-clamp-2 font-semibold">{name}</span>
                   {
-                    <span className="font-lights pb-0.5 opacity-60 line-clamp-1">
+                    <span className="font-lights line-clamp-1 pb-0.5 opacity-60">
                       {description}
                     </span>
                   }
