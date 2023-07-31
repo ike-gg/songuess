@@ -1,17 +1,16 @@
 import SetPreview from "@/features/sets/components/SetPreview";
 import getAlbumsArtistsFromSet from "@/lib/getAlbumsArtistsFromSet";
 import { Database } from "@/types/supabase";
-import { createClient } from "@supabase/supabase-js";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const SetPage = async ({
   params: { setId },
 }: {
   params: { setId: string };
 }) => {
-  const supabase = createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = createServerComponentClient<Database>({ cookies });
 
   const { data: setDetails } = await supabase
     .from("sets")
@@ -20,11 +19,19 @@ const SetPage = async ({
     .limit(1)
     .single();
 
-  const setContent = setDetails?.songs
-    ? await getAlbumsArtistsFromSet(setDetails.songs)
-    : null;
+  if (!setDetails) redirect("/sets");
 
-  return <SetPreview set={setDetails} setContent={setContent} />;
+  const {
+    data: { user: requestingUser },
+  } = await supabase.auth.getUser();
+
+  const setContent = await getAlbumsArtistsFromSet(setDetails.songs);
+
+  const isOwner = requestingUser?.id === setDetails.owner;
+
+  return (
+    <SetPreview set={setDetails} setContent={setContent} owner={isOwner} />
+  );
 };
 
 export default SetPage;
