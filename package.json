@@ -12,7 +12,6 @@
   "dependencies": {
     "@bradgarropy/use-countdown": "^1.5.2",
     "@hookform/resolvers": "^3.1.0",
-    "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.0.6",
     "@reduxjs/toolkit": "^1.9.5",
