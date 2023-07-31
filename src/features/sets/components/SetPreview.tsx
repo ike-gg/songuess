@@ -10,32 +10,73 @@ import {
   Heading,
   Paragraph,
   SubHeader,
+  Dialog,
+  ErrorBlock,
 } from "@/components/ui";
 import { Database } from "@/types/supabase";
-import { usePathname, useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-import { RxCopy, RxPlay, RxShare2 } from "react-icons/rx";
+import { RxCopy, RxPencil2, RxPlay, RxShare2, RxTrash } from "react-icons/rx";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import useFeedback from "@/hooks/useFeedback";
+import { routes } from "@/constants";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
 
 interface Props {
-  set: Set | null;
-  setContent: { albums: string[]; artists: string[] } | null;
+  set: Set;
+  setContent: { albums: string[]; artists: string[] };
+  owner?: boolean;
 }
 
-const SetPreview = ({ set, setContent }: Props) => {
-  const router = useRouter();
-  const url = usePathname();
+const SetPreview = ({ set, setContent, owner }: Props) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { error, setError, loading, setLoading } = useFeedback();
 
-  if (!set) {
-    router.replace("/sets");
-    return null;
-  }
+  const supabase = createClientComponentClient<Database>();
+
+  const router = useRouter();
+
+  const removeSet = async () => {
+    setLoading(true);
+    const { error } = await supabase.from("sets").delete().eq("id", set.id);
+    if (error) {
+      setError(error.message);
+      return;
+    }
+    router.replace(routes.sets.browser);
+  };
 
   const { description, featured, name, songs, cover, id } = set;
 
   return (
     <>
+      <Dialog handleState={setDialogOpen} state={dialogOpen}>
+        <Heading>Are you sure?</Heading>
+        <Paragraph>
+          Are you sure you want to delete <b>{set.name}</b> set?
+        </Paragraph>
+        {error && <ErrorBlock>{error}</ErrorBlock>}
+        <CardFooter className="flex flex-row justify-end gap-2">
+          <Button
+            onClick={() => setDialogOpen(false)}
+            variant="secondary"
+            size="small"
+          >
+            Cancel
+          </Button>
+          <Button
+            loading={loading}
+            onClick={() => removeSet()}
+            icon={<RxTrash />}
+            variant="danger"
+            size="small"
+          >
+            Delete
+          </Button>
+        </CardFooter>
+      </Dialog>
       <div className="relative -m-6 mb-0">
         {cover && (
           <img
@@ -47,7 +88,7 @@ const SetPreview = ({ set, setContent }: Props) => {
         {!cover && <div className="h-52 w-full" />}
       </div>
       <nav className="flex justify-between">
-        <BackButton href="/sets">Back to sets</BackButton>
+        <BackButton href={routes.sets.browser}>Back to sets</BackButton>
       </nav>
       <div>
         <div className="flex items-center gap-4">
@@ -72,18 +113,38 @@ const SetPreview = ({ set, setContent }: Props) => {
       )}
       <CardFooter>
         <div className="flex justify-between gap-3">
-          <Button
-            icon={<RxCopy />}
-            variant="secondary"
-            href={`/sets/create?setid=${id}`}
-          >
-            Duplicate
-          </Button>
+          <div className="flex gap-2">
+            {owner && (
+              <>
+                <Button
+                  icon={<RxTrash />}
+                  variant="danger"
+                  onClick={() => setDialogOpen(true)}
+                >
+                  Delete
+                </Button>
+                <Button
+                  href={routes.sets.update(id)}
+                  icon={<RxPencil2 />}
+                  variant="secondary"
+                >
+                  Edit
+                </Button>
+              </>
+            )}
+            <Button
+              icon={<RxCopy />}
+              variant="secondary"
+              href={`/sets/create?setid=${id}`}
+            >
+              Duplicate
+            </Button>
+          </div>
           <div className="flex gap-2">
             <Button
               variant="secondary"
               onClick={() => {
-                navigator.clipboard.writeText(url);
+                navigator.clipboard.writeText(location.href);
               }}
               icon={<RxShare2 />}
             >
