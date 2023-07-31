@@ -1,3 +1,4 @@
+import { Database } from "@/types/supabase";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -10,8 +11,18 @@ export async function GET(request: NextRequest) {
   const next = requestUrl.searchParams.get("next");
 
   if (code) {
-    const supabase = createRouteHandlerClient({ cookies });
-    await supabase.auth.exchangeCodeForSession(code);
+    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const { data } = await supabase.auth.exchangeCodeForSession(code);
+
+    //update user username from spotify account
+    if (data.user?.app_metadata.provider === "spotify") {
+      const usernameFromProvider = data.user.user_metadata.name;
+      if (!usernameFromProvider) return;
+      await supabase
+        .from("users")
+        .update({ username: data.user.user_metadata.name || "User" })
+        .eq("id", data.user.id);
+    }
   }
 
   if (next) {
