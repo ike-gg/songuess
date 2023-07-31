@@ -39,11 +39,11 @@ const RecoveryForm = ({ handleRecovery, loading, error, success }: Props) => {
       onSubmit={handleSubmit((e) => handleRecovery(e.email))}
     >
       <BackButton href="/signin">Back to sign in</BackButton>
+      {error && <ErrorBlock>{error}</ErrorBlock>}
+      {success && <SuccessBlock>{success}</SuccessBlock>}
       <Paragraph className="my-2">
         Use form below to recover your account using assigned email address
       </Paragraph>
-      {error && <ErrorBlock>{error}</ErrorBlock>}
-      {success && <SuccessBlock>{success}</SuccessBlock>}
       <Input
         label={"Email"}
         placeholder={"Type your email"}

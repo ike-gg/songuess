@@ -25,7 +25,7 @@ interface Props {
 }
 
 const schema = z.object({
-  username: z.string().min(6, "Minimum 6 characters"),
+  username: z.string().trim().min(6, "Minimum 6 characters"),
   email: z.string().email("Enter valid email"),
   password: z.string().min(6, "Minimum 6 characters"),
 });
