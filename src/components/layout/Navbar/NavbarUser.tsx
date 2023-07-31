@@ -1,24 +1,27 @@
+"use client";
+
 import { FiLogIn } from "react-icons/fi";
-import useUserDataServer from "@/lib/getUserDataServer";
 import { RxPerson } from "react-icons/rx";
 import { Button } from "@/components/ui";
+import useUserClient from "@/hooks/useUserClient";
+import { CgSpinner } from "react-icons/cg";
 
-const NavbarUser = async () => {
-  const user = await useUserDataServer();
-
+const NavbarUser = () => {
+  const { isLogged, loading, username } = useUserClient();
   return (
-    <div className="flex justify-end gap-2">
-      {user && (
+    <div className="flex h-8 items-center justify-end gap-2">
+      {loading && <CgSpinner className="animate-spin" />}
+      {!loading && isLogged && (
         <Button
           size="small"
           href="/user"
           variant="secondary"
           icon={<RxPerson />}
         >
-          {user.username || "User"}
+          {username}
         </Button>
       )}
-      {!user && (
+      {!loading && !isLogged && (
         <>
           <Button size="small" href="/signin" variant="secondary">
             Sign in

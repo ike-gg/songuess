@@ -17,7 +17,6 @@ const Navbar = ({ displayLinks = true }: Props) => {
     >
       <LogoName />
       {displayLinks && <NavbarLinks />}
-      {/* @ts-expect-error Async Server Component */}
       <NavbarUser />
     </nav>
   );
