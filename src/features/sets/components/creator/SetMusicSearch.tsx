@@ -85,7 +85,9 @@ const SetMusicSearch = ({ clickHandler, className, used }: Props) => {
             })}
         </div>
         <CardFooter className="flex flex-row justify-end">
-          <Button icon={<RxCheck />}>Save</Button>
+          <Button onClick={() => setDialogOpen(false)} icon={<RxCheck />}>
+            Save
+          </Button>
         </CardFooter>
       </Dialog>
     </>
