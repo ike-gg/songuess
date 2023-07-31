@@ -4,6 +4,7 @@ export const metadata = {
 };
 
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="bg-zinc-950 text-zinc-100">{children}</body>
+      <body className="bg-zinc-950 text-zinc-100">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
