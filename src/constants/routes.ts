@@ -2,6 +2,7 @@ const sets = {
   browser: "/sets",
   amimport: "/sets/importplaylist",
   spotify: "/sets/spotify",
+  update: (id: string) => `/sets/update?setid=${id}`,
   create: {
     blank: "/sets/create",
     spotifyPlaylist: (id: string) => `/sets/create?spotifyplaylistid=${id}`,
@@ -10,4 +11,10 @@ const sets = {
   },
 };
 
-export { sets };
+const auth = {
+  signin: "/signin",
+  signup: "/signup",
+  recovery: "/recovery",
+};
+
+export const routes = { sets, auth };
