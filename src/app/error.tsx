@@ -1,6 +1,13 @@
 "use client";
 
-import { BackButton, Button, CardFooter, Code, Heading } from "@/components/ui";
+import {
+  BackButton,
+  Button,
+  Card,
+  CardFooter,
+  Code,
+  Heading,
+} from "@/components/ui";
 import { RxReload, RxReset } from "react-icons/rx";
 
 const GeneralErrorPage = ({
@@ -11,7 +18,7 @@ const GeneralErrorPage = ({
   reset: () => void;
 }) => {
   return (
-    <>
+    <Card>
       <BackButton href="/sets">Back to sets</BackButton>
       <Heading>An error occurred</Heading>
       <Code footer={error.stack}>{error.message}</Code>
@@ -23,7 +30,7 @@ const GeneralErrorPage = ({
           Go back
         </Button>
       </CardFooter>
-    </>
+    </Card>
   );
 };
 
