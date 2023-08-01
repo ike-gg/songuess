@@ -1,11 +1,10 @@
 "use client";
 
 import { HTMLProps, ReactNode, forwardRef } from "react";
-import { AnimatePresence } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { RxExclamationTriangle } from "react-icons/rx";
 import { CgSpinner } from "react-icons/cg";
-import { ErrorParagraph, Tooltip } from "@/components/ui";
+import { ErrorParagraph, Tooltip, Transition } from "@/components/ui";
 
 interface Props extends HTMLProps<HTMLInputElement> {
   label: string;
@@ -55,9 +54,9 @@ const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
           id={label}
         />
       </div>
-      <AnimatePresence>
-        {error && <ErrorParagraph className="mt-1">{error}</ErrorParagraph>}
-      </AnimatePresence>
+      <Transition state={error ? true : false}>
+        <ErrorParagraph className="mt-1">{error}</ErrorParagraph>
+      </Transition>
     </label>
   );
 });
