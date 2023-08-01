@@ -8,3 +8,4 @@ export * from "./Skeleton";
 export * from "./Tooltip";
 export * from "./Buttons";
 export * from "./Dialog";
+export * from "./Transition";
