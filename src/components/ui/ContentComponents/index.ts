@@ -10,3 +10,4 @@ export * from "./Paragraph";
 export * from "./SubHeader";
 export * from "./SuccessBlock";
 export * from "./Label";
+export * from "./WarningBlock";
