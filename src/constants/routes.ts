@@ -17,4 +17,6 @@ const auth = {
   recovery: "/recovery",
 };
 
-export const routes = { sets, auth };
+const home = "/";
+
+export const routes = { sets, auth, home };
