@@ -2,13 +2,20 @@
 
 import { Database } from "@/types/supabase";
 import SetListItem from "./SetListItem";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import usePagination from "@/hooks/usePagination";
-import { RxMagnifyingGlass, RxPlus } from "react-icons/rx";
+import {
+  RxGlobe,
+  RxMagnifyingGlass,
+  RxPerson,
+  RxPlus,
+  RxStar,
+} from "react-icons/rx";
 import {
   BackButton,
   Button,
+  CardFooter,
   Heading,
   Input,
   Paragraph,
@@ -26,17 +33,28 @@ export interface SetSelectorProps {
   };
 }
 
-type SetCategory = keyof SetSelectorProps["sets"];
+type Category = keyof SetSelectorProps["sets"];
+
+type SetCategoryLabel = {
+  name: keyof SetSelectorProps["sets"];
+  icon?: ReactNode;
+};
 
 const SetSelector = ({ sets }: SetSelectorProps) => {
   const [searchOpen, setSearchOpen] = useState(false);
-  const [activeSet, setActiveSet] = useState<SetCategory>("featured");
+  const [activeSet, setActiveSet] = useState<Category>("featured");
   const [query, setQuery] = useState("");
 
-  const setNames: SetCategory[] = ["featured", "community"];
+  const setLabels: SetCategoryLabel[] = [
+    { name: "featured", icon: <RxStar /> },
+    { name: "community", icon: <RxGlobe /> },
+  ];
 
   if (sets.personal) {
-    setNames.push("personal");
+    setLabels.push({
+      name: "personal",
+      icon: <RxPerson />,
+    });
   }
 
   const {
@@ -79,16 +97,17 @@ const SetSelector = ({ sets }: SetSelectorProps) => {
       </div>
       <div className="flex justify-between gap-8 overflow-auto">
         <div className="flex gap-2">
-          {setNames.map((setName) => {
+          {setLabels.map(({ name, icon }) => {
             return (
               <Button
-                onClick={() => setActiveSet(setName)}
-                key={setName}
+                onClick={() => setActiveSet(name)}
+                key={name}
                 size="small"
-                variant={activeSet === setName ? "primary" : "secondary"}
+                icon={icon}
+                variant={activeSet === name ? "primary" : "secondary"}
                 className="capitalize"
               >
-                {setName}
+                {name}
               </Button>
             );
           })}
@@ -123,7 +142,7 @@ const SetSelector = ({ sets }: SetSelectorProps) => {
           })}
       </div>
       {paginationAvailable && (
-        <div className="flex items-center justify-between">
+        <CardFooter className="flex flex-row items-center justify-between">
           <Button
             variant="secondary"
             onClick={prevPage}
@@ -143,7 +162,7 @@ const SetSelector = ({ sets }: SetSelectorProps) => {
           >
             Next
           </Button>
-        </div>
+        </CardFooter>
       )}
     </>
   );
