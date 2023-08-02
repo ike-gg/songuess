@@ -10,7 +10,7 @@ const Label = ({ children, className }: Props) => {
   return (
     <p
       className={twMerge(
-        "text-xs uppercase tracking-wider opacity-30",
+        "text-xs uppercase tracking-wider opacity-50",
         className
       )}
     >
