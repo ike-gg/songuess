@@ -1,6 +1,8 @@
 "use client";
 
+import { current } from "@reduxjs/toolkit";
 import { motion } from "framer-motion";
+import { twMerge } from "tailwind-merge";
 
 interface Props {
   percents: number;
@@ -12,6 +14,8 @@ interface Props {
   size?: number;
   strokeWidth?: number;
   caption?: string;
+  className?: string;
+  currentColor?: boolean;
 }
 
 const CircleProgress = ({
@@ -24,6 +28,8 @@ const CircleProgress = ({
   size = 100,
   strokeWidth = 6,
   caption,
+  className,
+  currentColor,
 }: Props) => {
   const radius = 45;
   const circumference = Math.ceil(2 * Math.PI * radius);
@@ -49,7 +55,10 @@ const CircleProgress = ({
   };
 
   return (
-    <motion.div key={"circleProgress"} className="relative">
+    <motion.div
+      key={"circleProgress"}
+      className={twMerge("relative", className)}
+    >
       {caption && (
         <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           {caption}
@@ -88,7 +97,7 @@ const CircleProgress = ({
           cy="50"
           r={radius}
           strokeWidth={strokeWidth}
-          stroke={stroke}
+          stroke={currentColor ? "currentColor" : stroke}
           fill="transparent"
           strokeDashoffset={fillPercents}
           strokeDasharray={circumference}
