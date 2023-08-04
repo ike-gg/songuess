@@ -6,12 +6,12 @@ interface Props {
   className?: string;
 }
 
-const SubHeader = ({ children, className }: Props) => {
+const SubHeading = ({ children, className }: Props) => {
   return (
-    <h2 className={twMerge("text-lg font-medium opacity-90", className)}>
+    <h2 className={twMerge("text-xl font-medium opacity-90", className)}>
       {children}
     </h2>
   );
 };
 
-export { SubHeader };
+export { SubHeading };

@@ -1,9 +1,20 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { twMerge } from "tailwind-merge";
 
-const LogoName = () => {
+interface Props {
+  className?: string;
+}
+
+const LogoName = ({ className }: Props) => {
   return (
-    <Link href="/" className="flex items-center gap-2 text-lg font-medium">
+    <Link
+      href="/"
+      className={twMerge(
+        "flex items-center gap-2 text-lg font-medium",
+        className
+      )}
+    >
       <span className="text-3xl">
         <Logo />
       </span>{" "}

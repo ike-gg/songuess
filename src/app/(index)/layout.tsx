@@ -7,10 +7,14 @@ export default function IndexLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-screen-xl">
-      <Navbar />
-      {children}
-      <Footer />
+    <div>
+      <div className="mx-auto max-w-screen-xl">
+        <Navbar />
+      </div>
+      <div className="z-0">{children}</div>
+      <div className="mx-auto max-w-screen-xl">
+        <Footer />
+      </div>
     </div>
   );
 }
