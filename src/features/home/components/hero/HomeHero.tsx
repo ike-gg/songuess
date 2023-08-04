@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import ScrollingMarquee from "@/components/content/home/ScrollingMarquee";
+
 import { AlbumAttributes } from "@/types/musicApi/Album";
 import { twMerge } from "tailwind-merge";
 import HomeLogo from "./HomeLogo";
 import HomeTitle from "./HomeTitle";
 import chunkArray from "@/utils/chunkArray";
 import parseArtwork from "@/utils/parseArtwork";
+import ScrollingMarquee from "./ScrollingMarquee";
 
 interface Props {
   albums: AlbumAttributes[];
@@ -18,11 +19,11 @@ const HomeHero = ({ albums }: Props) => {
     return albumsArray.map((album) => {
       const { name, artistName, artwork } = album;
       const {
-        artworkUrl: { small },
+        artworkUrl: { tile },
       } = parseArtwork(artwork);
       return (
         <img
-          src={small}
+          src={tile}
           key={`${name}${artistName}`}
           alt={`album ${name} artwork by ${artistName}`}
           className="h-36 w-36 rounded-lg bg-zinc-800 "
@@ -40,13 +41,13 @@ const HomeHero = ({ albums }: Props) => {
       )}
     >
       <div className="flex flex-col gap-6">
-        <ScrollingMarquee basedElement={false} speed={1.6}>
+        <ScrollingMarquee basedElement={false} speed={1.2}>
           {albumElements[0]}
         </ScrollingMarquee>
-        <ScrollingMarquee basedElement={false} speed={0.8} direction="right">
+        <ScrollingMarquee basedElement={false} speed={0.9} direction="right">
           {albumElements[1]}
         </ScrollingMarquee>
-        <ScrollingMarquee basedElement={false} speed={1.3}>
+        <ScrollingMarquee basedElement={false} speed={1}>
           {albumElements[2]}
         </ScrollingMarquee>
       </div>

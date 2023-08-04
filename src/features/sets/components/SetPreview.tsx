@@ -9,9 +9,9 @@ import {
   ExtendingParagraph,
   Heading,
   Paragraph,
-  SubHeader,
   Dialog,
   ErrorBlock,
+  SubHeading,
 } from "@/components/ui";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -102,7 +102,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
       </ExtendingParagraph>
       {setContent && (
         <div className="mt-8 flex flex-col gap-2">
-          <SubHeader>Set includes:</SubHeader>
+          <SubHeading>Set includes:</SubHeading>
           <ExtendingParagraph>
             {`Albums: ${setContent.albums.join(", ")}`}
           </ExtendingParagraph>
