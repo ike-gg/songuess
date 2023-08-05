@@ -53,7 +53,7 @@ const MultiplayerChat = () => {
 
   const messagesProgress = useTransform(
     scrollYProgress,
-    [0, 0.6],
+    [0.2, 0.6],
     [0, messages.length + 1]
   );
 

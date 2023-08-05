@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedText, Heading, Paragraph } from "@/components/ui";
+import { Heading, Paragraph } from "@/components/ui";
 import SetListItem from "@/features/sets/components/SetListItem";
 import { Database } from "@/types/supabase";
 import {
@@ -12,10 +12,7 @@ import {
 import { useRef, useState } from "react";
 import { RxGlobe, RxPerson, RxStar } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
-import HomeSectionWrapper from "../shared/HomeSectionWrapper";
-import HomeSectionHeader from "../shared/HomeSectionHeader";
-import HomeSectionParagraph from "../shared/HomeSectionParagraph";
-import HomeSectionContent from "../shared/HomeSectionContent";
+import * as HomeSection from "../shared/HomeSection";
 
 const setsInfo = [
   {
@@ -59,15 +56,15 @@ const HomeSets = ({ sets }: Props) => {
   });
 
   return (
-    <HomeSectionWrapper ref={refContainer} className="max-w-screen-lg">
+    <HomeSection.Wrapper ref={refContainer} className="max-w-screen-lg">
       <div className="mx-auto flex max-w-2xl flex-col gap-2 text-center">
-        <HomeSectionHeader>Discover plenty of sets</HomeSectionHeader>
-        <HomeSectionParagraph>
+        <HomeSection.Header>Discover plenty of sets</HomeSection.Header>
+        <HomeSection.Paragraph>
           We give you full control over your music experience. Enjoy pre-made
           playlists from various categories or have fun crafting your own.
-        </HomeSectionParagraph>
+        </HomeSection.Paragraph>
       </div>
-      <HomeSectionContent className="flex flex-col gap-12">
+      <HomeSection.Content className="flex flex-col gap-12">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {setsInfo.map(({ desc, icon, name }, setIndex) => {
             const shouldMark = markedSet === setIndex;
@@ -104,8 +101,8 @@ const HomeSets = ({ sets }: Props) => {
             ))}
           </motion.div>
         </div>
-      </HomeSectionContent>
-    </HomeSectionWrapper>
+      </HomeSection.Content>
+    </HomeSection.Wrapper>
   );
 };
 

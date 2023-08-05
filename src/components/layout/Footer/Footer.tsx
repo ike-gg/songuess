@@ -3,7 +3,7 @@ import { links } from "./FooterItems";
 
 const Footer = () => {
   return (
-    <footer className="flex items-start gap-10 p-4 md:p-12">
+    <footer className="mb-24 flex items-start gap-10 p-8 md:p-12">
       <LogoName className="-translate-y-[5px]" />
       <nav className="flex gap-8">
         {links.map(({ items, name }) => {
