@@ -1,28 +1,25 @@
 import { Badge } from "@/components/ui";
 import MultiplayerChat from "./MultiplayerChat";
-import HomeSectionHeader from "../shared/HomeSectionHeader";
-import HomeSectionParagraph from "../shared/HomeSectionParagraph";
-import HomeSectionContent from "../shared/HomeSectionContent";
-import HomeSectionWrapper from "../shared/HomeSectionWrapper";
+import * as HomeSection from "../shared/HomeSection";
 
 const HomeMultiplayer = () => {
   return (
-    <HomeSectionWrapper>
+    <HomeSection.Wrapper>
       <div className="mx-auto flex max-w-2xl flex-col gap-2 text-center">
-        <HomeSectionHeader
+        <HomeSection.Header
           above={<Badge className="mx-auto w-fit">COMING SOON</Badge>}
         >
           Multiplayer
-        </HomeSectionHeader>
-        <HomeSectionParagraph>
+        </HomeSection.Header>
+        <HomeSection.Paragraph>
           We give you full control over your music experience. Enjoy pre-made
           playlists from various categories or have fun crafting your own.
-        </HomeSectionParagraph>
+        </HomeSection.Paragraph>
       </div>
-      <HomeSectionContent>
+      <HomeSection.Content>
         <MultiplayerChat />
-      </HomeSectionContent>
-    </HomeSectionWrapper>
+      </HomeSection.Content>
+    </HomeSection.Wrapper>
   );
 };
 
