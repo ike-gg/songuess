@@ -8,8 +8,8 @@ export default function IndexLayout({
 }) {
   return (
     <div>
-      <div className="mx-auto max-w-screen-xl">
-        <Navbar />
+      <div className="sticky top-0 z-50 mx-auto max-w-screen-xl bg-gradient-to-b from-zinc-950 via-zinc-950/75 to-transparent">
+        <Navbar className="relative" />
       </div>
       <div className="z-0">{children}</div>
       <div className="mx-auto max-w-screen-xl">
