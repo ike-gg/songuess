@@ -1,9 +1,9 @@
-import { LogoName } from "@/components/ui";
+import { LogoName, Paragraph } from "@/components/ui";
 import { links } from "./FooterItems";
 
 const Footer = () => {
   return (
-    <footer className="mb-24 flex items-start gap-10 p-8 md:p-12">
+    <footer className="mb-24 flex flex-wrap items-start gap-16 p-8 md:p-12">
       <LogoName className="-translate-y-[5px]" />
       <nav className="flex gap-8">
         {links.map(({ items, name }) => {
@@ -24,6 +24,7 @@ const Footer = () => {
           );
         })}
       </nav>
+      <Paragraph className="ml-auto opacity-20">SonGuess ©️ 2023</Paragraph>
     </footer>
   );
 };
