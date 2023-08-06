@@ -79,7 +79,7 @@ const MultiplayerChat = () => {
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring" }}
               className={twMerge(
-                "relative z-50 flex w-fit origin-bottom-left flex-col gap-1 whitespace-nowrap rounded-full border border-zinc-700 bg-zinc-800 pb-2.5 pl-5 pr-10 pt-2",
+                "relative z-30 flex w-fit origin-bottom-left flex-col gap-1 whitespace-nowrap rounded-full border border-zinc-700 bg-zinc-800 pb-2.5 pl-5 pr-10 pt-2",
                 lastMessage &&
                   "border-2 border-indigo-800 bg-indigo-900 pb-3 pl-6 pr-12 pt-3"
               )}
@@ -88,7 +88,7 @@ const MultiplayerChat = () => {
               <h5
                 className={twMerge(
                   "text-sm leading-none text-indigo-500",
-                  lastMessage && "text-lg leading-none"
+                  lastMessage && "text-lg leading-none text-indigo-400"
                 )}
               >
                 {user}
@@ -108,12 +108,12 @@ const MultiplayerChat = () => {
       <div className="absolute bottom-0 right-0 h-full w-3/5">
         <div className="relative h-full w-full">
           <Button
-            className="absolute right-0 top-0 z-50 m-2 rounded-full p-2"
+            className="absolute right-0 top-0 z-40 m-2 rounded-full p-2"
             variant="transparent"
             icon={videoMuted ? <IoVolumeMute /> : <IoVolumeHigh />}
             onClick={() => setVideoMuted((p) => !p)}
           />
-          <div className="absolute z-40 h-full w-full bg-gradient-to-r from-zinc-900 to-transparent" />
+          <div className="absolute z-10 h-full w-full bg-gradient-to-r from-zinc-900 to-transparent" />
           <motion.video
             className="relative right-0 h-full w-full object-cover"
             ref={videoRef}

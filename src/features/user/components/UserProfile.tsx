@@ -10,6 +10,7 @@ import {
   Label,
   Paragraph,
   ProfilePicture,
+  SubHeading,
   WarningBlock,
 } from "@/components/ui";
 import { routes } from "@/constants";
@@ -54,10 +55,10 @@ const UserProfile = ({ user }: Props) => {
       {error && <ErrorBlock>{error}</ErrorBlock>}
       <div className="flex items-center gap-4 rounded-lg bg-gradient-to-r from-zinc-800 to-zinc-800/30 p-4">
         <ProfilePicture avatarUrl={user.avatar_url || undefined} />
-        <div className="flex flex-col justify-between gap-1">
+        <div className="flex h-full flex-col justify-between">
           <Label className="leading-none">user profile</Label>
-          <Heading className="leading-none">{user.username}</Heading>
-          <Paragraph className="leading-none">
+          <SubHeading className="leading-none">{user.username}</SubHeading>
+          <Paragraph className="text-xs leading-none">
             @{user.username.toLowerCase().replaceAll(" ", "")}
           </Paragraph>
         </div>
@@ -93,7 +94,7 @@ const UserProfile = ({ user }: Props) => {
             key={data.name + data.value}
             className="rounded-lg bg-zinc-800/50 p-6 pt-12 text-right hover:bg-zinc-800"
           >
-            <Heading className="text-5xl">{data.value}</Heading>
+            <SubHeading className="text-5xl">{data.value}</SubHeading>
             <Paragraph>{data.name}</Paragraph>
           </div>
         ))}

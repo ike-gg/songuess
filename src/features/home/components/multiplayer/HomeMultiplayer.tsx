@@ -12,8 +12,9 @@ const HomeMultiplayer = () => {
           Multiplayer
         </HomeSection.Header>
         <HomeSection.Paragraph>
-          We give you full control over your music experience. Enjoy pre-made
-          playlists from various categories or have fun crafting your own.
+          Challenge friends and music enthusiasts worldwide to thrilling
+          real-time multiplayer battles. Test your music knowledge, compete for
+          high scores, and reign supreme in the ultimate music showdowns!
         </HomeSection.Paragraph>
       </div>
       <HomeSection.Content>
