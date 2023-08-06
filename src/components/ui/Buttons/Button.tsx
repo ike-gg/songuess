@@ -39,7 +39,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
       "whitespace-nowrap flex items-center justify-center gap-1.5 rounded-lg transition-all duration-300 w-fit",
       "disabled:opacity-50 border-2 border-transparent",
       variant === "primary" &&
-        "bg-indigo-700 text-indigo-100 hover:bg-indigo-800 active:border-indigo-600",
+        "bg-indigo-600 text-indigo-100 hover:bg-indigo-700 active:border-indigo-500",
       variant === "secondary" &&
         " bg-zinc-800 text-zinc-300 hover:bg-zinc-700 active:border-zinc-600",
       variant === "transparent" &&

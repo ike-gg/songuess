@@ -9,14 +9,13 @@ interface Props {
   delay?: number;
 }
 
-const Motion = ({ children, duration = 1.5, delay }: Props) => {
+const Motion = ({ children, duration = 1.5, delay = 0.12 }: Props) => {
   return (
     <MotionConfig
       transition={{
         ease: [1, 0, 0, 1],
         duration,
-        // staggerChildren: 0.12,
-        delay,
+        staggerChildren: delay,
       }}
     >
       {children}
