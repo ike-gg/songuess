@@ -18,7 +18,7 @@ const LogoName = ({ className }: Props) => {
       <span className="text-3xl">
         <Logo />
       </span>{" "}
-      <span className="hidden bg-gradient-to-b from-indigo-500 to-indigo-700 bg-clip-text text-transparent md:block">
+      <span className="hidden bg-gradient-to-b from-indigo-500 to-indigo-600 bg-clip-text text-transparent md:block">
         SonGuess
       </span>
     </Link>
