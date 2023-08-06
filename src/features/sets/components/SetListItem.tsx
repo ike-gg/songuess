@@ -31,7 +31,7 @@ const SetListItem = ({ set }: Props) => {
       {!cover && <div className="h-14 w-14 rounded-sm bg-zinc-700" />}
       <div className="flex grow items-center justify-between">
         <div className="flex basis-8/12 flex-col gap-1">
-          <SubHeading className="leading-none">{name}</SubHeading>
+          <SubHeading className="text-lg leading-none">{name}</SubHeading>
           <Paragraph className="line-clamp-1 text-sm leading-tight">
             {description}
           </Paragraph>

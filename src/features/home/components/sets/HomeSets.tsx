@@ -1,6 +1,6 @@
 "use client";
 
-import { Heading, Paragraph } from "@/components/ui";
+import { Paragraph, SubHeading } from "@/components/ui";
 import SetListItem from "@/features/sets/components/SetListItem";
 import { Database } from "@/types/supabase";
 import {
@@ -8,6 +8,7 @@ import {
   useScroll,
   motion,
   useTransform,
+  useSpring,
 } from "framer-motion";
 import { useRef, useState } from "react";
 import { RxGlobe, RxPerson, RxStar } from "react-icons/rx";
@@ -44,8 +45,13 @@ const HomeSets = ({ sets }: Props) => {
     offset: ["start end", "end start"],
   });
 
-  const scrollSets = useTransform(scrollYProgress, [0, 1], [0, -400]);
-  const reversedscrollSets = useTransform(scrollYProgress, [0, 1], [-300, 100]);
+  const scrollSets = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, -400])
+  );
+  const reversedscrollSets = useSpring(
+    useTransform(scrollYProgress, [0, 1], [-400, 0])
+  );
+
   const setInfoAttention = useTransform(scrollYProgress, [0.3, 0.58], [0, 2]);
 
   useMotionValueEvent(setInfoAttention, "change", (latest) => {
@@ -79,7 +85,7 @@ const HomeSets = ({ sets }: Props) => {
               >
                 <div className="flex items-center gap-2">
                   <span className="text-xl">{icon}</span>
-                  <Heading>{name}</Heading>
+                  <SubHeading>{name}</SubHeading>
                 </div>
                 <Paragraph>{desc}</Paragraph>
               </div>

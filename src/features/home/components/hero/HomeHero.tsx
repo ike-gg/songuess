@@ -35,7 +35,7 @@ const HomeHero = ({ albums }: Props) => {
   return (
     <div
       className={twMerge(
-        "relative z-50 flex w-full flex-col",
+        "relative z-20 flex w-full flex-col",
         "bg-transparent before:absolute before:-left-1 before:z-20 before:h-full before:w-12 before:bg-gradient-to-r before:from-zinc-950 before:to-transparent md:before:w-56",
         "after:absolute after:-right-1 after:z-20 after:h-full after:w-12 after:bg-gradient-to-l after:from-zinc-950 after:to-transparent md:after:w-56 "
       )}

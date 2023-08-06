@@ -9,7 +9,7 @@ const HomeTitle = () => {
       }}
       className="z-40 max-w-sm pb-2 text-center text-5xl font-bold md:max-w-2xl md:text-6xl"
     >
-      <AnimatedText className="bg-gradient-to-b from-indigo-600 to-indigo-800 bg-clip-text text-transparent">
+      <AnimatedText className="bg-gradient-to-b from-indigo-500 to-indigo-700 bg-clip-text text-transparent">
         Tune into the Ultimate Song Guessing Challenge!
       </AnimatedText>
     </h1>
