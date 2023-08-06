@@ -7,6 +7,7 @@ import HomeTitle from "./HomeTitle";
 import chunkArray from "@/utils/chunkArray";
 import parseArtwork from "@/utils/parseArtwork";
 import ScrollingMarquee from "./ScrollingMarquee";
+import Image from "next/image";
 
 interface Props {
   albums: AlbumAttributes[];
@@ -22,7 +23,9 @@ const HomeHero = ({ albums }: Props) => {
         artworkUrl: { tile },
       } = parseArtwork(artwork);
       return (
-        <img
+        <Image
+          width={80}
+          height={80}
           src={tile}
           key={`${name}${artistName}`}
           alt={`album ${name} artwork by ${artistName}`}

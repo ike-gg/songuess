@@ -11,7 +11,7 @@ interface Link {
 const links: Link[] = [
   {
     label: "Leaderboard",
-    href: "",
+    href: "/",
     disabled: true,
   },
   {
