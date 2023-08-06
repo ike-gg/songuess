@@ -116,7 +116,11 @@ const FeatureGuess = ({ songs }: Props) => {
       <AnimatePresence>
         <motion.img
           initial={{ y: "100%", rotate: -4 }}
-          animate={{ y: "0%", rotate: 8 }}
+          animate={{
+            y: "0%",
+            rotate: 8,
+            boxShadow: `0 0 100px ${addAlpha(primColor, 0.2)}`,
+          }}
           exit={{ y: "100%", rotate: -4 }}
           key={artworkUrl.medium}
           src={artworkUrl.medium}
