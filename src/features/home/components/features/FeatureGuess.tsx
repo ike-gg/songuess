@@ -12,7 +12,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { Button, Paragraph } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { RxReload } from "react-icons/rx";
 import { HiPlay, HiPause } from "react-icons/hi2";
 

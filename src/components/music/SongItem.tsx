@@ -4,7 +4,7 @@ import { SongAttributes } from "@/types/musicApi/Song";
 import parseArtwork from "@/utils/parseArtwork";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { RxPlay, RxPause } from "react-icons/rx";
+import { HiPlay, HiPause } from "react-icons/hi2";
 import removeParentheses from "@/utils/removeParentheses";
 
 interface Props {
@@ -67,11 +67,11 @@ const SongItem = ({
         <img src={mini} className="rounded-sm" alt={`cover of ${albumName}`} />
       )}
       <div className="flex shrink flex-col gap-1 leading-none">
-        <span className="font-semibold line-clamp-2">
+        <span className="line-clamp-2 font-semibold">
           {shortName ? removeParentheses(name) : name}
         </span>
         {(showArtist || showAlbum) && (
-          <span className="font-lights opacity-60 line-clamp-1">
+          <span className="font-lights line-clamp-1 opacity-60">
             {showArtist && !showAlbum && artistName}
             {showAlbum && !showArtist && albumName}
             {showAlbum && showArtist && `${artistName} from ${albumName}`}
@@ -86,8 +86,8 @@ const SongItem = ({
             setIsPlaying((p) => !p);
           }}
         >
-          {isPlaying && <RxPause />}
-          {!isPlaying && <RxPlay />}
+          {isPlaying && <HiPause />}
+          {!isPlaying && <HiPlay />}
         </div>
       )}
     </div>

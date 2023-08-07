@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
@@ -16,7 +15,7 @@ const links: Link[] = [
   },
   {
     label: "Github",
-    href: "/github",
+    href: "https://github.com/ike-gg/songuess",
   },
   {
     label: "Music Sets",
