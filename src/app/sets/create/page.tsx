@@ -111,7 +111,7 @@ const CreateSetPage = async ({
         <BackButton href="/sets">Back to sets</BackButton>
         <div className="flex flex-row gap-2">
           <Button variant="apple" size="small" href="/sets/importplaylist">
-            Prepared playlists
+            Templates
           </Button>
           <Button variant="spotify" size="small" href={spotifyAuthUrl}>
             Your Spotify

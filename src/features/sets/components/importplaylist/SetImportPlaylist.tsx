@@ -5,7 +5,10 @@ import { CardItem, Input } from "@/components/ui";
 import { routes } from "@/constants";
 import useDebounceQuery from "@/hooks/useDebounceQuery";
 import usePlaylistQuery from "@/hooks/usePlaylistQuery";
-import { SearchQueryPlaylist } from "@/types/musicApi/SearchQuery";
+import {
+  SearchQueryPlaylist,
+  SearchQueryAlbums,
+} from "@/types/musicApi/SearchQuery";
 import { useState } from "react";
 import { RxArrowRight, RxMagnifyingGlass } from "react-icons/rx";
 
@@ -39,7 +42,7 @@ const SetImportPlaylist = ({ defaultPlaylists }: Props) => {
           return (
             <CardItem href={routes.sets.create.amPlaylist(id)} key={id}>
               <PlaylistItem showArtwork playlistData={attributes}>
-                {<RxArrowRight />}
+                <RxArrowRight />
               </PlaylistItem>
             </CardItem>
           );

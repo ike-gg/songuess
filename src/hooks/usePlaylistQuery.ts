@@ -1,5 +1,8 @@
 import queryPlaylist from "@/lib/queryPlaylist";
-import { SearchQueryPlaylist } from "@/types/musicApi/SearchQuery";
+import {
+  SearchQueryAlbums,
+  SearchQueryPlaylist,
+} from "@/types/musicApi/SearchQuery";
 import { useEffect, useState } from "react";
 
 interface PlaylistQueryOptions {
@@ -12,9 +15,9 @@ const usePlaylistQuery = (
 ) => {
   const { defaultData } = options;
 
-  const [playlists, setPlaylists] = useState<SearchQueryPlaylist[]>(
-    defaultData || []
-  );
+  const [playlists, setPlaylists] = useState<
+    (SearchQueryPlaylist | SearchQueryAlbums)[]
+  >(defaultData || []);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

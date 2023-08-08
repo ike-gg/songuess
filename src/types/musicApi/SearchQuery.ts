@@ -4,7 +4,7 @@ import { MusicVideoAttributes } from "./MusicVideo";
 import { PlaylistAttributes } from "./Playlist";
 import { SongAttributes } from "./Song";
 
-interface SearchQueryAlbums {
+export interface SearchQueryAlbums {
   id: string;
   type: "albums";
   attributes: AlbumAttributes;
