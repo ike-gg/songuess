@@ -4,9 +4,10 @@ import parseArtwork from "@/utils/parseArtwork";
 import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import { PlaylistAttributes } from "@/types/musicApi/Playlist";
+import { AlbumAttributes } from "@/types/musicApi/Album";
 
 interface Props {
-  playlistData: PlaylistAttributes;
+  playlistData: PlaylistAttributes | AlbumAttributes;
   colorful?: boolean;
   showArtwork?: boolean;
   onClick?: () => void;
@@ -22,13 +23,24 @@ const PlaylistItem = ({
   className,
   children,
 }: Props) => {
-  const { artwork, name, description } = playlistData;
+  const { artwork, name } = playlistData;
 
   const {
     artworkUrl: { mini },
     bgColor,
     primColor,
   } = parseArtwork(artwork);
+
+  let description: string | null = null;
+
+  if ("description" in playlistData) {
+    description = playlistData.description?.short || null;
+  }
+
+  if ("artistName" in playlistData) {
+    description = playlistData.artistName;
+  }
+
   return (
     <div
       style={{
@@ -50,12 +62,12 @@ const PlaylistItem = ({
         />
       )}
       <div className="flex shrink flex-col gap-1 leading-none">
-        <span className="font-semibold line-clamp-2">{name}</span>
-        {
-          <span className="font-lights pb-0.5 opacity-60 line-clamp-1">
-            {description?.short}
+        <span className="line-clamp-2 font-semibold">{name}</span>
+        {description && (
+          <span className="font-lights line-clamp-1 pb-0.5 opacity-60">
+            {description}
           </span>
-        }
+        )}
       </div>
     </div>
   );
