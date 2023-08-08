@@ -1,12 +1,13 @@
 const sets = {
   browser: "/sets",
-  amimport: "/sets/importplaylist",
+  amimport: "/sets/templates",
   spotify: "/sets/spotify",
   update: (id: string) => `/sets/update?setid=${id}`,
   create: {
     blank: "/sets/create",
     spotifyPlaylist: (id: string) => `/sets/create?spotifyplaylistid=${id}`,
-    amPlaylist: (id: string) => `/sets/create?playlistid=${id}`,
+    amPlaylist: (id: string, album: boolean) =>
+      `/sets/create?playlistid=${id}${album ? "&album=true" : ""}`,
     existingSet: (id: string) => `/sets/create?setid=${id}`,
   },
 };

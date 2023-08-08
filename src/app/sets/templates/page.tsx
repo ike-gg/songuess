@@ -2,7 +2,7 @@ import { Heading, Paragraph, BackButton } from "@/components/ui";
 import SetImportPlaylist from "@/features/sets/components/importplaylist/SetImportPlaylist";
 import getPopularPlaylists from "@/lib/getPopularPlaylists";
 
-const SetImportPlaylistPage = async () => {
+const SetTemplatesPage = async () => {
   const popularPlaylists = await getPopularPlaylists();
 
   return (
@@ -19,4 +19,4 @@ const SetImportPlaylistPage = async () => {
   );
 };
 
-export default SetImportPlaylistPage;
+export default SetTemplatesPage;

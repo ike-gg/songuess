@@ -13,15 +13,18 @@ import getPlaylistSpotify from "@/lib/spotify/getPlaylistSpotify";
 import getSongsByISRC from "@/lib/getSongsByISRC";
 import removeTags from "@/utils/removeTags";
 import { BackButton, Button, Heading } from "@/components/ui";
+import { routes } from "@/constants";
+import getAlbumDetails from "@/lib/getAlbumDetails";
 
 interface SearchParams {
   playlistid?: string;
   setid?: string;
   spotifyplaylistid?: string;
+  album?: string;
 }
 
 const CreateSetPage = async ({
-  searchParams: { playlistid, setid, spotifyplaylistid },
+  searchParams: { playlistid, setid, spotifyplaylistid, album },
 }: {
   searchParams: SearchParams;
 }) => {
@@ -39,19 +42,26 @@ const CreateSetPage = async ({
 
   if (playlistid) {
     try {
-      const playlistDetails = await getPlaylistDetails(playlistid);
+      const playlistDetails =
+        album === "true"
+          ? await getAlbumDetails(playlistid)
+          : await getPlaylistDetails(playlistid);
 
-      const { attributes, relationships } = playlistDetails.data[0];
-      const { name, artwork, description: _desc } = attributes;
+      const { attributes, relationships } = playlistDetails;
+      const { name, artwork } = attributes;
+
       const {
         artworkUrl: { large },
       } = parseArtwork(artwork);
 
-      const description = _desc?.standard && removeTags(_desc.standard);
+      const description =
+        "artistName" in attributes
+          ? removeTags(attributes.editorialNotes?.standard || "")
+          : removeTags(attributes.description?.standard || "");
 
       providedData = {
         name,
-        playlist: relationships.tracks.data,
+        playlist: relationships.tracks?.data || [],
         cover: large,
         description: description,
       };
@@ -110,7 +120,7 @@ const CreateSetPage = async ({
       <nav className="flex items-start justify-between">
         <BackButton href="/sets">Back to sets</BackButton>
         <div className="flex flex-row gap-2">
-          <Button variant="apple" size="small" href="/sets/importplaylist">
+          <Button variant="apple" size="small" href={routes.sets.amimport}>
             Templates
           </Button>
           <Button variant="spotify" size="small" href={spotifyAuthUrl}>

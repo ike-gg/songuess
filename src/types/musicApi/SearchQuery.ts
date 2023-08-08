@@ -12,7 +12,7 @@ export interface SearchQueryAlbums {
 
 export interface SearchQuerySong {
   id: string;
-  type: "songs";
+  type: string;
   attributes: SongAttributes;
 }
 
