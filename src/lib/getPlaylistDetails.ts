@@ -1,6 +1,7 @@
 import { PlaylistType } from "@/types/musicApi/Playlist";
 
 const getPlaylistDetails = async (playlistId: string) => {
+  console.log("fetching playlists");
   const res = await fetch(
     `https://harmony-backend.vercel.app/api/getPlaylist?id=${playlistId}`
   );
@@ -11,7 +12,7 @@ const getPlaylistDetails = async (playlistId: string) => {
 
   const data = (await res.json()) as PlaylistType;
 
-  return data;
+  return data.data[0];
 };
 
 export default getPlaylistDetails;

@@ -39,8 +39,12 @@ const SetImportPlaylist = ({ defaultPlaylists }: Props) => {
       <div className="group/plitem mt-4 flex flex-col gap-3">
         {playlists.map((playlist) => {
           const { attributes, id } = playlist;
+          const isAlbum = "artistName" in attributes ? true : false;
           return (
-            <CardItem href={routes.sets.create.amPlaylist(id)} key={id}>
+            <CardItem
+              href={routes.sets.create.amPlaylist(id, isAlbum)}
+              key={id}
+            >
               <PlaylistItem showArtwork playlistData={attributes}>
                 <RxArrowRight />
               </PlaylistItem>
