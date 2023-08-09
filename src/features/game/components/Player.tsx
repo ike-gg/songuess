@@ -38,8 +38,9 @@ const Player = () => {
           filter: status === "guessing" ? `blur(${blur}px)` : "blur(0px)",
           padding: status === "guessing" ? blur : 0,
         }}
+        style={{ backgroundColor: bgColor }}
         src={artworkUrl.large}
-        className="w-full max-w-sm rounded-lg md:max-w-[275px]"
+        className="w-full rounded-lg md:w-64"
         alt="preview of song cover"
       />
       {!isIOS && <VolumePicker bgColor={bgColor} textColor={primColor} />}

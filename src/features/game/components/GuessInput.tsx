@@ -61,7 +61,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
           ref={inputRef}
           autoCorrect="off"
           type="text"
-          className="opacity-1 absolute left-0 top-0 -z-50 h-full w-full opacity-0"
+          className="static bottom-0 left-0 -z-50 block h-full w-full opacity-100 md:absolute md:hidden md:opacity-0"
           value={guess}
           autoFocus
           style={{ caretColor: "transparent" }}
@@ -75,7 +75,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
             e.target.focus();
           }}
         />
-        <div className="relative flex flex-wrap gap-y-3 text-center">
+        <div className="relative hidden flex-wrap gap-y-3 text-center md:flex">
           {secretWordsArray.map((word, wordIndex, wordsArray) => {
             return (
               <div className="flex" key={word + wordIndex}>
@@ -114,7 +114,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
                         borderColor: addAlpha(textColor, 0.5),
                       }}
                       className={twMerge(
-                        "flex h-[2.25rem] w-6 items-center  justify-center overflow-hidden text-center transition-all",
+                        "flex h-[2.25rem] w-6 scale-[100.7%] items-center justify-center overflow-hidden text-center transition-all",
                         parsedSecret[realIndex + 1] === " " && "rounded-r-lg ",
                         parsedSecret[realIndex - 1] === " " && "rounded-l-lg ",
                         realIndex === 0 && "rounded-l-lg",
@@ -124,7 +124,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
                     >
                       <AnimatePresence>
                         {userLetterGuess && (
-                          <motion.span
+                          <motion.div
                             key={wordIndex + letter + letterIndex + "inner"}
                             className="block"
                             initial={{ y: 20, scale: 1, opacity: 0 }}
@@ -137,7 +137,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
                             ) : (
                               userLetterGuess
                             )}
-                          </motion.span>
+                          </motion.div>
                         )}
                       </AnimatePresence>
                     </motion.div>

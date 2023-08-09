@@ -20,12 +20,17 @@ const Countdown = () => {
   // useCountdown because components needs to be
   // rendered before changing round status state.
   useEffect(() => {
-    if (isInactive && seconds === 0)
+    if (isInactive && seconds === 0) {
       dispatch(gameActions.setRoundStatus("guessing"));
+    }
   });
 
+  useEffect(() => {
+    dispatch(gameActions.loadNextSong());
+  }, [dispatch]);
+
   return (
-    <GameCard key={"countdown"} className="flex-col items-center p-8">
+    <GameCard layoutId="gamenavigator" className="flex-col items-center p-8">
       <Paragraph>
         {currRound === 0 ? "Game begin in..." : "Round begin in..."}
       </Paragraph>
