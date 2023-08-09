@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="bg-zinc-950 text-zinc-100">
+      <body className="bg-zinc-950 text-zinc-100 transition-colors duration-500">
         {children}
         <Analytics />
       </body>

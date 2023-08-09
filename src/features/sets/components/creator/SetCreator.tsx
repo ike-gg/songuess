@@ -6,6 +6,7 @@ import {
   RxLink1,
   RxLockClosed,
   RxPencil2,
+  RxReset,
 } from "react-icons/rx";
 import SetMusicSearch from "./SetMusicSearch";
 import { useEffect, useState } from "react";
@@ -18,7 +19,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import parseArtwork from "@/utils/parseArtwork";
 import { useRouter } from "next/navigation";
-import sleep from "@/utils/sleep";
 import {
   Button,
   CardFooter,
@@ -181,6 +181,9 @@ const SetCreator = ({ values, existingId }: Props) => {
             <Paragraph className="flex items-center gap-2">
               <Tooltip>Minimum 5 tracks, maximum 100 tracks per set.</Tooltip>
               Playlist inludes {songsAdded.length} songs.
+              {songsAdded.length > 0 && (
+                <span className="opacity-50">Tap on song to delete it.</span>
+              )}
             </Paragraph>
             {errors.songs?.message && (
               <ErrorParagraph>{errors.songs.message}</ErrorParagraph>
@@ -192,9 +195,11 @@ const SetCreator = ({ values, existingId }: Props) => {
           {playlist.map((song) => {
             return (
               <SongItem
-                className="cursor-pointer border border-zinc-700/40 bg-zinc-800 p-2 pr-5 hover:scale-[98%] hover:opacity-80"
+                className="cursor-pointer border border-zinc-700/40 bg-zinc-800 p-2 pr-4 opacity-80 hover:opacity-100"
                 shortName
                 showArtist
+                showPreview
+                colorfulPlay
                 showArtwork
                 songData={song.attributes}
                 key={song.id + "added"}

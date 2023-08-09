@@ -16,7 +16,7 @@ const BackgroundImage = ({ color, src }: Props) => {
       document.body.style.backgroundColor = color;
     }
     return () => {
-      document.body.style.backgroundColor = "";
+      document.body.style.backgroundColor = "#09090b";
     };
   }, [status, color]);
 
@@ -27,7 +27,11 @@ const BackgroundImage = ({ color, src }: Props) => {
       animate={{ opacity: isLoaded ? 1 : 0 }}
       transition={{ duration: 1 }}
       exit={{ opacity: 0 }}
-      onLoad={() => setIsLoaded(true)}
+      onLoad={() =>
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, 500)
+      }
       className="fixed left-0 top-0 -z-50 h-screen w-screen animate-slowlyRotate object-cover blur-[60px]"
     />
   );

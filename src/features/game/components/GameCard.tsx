@@ -17,9 +17,14 @@ const GameCard = ({ children, className, ...props }: Props) => {
         "relative m-4 flex max-w-md gap-4 overflow-hidden overflow-y-auto rounded-xl border border-zinc-800 bg-zinc-900 p-4 md:max-w-2xl md:p-6",
         className
       )}
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1, ...animateProps }}
-      exit={{ opacity: 0, scale: 1.5 }}
+      initial={{ opacity: 0, scale: 1.3 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        transition: { duration: 0.1 },
+        ...animateProps,
+      }}
+      exit={{ opacity: 0, scale: 0.9 }}
     >
       {children}
     </motion.div>
