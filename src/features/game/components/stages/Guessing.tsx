@@ -31,16 +31,12 @@ const Guessing = () => {
 
   return (
     <>
-      <BackgroundImage
-        key={`bg${id}`}
-        src={artworkUrl.small}
-        color={primColor}
-      />
+      <BackgroundImage key={`bg${id}`} src={artworkUrl.small} color={bgColor} />
       <GameCard
         key={`gameBoard${id}`}
         className="flex-col border-transparent bg-transparent p-5 shadow-transparent md:w-full md:flex-row md:p-6"
         style={{
-          backgroundColor: addAlpha(bgColor, 0.5),
+          backgroundColor: addAlpha(bgColor, 0.25),
           color: primColor,
         }}
         animate={{
