@@ -1,4 +1,4 @@
-import { FormEvent, forwardRef, useEffect, useState } from "react";
+import { FormEvent, forwardRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import splitWordsWithSpaces from "@/utils/splitWordsWithSpaces";
@@ -55,7 +55,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
         }}
       >
         <Paragraph className="mb-2 text-sm opacity-80">
-          {isInputFocused ? "Type to guess" : "Click to type"}
+          {isInputFocused ? "Type to guess" : "Click to type"} {parsedSecret}
         </Paragraph>
         <input
           ref={inputRef}
@@ -80,57 +80,62 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
             return (
               <div className="flex" key={word + wordIndex}>
                 {word.split("").map((letter, letterIndex) => {
+                  //realIndex represents current char's index of whole phrase
+                  //inside the splitted by words scope
                   const realIndex =
                     wordsArray.slice(0, wordIndex).reduce((prev, curr) => {
                       return curr.length + prev;
                     }, 0) + letterIndex;
 
-                  const guessLetter = guess[realIndex];
+                  const userLetterGuess = guess[realIndex];
 
-                  let bgColor =
-                    letter === " " ? "transparent" : backgroundColor;
-                  if (
-                    letter?.toLowerCase() ===
-                    parseDiacriticalChars(guessLetter || "").toLowerCase()
-                  )
-                    bgColor = addAlpha(bgColor, 0.3);
-                  else if (guess.length === realIndex)
-                    bgColor = addAlpha(bgColor, 0.2);
-                  else bgColor = addAlpha(bgColor, 0.1);
+                  const letterToGuess = letter.toLowerCase();
+                  const userLetterGuessParsed = parseDiacriticalChars(
+                    userLetterGuess || ""
+                  ).toLowerCase();
+
+                  const correctLetter = letterToGuess === userLetterGuessParsed;
+
+                  let bgColor: string | null = null;
+
+                  if (correctLetter) bgColor = textColor;
+                  //statement to show current position
+                  if (guess.length === realIndex)
+                    bgColor = addAlpha(textColor, 0.2);
+                  if (letterToGuess === " ") bgColor = addAlpha(textColor, 0);
+                  if (!bgColor) bgColor = addAlpha(textColor, 0.1);
 
                   return (
                     <motion.div
                       key={wordIndex + letter + letterIndex}
                       style={{
                         backgroundColor: bgColor,
-                        borderColor: addAlpha(textColor, 0.2),
+                        color: correctLetter ? backgroundColor : "currentcolor",
+                        borderColor: addAlpha(textColor, 0.5),
                       }}
                       className={twMerge(
-                        "h-[2.25rem] w-6 overflow-hidden border-b border-t p-1 text-center transition-all",
-                        parsedSecret[realIndex + 1] === " " &&
-                          "rounded-r-lg border-r",
-                        parsedSecret[realIndex - 1] === " " &&
-                          "rounded-l-lg border-l",
-                        realIndex === 0 && "rounded-l-lg border-l",
-                        letter === " " && "w-5 border-none",
-                        realIndex === parsedSecret.length - 1 &&
-                          "rounded-r-lg border-r"
+                        "flex h-[2.25rem] w-6 items-center  justify-center overflow-hidden text-center transition-all",
+                        parsedSecret[realIndex + 1] === " " && "rounded-r-lg ",
+                        parsedSecret[realIndex - 1] === " " && "rounded-l-lg ",
+                        realIndex === 0 && "rounded-l-lg",
+                        letter === " " && "w-5",
+                        realIndex === parsedSecret.length - 1 && "rounded-r-lg "
                       )}
                     >
                       <AnimatePresence>
-                        {guessLetter && (
+                        {userLetterGuess && (
                           <motion.span
                             key={wordIndex + letter + letterIndex + "inner"}
                             className="block"
-                            initial={{ scale: 0 }}
-                            animate={{ y: 0, scale: 1, rotate: 0, opacity: 1 }}
-                            transition={{ duration: 0.2 }}
+                            initial={{ y: 20, scale: 1, opacity: 0 }}
+                            animate={{ y: 0, scale: 1, opacity: 1 }}
                             exit={{ scale: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
                           >
-                            {guessLetter === " " ? (
+                            {userLetterGuess === " " ? (
                               <span>&nbsp;</span>
                             ) : (
-                              guessLetter
+                              userLetterGuess
                             )}
                           </motion.span>
                         )}
