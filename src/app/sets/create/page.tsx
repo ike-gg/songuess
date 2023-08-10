@@ -103,7 +103,8 @@ const CreateSetPage = async ({
 
     const tracksISRC = tracks.items
       .filter((t) => t.track.external_ids.isrc)
-      .map((t) => t.track.external_ids.isrc) as string[];
+      .map((t) => t.track.external_ids.isrc)
+      .slice(0, 2) as string[];
 
     const songs = await getSongsByISRC(tracksISRC);
 
