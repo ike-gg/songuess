@@ -17,10 +17,10 @@ const MotionWrapper = ({
 }: Props) => {
   return (
     <motion.div
-      initial={{ y: distance, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -distance, opacity: 0 }}
-      transition={{ delay }}
+      initial={{ height: 0, opacity: 0 }}
+      animate={{ height: "auto", opacity: 1 }}
+      exit={{ height: 0, opacity: 0 }}
+      className="overflow-hidden"
       {...props}
     >
       {children}
