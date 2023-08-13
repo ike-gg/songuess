@@ -14,12 +14,10 @@ import { MotionWrapper, Paragraph } from "@/components/ui";
 interface Props {
   onGuess?: () => void;
   secretPhrase: string;
-  textColor: string;
-  backgroundColor: string;
 }
 
 const GuessInput = forwardRef<HTMLInputElement, Props>(
-  ({ secretPhrase, onGuess, backgroundColor, textColor }, inputRef) => {
+  ({ secretPhrase, onGuess }, inputRef) => {
     const [guess, setGuess] = useState("");
 
     const dispatch = useAppDispatch();
@@ -48,23 +46,18 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
     };
 
     return (
-      <MotionWrapper
-        className="relative mb-12"
-        style={{
-          color: textColor,
-        }}
-      >
-        <Paragraph className="mb-2 text-sm opacity-80">
-          {isInputFocused ? "Type to guess" : "Click to type"} {parsedSecret}
+      <div className="my-3">
+        <Paragraph className="mb-3 text-sm opacity-80">
+          {isInputFocused ? "Type to guess" : "Click to type"}
         </Paragraph>
         <input
           ref={inputRef}
           autoCorrect="off"
-          type="text"
-          className="static bottom-0 left-0 -z-50 block h-full w-full opacity-100 md:absolute md:hidden md:opacity-0"
-          value={guess}
+          autoComplete="off"
           autoFocus
-          style={{ caretColor: "transparent" }}
+          type="search"
+          className="static bottom-0 left-0 -z-50 block h-full w-full bg-zinc-800/80 p-2 text-zinc-100 caret-transparent opacity-100 outline-none md:absolute md:opacity-0"
+          value={guess}
           onInput={handleGuessInput}
           onFocus={() => dispatch(gameActions.setInputFocus(true))}
           onBlur={(e) => {
@@ -75,7 +68,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
             e.target.focus();
           }}
         />
-        <div className="relative hidden flex-wrap gap-y-3 text-center md:flex">
+        <div className="relative hidden flex-wrap justify-center gap-y-3 text-center md:flex">
           {secretWordsArray.map((word, wordIndex, wordsArray) => {
             return (
               <div className="flex" key={word + wordIndex}>
@@ -96,30 +89,26 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
 
                   const correctLetter = letterToGuess === userLetterGuessParsed;
 
-                  let bgColor: string | null = null;
-
-                  if (correctLetter) bgColor = textColor;
-                  //statement to show current position
-                  if (guess.length === realIndex)
-                    bgColor = addAlpha(textColor, 0.2);
-                  if (letterToGuess === " ") bgColor = addAlpha(textColor, 0);
-                  if (!bgColor) bgColor = addAlpha(textColor, 0.1);
-
                   return (
                     <motion.div
                       key={wordIndex + letter + letterIndex}
-                      style={{
-                        backgroundColor: bgColor,
-                        color: correctLetter ? backgroundColor : "currentcolor",
-                        borderColor: addAlpha(textColor, 0.5),
-                      }}
                       className={twMerge(
-                        "flex h-[2.25rem] w-6 scale-[100.7%] items-center justify-center overflow-hidden text-center transition-all",
-                        parsedSecret[realIndex + 1] === " " && "rounded-r-lg ",
-                        parsedSecret[realIndex - 1] === " " && "rounded-l-lg ",
-                        realIndex === 0 && "rounded-l-lg",
-                        letter === " " && "w-5",
-                        realIndex === parsedSecret.length - 1 && "rounded-r-lg "
+                        "flex h-[2.25rem] w-6 scale-[100.7%] items-center justify-center overflow-hidden border-y border-zinc-800 bg-zinc-800/75 text-center transition-all",
+                        //box before space
+                        parsedSecret[realIndex + 1] === " " &&
+                          "rounded-r-lg border-r",
+                        //box after space
+                        parsedSecret[realIndex - 1] === " " &&
+                          "rounded-l-lg border-l",
+                        //fist box
+                        realIndex === 0 && "rounded-l-lg border-l",
+                        //last box
+                        realIndex === parsedSecret.length - 1 &&
+                          "rounded-r-lg border-r",
+                        //box containing correct letter guess
+                        correctLetter && "bg-zinc-100 text-zinc-800",
+                        //box containing secret space
+                        letter === " " && "w-4lov border-none bg-transparent"
                       )}
                     >
                       <AnimatePresence>
@@ -147,7 +136,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
             );
           })}
         </div>
-      </MotionWrapper>
+      </div>
     );
   }
 );

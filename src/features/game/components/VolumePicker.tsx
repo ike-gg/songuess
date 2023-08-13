@@ -23,10 +23,10 @@ const VolumePicker = ({ bgColor, textColor }: Props) => {
       onClick={(e) => e.stopPropagation()}
       className="group flex scale-95 items-center gap-4 text-xl opacity-50 transition-all hover:scale-100 hover:gap-3 hover:opacity-100"
     >
-      <RxSpeakerQuiet
+      {/* <RxSpeakerQuiet
         className="cursor-pointer"
         onClick={() => handleVolumeChange(0)}
-      />
+      /> */}
       <Root
         value={[volume]}
         max={1}
@@ -46,10 +46,10 @@ const VolumePicker = ({ bgColor, textColor }: Props) => {
         </Track>
         <Thumb className=" rounded-full bg-purple-900 opacity-0 transition-opacity group-hover:opacity-100" />
       </Root>
-      <RxSpeakerLoud
+      {/* <RxSpeakerLoud
         className="cursor-pointer"
         onClick={() => handleVolumeChange(1)}
-      />
+      /> */}
     </div>
   );
 };
