@@ -10,7 +10,7 @@ const Preparing = () => {
 
   if (!set) return null;
 
-  const { cover, description, name, featured, songs } = set;
+  const { cover, name, songs } = set;
 
   const availableRounds = [3, 5, 10, 15, 20].filter(
     (roundOption) => songs.length >= roundOption
@@ -23,7 +23,7 @@ const Preparing = () => {
         <BackButton href="/sets">Back to sets</BackButton>
         <Heading>{name}</Heading>
         <Paragraph>{songs.length} tracks</Paragraph>
-        <Badge className="w-fit">Select rounds</Badge>
+        <Paragraph>Choose number of rounds</Paragraph>
         <div className="flex gap-2">
           {availableRounds.map((setRounds, index) => {
             return (
@@ -39,7 +39,7 @@ const Preparing = () => {
             );
           })}
         </div>
-        <Badge className="w-fit">Select time each round</Badge>
+        <Paragraph>Choose time per round</Paragraph>
         <div className="flex gap-2">
           {[5, 15, 20, 30, 1200].map((setTime, index) => {
             return (

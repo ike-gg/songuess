@@ -7,6 +7,8 @@ const getSongsByISRC = async (isrc: string[]) => {
     )}&isrc=true`
   );
 
+  console.log(res.url);
+
   if (!res.ok) {
     throw new Error("Something went wrong while fetching songs...");
   }

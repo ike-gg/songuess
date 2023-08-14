@@ -3,7 +3,7 @@ import { Artwork } from "@/types/musicApi/Common";
 const parseArtwork = (artwork: Artwork) => {
   const { url, bgColor, textColor1, textColor4, textColor2, textColor3 } =
     artwork;
-  const sizes = ["50", "150", "250", "450", "80"];
+  const sizes = ["50", "150", "250", "450", "80", "3000"];
   const urlSizes = sizes.map((size) =>
     url.replace("{w}", size).replace("{h}", size)
   );
@@ -15,6 +15,7 @@ const parseArtwork = (artwork: Artwork) => {
       medium: urlSizes[2],
       large: urlSizes[3],
       tile: urlSizes[4],
+      full: urlSizes[5],
     },
     bgColor: `#${bgColor}`,
     primColor: `#${textColor1}`,

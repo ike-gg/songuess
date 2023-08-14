@@ -29,11 +29,11 @@ export interface GameSlice {
 
 const initialState: GameSlice = {
   status: "preparing",
-  maxRounds: 10,
+  maxRounds: 5,
   roundTime: 30,
   currRound: 0,
   points: 0,
-  volume: 0.5,
+  volume: 0.4,
   round: {
     status: "countdown",
     similarity: 0,
