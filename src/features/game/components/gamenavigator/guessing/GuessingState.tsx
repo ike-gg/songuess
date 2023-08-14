@@ -27,7 +27,7 @@ const GuessingState = () => {
   });
 
   return (
-    <div className="mx-3 flex items-center gap-3">
+    <div className="ml-3 flex items-center gap-3">
       <Similarity />
       <CircleProgress
         percents={((roundTime - seconds + 1) / roundTime) * 100}

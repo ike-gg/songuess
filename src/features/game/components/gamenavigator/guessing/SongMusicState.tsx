@@ -120,16 +120,8 @@ const SongMusicState = () => {
               />
             </Element>
           )}
-        </AnimatePresence>
-        <AnimatePresence>
           {supportedDevice && playing && (
-            <motion.div
-              layout
-              key="volumecontrols"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "auto", opacity: 1 }}
-              exit={{ width: 0, opacity: 0 }}
-            >
+            <Element key="volumecontrols">
               <Root
                 value={[volume]}
                 max={1}
@@ -147,7 +139,7 @@ const SongMusicState = () => {
                 </Track>
                 <Thumb className="rounded-full opacity-0 transition-opacity group-hover:opacity-100" />
               </Root>
-            </motion.div>
+            </Element>
           )}
         </AnimatePresence>
       </motion.div>
