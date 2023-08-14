@@ -33,6 +33,8 @@ const getPlaylistSpotify = async (id: string) => {
 
   const data = (await response.json()) as SpotifyAPIPlaylist;
 
+  console.log(data.tracks.items[0]);
+
   return data;
 };
 

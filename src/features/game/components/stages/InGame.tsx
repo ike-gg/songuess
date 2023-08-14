@@ -7,41 +7,42 @@ import { Button } from "@/components/ui";
 import { AnimatePresence } from "framer-motion";
 import BackgroundImage from "../BackgroundImage";
 import parseArtwork from "@/utils/parseArtwork";
-import { Fragment } from "react";
+import GameNavigator from "../gamenavigator/GameNavigator";
+import GuessInput from "../GuessInput";
+import { useEffect, useRef } from "react";
+import CountdownNavigator from "../gamenavigator/countdown/CountdownNavigator";
+import GuessingNavigator from "../gamenavigator/guessing/GuessingNavigator";
 
 const InGame = () => {
+  const ref = useRef<HTMLInputElement>(null);
   const { status, currentSong } = useAppSelector((state) => state.game.round);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (!ref.current) return;
+    ref.current.focus();
+  }, [ref]);
+
   if (!currentSong) return <p>lol not found music</p>;
 
-  const { attributes } = currentSong;
-  const { bgColor, artworkUrl } = parseArtwork(attributes.artwork);
+  const { attributes, id } = currentSong;
+  const { name } = attributes;
 
   const countdownStage = status === "countdown";
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        {countdownStage && <Countdown key="countdown" />}
-        {!countdownStage && (
-          <Fragment key="game">
-            <BackgroundImage
-              key={`background`}
-              src={artworkUrl.small}
-              color={bgColor}
-            />
-            <Guessing key="game" />
-          </Fragment>
-        )}
-      </AnimatePresence>
-      <Button
-        className="border-full absolute right-0 top-0 m-4 rounded-full p-2"
-        variant="transparent"
-        icon={<RxCross2 />}
-        onClick={() => dispatch(gameActions.restartState())}
-      />
-    </>
+    <AnimatePresence>
+      {/* <GameNavigator key="gamenavigator" /> */}
+      {status === "countdown" && (
+        <CountdownNavigator key="gamenavigator_countdown" />
+      )}
+      {(status === "guessing" ||
+        status === "guessed" ||
+        status === "timeout") && (
+        <GuessingNavigator key={`gamenavigator_guessing`} />
+      )}
+      {status !== "countdown" && <Guessing />}
+    </AnimatePresence>
   );
 };
 

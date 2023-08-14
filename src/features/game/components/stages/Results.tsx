@@ -8,11 +8,14 @@ const Results = () => {
   const { points, playlist } = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
   return (
-    <GameCard key="preparing" className="max-w-2xl flex-col text-center md:p-6">
+    <GameCard
+      key="preparing"
+      className="flex-col text-center md:max-w-xl md:p-6"
+    >
       <Heading>You&apos;re a true musical expert!</Heading>
       <Paragraph>You scored {points} points!</Paragraph>
       <Paragraph>Here&apos;s your playlist:</Paragraph>
-      <div className="flex max-h-96 flex-col overflow-y-auto rounded-lg bg-zinc-800 text-left">
+      <div className="flex max-h-96 flex-col overflow-y-auto rounded-lg text-left">
         {playlist &&
           playlist.map((song) => {
             return (
@@ -28,7 +31,8 @@ const Results = () => {
           })}
       </div>
       <Button
-        className="mt-4"
+        className="w-full"
+        variant="secondary"
         onClick={() => dispatch(gameActions.restartState())}
       >
         Play again
