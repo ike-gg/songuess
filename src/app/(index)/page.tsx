@@ -9,9 +9,8 @@ export const metadata: Metadata = {
   title: "SonGuess",
   description: "Song guessing game.",
   themeColor: "#4F46E5",
-  //@ts-ignore
-  openGraph: {
-    type: "object",
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
