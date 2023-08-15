@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { routes } from "@/constants";
 import Game from "@/features/game/Game";
 import GameProvider from "@/features/game/GameProvider";
 import { SongType } from "@/types/musicApi/Song";
@@ -16,6 +17,10 @@ const SetPage = async ({
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
+  if (!setId) {
+    redirect(routes.sets.browser);
+  }
+
   const { data: setDetails } = await supabase
     .from("sets")
     .select("*")
@@ -24,7 +29,7 @@ const SetPage = async ({
     .single();
 
   if (!setDetails) {
-    redirect("/sets");
+    redirect(routes.sets.browser);
   }
 
   const response = await fetch(

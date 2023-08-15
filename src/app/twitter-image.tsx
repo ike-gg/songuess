@@ -10,7 +10,7 @@ export const size = {
 };
 
 import { Inter } from "next/font/google";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const contentType = "image/png";
@@ -41,7 +41,7 @@ export default async function Image() {
           background: "radial-gradient(circle at center, #27272A, #18181B)",
         }}
       >
-        <img style={{ position: "absolute" }} src={`http://${url}/card.png`} />
+        <img style={{ position: "absolute" }} src={`http://${url}/card.jpg`} />
         <Logo />
         SonGuess
       </div>
