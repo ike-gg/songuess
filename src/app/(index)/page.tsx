@@ -7,6 +7,11 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "SonGuess",
+  description: "Song guessing game.",
+  themeColor: "#4F46E5",
+  openGraph: {
+    type: "article",
+  },
 };
 
 const HomePage = async () => {
