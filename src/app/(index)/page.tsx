@@ -3,6 +3,11 @@ import getPopularAlbums from "@/lib/getPopularAlbums";
 import getPopularSongs from "@/lib/getPopularSongs";
 import { Database } from "@/types/supabase";
 import { createClient } from "@supabase/supabase-js";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "SonGuess",
+};
 
 const HomePage = async () => {
   const supabase = createClient<Database>(
