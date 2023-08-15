@@ -13,6 +13,9 @@ interface SpotifyAPIPlaylist {
         external_ids: {
           isrc?: string;
         };
+        album: {
+          name: string;
+        };
       };
     }[];
   };

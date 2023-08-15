@@ -39,6 +39,10 @@ const CreateSetPage = async ({
   }
 
   let providedData: ProvidedValuesSetCreator | undefined;
+  let isrcs: {
+    album: string;
+    isrc: string;
+  }[] = [];
 
   if (playlistid) {
     try {
@@ -101,16 +105,23 @@ const CreateSetPage = async ({
     const { description: _desc, images, name, tracks } = playlist;
     const description = removeTags(_desc);
 
+    console.log(tracks.items.map((i) => i.track.album.name));
+
     const tracksISRC = tracks.items
       .filter((t) => t.track.external_ids.isrc)
-      .map((t) => t.track.external_ids.isrc)
-      .slice(0, 2) as string[];
+      .map((t) => {
+        const { album, external_ids } = t.track;
+        return {
+          album: album.name,
+          isrc: external_ids.isrc!,
+        };
+      });
 
-    const songs = await getSongsByISRC(tracksISRC);
+    isrcs = tracksISRC;
 
     providedData = {
       name,
-      playlist: songs,
+      playlist: [],
       cover: images[0].url,
       description,
     };
@@ -130,7 +141,7 @@ const CreateSetPage = async ({
         </div>
       </nav>
       <Heading>Create set</Heading>
-      <SetCreator values={providedData} />
+      <SetCreator isrcs={isrcs} values={providedData} />
     </>
   );
 };

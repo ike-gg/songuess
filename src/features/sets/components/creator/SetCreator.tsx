@@ -30,6 +30,7 @@ import {
   Tooltip,
 } from "@/components/ui";
 import useFeedback from "@/hooks/useFeedback";
+import ISRCImport from "./ISRCImport";
 
 const schema = z.object({
   name: z.string().trim().min(6, "Minimal 6 characters"),
@@ -53,12 +54,18 @@ export interface ProvidedValuesSetCreator
 interface Props {
   values?: ProvidedValuesSetCreator;
   existingId?: string;
+  isrcs?: {
+    album: string;
+    isrc: string;
+  }[];
 }
 
-const SetCreator = ({ values, existingId }: Props) => {
+const SetCreator = ({ values, existingId, isrcs }: Props) => {
   const updateMode = existingId ? true : false;
+  const isIsrcs = Array.isArray(isrcs) && isrcs.length > 0;
 
   const { setError, error, setLoading, loading } = useFeedback();
+
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const [playlist, setPlaylist] = useState<SearchQuerySong[]>(
@@ -94,6 +101,14 @@ const SetCreator = ({ values, existingId }: Props) => {
       if (isAdded) {
         return prev.filter(({ id }) => id !== song.id);
       } else return [...prev, song];
+    });
+  };
+
+  const newSongHandler = (newSong: SearchQuerySong) => {
+    setPlaylist((prev) => {
+      const isAdded = prev.some((currSongs) => currSongs.id === newSong.id);
+      if (isAdded) return prev;
+      return [...prev, newSong];
     });
   };
 
@@ -151,6 +166,7 @@ const SetCreator = ({ values, existingId }: Props) => {
       onSubmit={handleSubmit(handleSetSubmit)}
       className="flex flex-col gap-3"
     >
+      {isIsrcs && <ISRCImport isrcs={isrcs} addHandler={newSongHandler} />}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Input
           label="Set name"
