@@ -1,3 +1,4 @@
+import { Logo } from "@/components/ui";
 import { ImageResponse } from "next/server";
 
 // Route segment config
@@ -26,10 +27,12 @@ export default async function Image() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          gap: 20,
           background: "linear-gradient(to bottom right, red,blue)",
         }}
       >
-        songuess
+        <Logo />
+        SonGuess
       </div>
     ),
     // ImageResponse options
