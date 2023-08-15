@@ -10,13 +10,15 @@ export const size = {
 };
 
 import { Inter } from "next/font/google";
+import { cookies, headers } from "next/headers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const contentType = "image/png";
 
 // Image generation
 export default async function Image() {
-  // Font
+  const requestHeaders = headers();
+  const url = requestHeaders.get("host");
 
   const interFont = fetch(new URL("./Inter-Medium.ttf", import.meta.url)).then(
     (res) => res.arrayBuffer()
@@ -27,17 +29,19 @@ export default async function Image() {
       <div
         className={inter.className}
         style={{
-          fontSize: 64,
+          fontSize: 128,
           width: "100%",
           height: "100%",
           display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "flex-start",
+          alignItems: "center",
+          justifyContent: "center",
           gap: 20,
-          color: "#4F46E5",
+          position: "relative",
+          color: "white",
           background: "radial-gradient(circle at center, #27272A, #18181B)",
         }}
       >
+        <img style={{ position: "absolute" }} src={`http://${url}/card.png`} />
         <Logo />
         SonGuess
       </div>
