@@ -31,6 +31,7 @@ export default function Signup() {
       setIsLoading(false);
       return;
     }
+
     if (dataUsername && dataUsername.length >= 1) {
       setError("Username is alredy taken.");
       setIsLoading(false);
@@ -43,7 +44,7 @@ export default function Signup() {
       options: {
         emailRedirectTo: `${location.origin}/auth/callback`,
         data: {
-          username,
+          full_name: username,
         },
       },
     });
