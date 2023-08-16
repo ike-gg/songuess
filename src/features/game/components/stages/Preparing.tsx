@@ -41,7 +41,7 @@ const Preparing = () => {
         </div>
         <Paragraph>Choose time per round</Paragraph>
         <div className="flex gap-2">
-          {[5, 15, 20, 30, 1200].map((setTime, index) => {
+          {[5, 15, 20, 30].map((setTime, index) => {
             return (
               <Button
                 variant={setTime === roundTime ? "primary" : "secondary"}
