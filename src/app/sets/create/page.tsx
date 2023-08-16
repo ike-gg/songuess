@@ -133,8 +133,8 @@ const CreateSetPage = async ({
           <Button variant="apple" size="small" href={routes.sets.amimport}>
             Templates
           </Button>
-          <Button variant="spotify" size="small" href={spotifyAuthUrl}>
-            Your Spotify
+          <Button disabled variant="spotify" size="small">
+            Spotify temporary disabled
           </Button>
         </div>
       </nav>
