@@ -17,7 +17,7 @@ const SetsPage = async () => {
     .eq("private", false);
 
   const featuredSets = sets?.filter((set) => set.featured);
-  const communitySets = sets;
+  const communitySets = sets?.filter((set) => !set.featured);
 
   const { data: personalSets } = await supabase
     .from("sets")
