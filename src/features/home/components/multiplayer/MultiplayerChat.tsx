@@ -27,7 +27,7 @@ const messages = [
   },
   {
     user: "miska",
-    message: "Lavender haze - close!",
+    message: "On the ground",
   },
   {
     user: "ike",

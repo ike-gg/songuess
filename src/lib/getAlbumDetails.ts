@@ -1,7 +1,6 @@
 import { AlbumType } from "@/types/musicApi/Album";
 
 const getAlbumDetails = async (albumId: string) => {
-  console.log("fetching albums");
   const res = await fetch(
     `https://harmony-backend.vercel.app/api/getAlbum?id=${albumId}`
   );

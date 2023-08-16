@@ -125,13 +125,13 @@ const BackgroundImage = ({ c1, acc }: Props) => {
 
       camera.position.z = 300;
 
-      var randomisePosition = new THREE.Vector2(1, 2);
+      const randomisePosition = new THREE.Vector2(1, 2);
 
-      var R = function (x: number, y: number, t: number): number {
+      const R = (x: number, y: number, t: number): number => {
         return Math.floor(192 + 64 * Math.cos((x * x - y * y) / 300 + t));
       };
 
-      var G = function (x: number, y: number, t: number): number {
+      const G = (x: number, y: number, t: number): number => {
         return Math.floor(
           192 +
             64 *
@@ -141,7 +141,7 @@ const BackgroundImage = ({ c1, acc }: Props) => {
         );
       };
 
-      var B = function (x: number, y: number, t: number): number {
+      const B = (x: number, y: number, t: number): number => {
         return Math.floor(
           192 +
             64 *
@@ -165,7 +165,7 @@ const BackgroundImage = ({ c1, acc }: Props) => {
           //@ts-ignore
           u_bgMain: { type: "v3", value: rgb(color2?.r, color2?.g, color2?.b) },
           //@ts-ignore
-          u_color1: { type: "v3", value: rgb(color2?.r, color2?.g, color2?.b) },
+          u_color1: { type: "v3", value: rgb(color1?.r, color1?.g, color1?.b) },
           //@ts-ignore
           u_color2: { type: "v3", value: rgb(color4?.r, color4?.g, color4?.b) },
           //@ts-ignore
@@ -190,7 +190,7 @@ const BackgroundImage = ({ c1, acc }: Props) => {
       scene.add(mesh);
 
       renderer.render(scene, camera);
-      let t = 0;
+      let t = Math.floor(Math.random() * 500000);
       let j = 0;
       let x = randomInteger(0, 16);
       let y = randomInteger(0, 16);

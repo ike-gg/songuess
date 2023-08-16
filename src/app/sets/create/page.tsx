@@ -105,8 +105,6 @@ const CreateSetPage = async ({
     const { description: _desc, images, name, tracks } = playlist;
     const description = removeTags(_desc);
 
-    console.log(tracks.items.map((i) => i.track.album.name));
-
     const tracksISRC = tracks.items
       .filter((t) => t.track.external_ids.isrc)
       .map((t) => {

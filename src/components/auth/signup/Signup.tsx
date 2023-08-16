@@ -47,7 +47,7 @@ export default function Signup() {
         },
       },
     });
-    console.log(error, data);
+
     setIsLoading(false);
     if (!error) {
       setSuccess(

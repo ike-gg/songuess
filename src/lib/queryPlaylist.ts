@@ -18,8 +18,6 @@ const queryPlaylist = async (query: string) => {
   if (playlists) mergedData.push(...playlists.data);
   if (albums) mergedData.push(...albums.data);
 
-  console.log(mergedData);
-
   return mergedData;
 };
 
