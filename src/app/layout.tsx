@@ -11,7 +11,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "SonGuess",
   description:
-    "Guess the song titles from a wide range of playlists. Test your music knowledge now!",
+    "Guess the song titles from a wide range of sets. Test your music knowledge now!",
   keywords: [
     "song",
     "guessing",
