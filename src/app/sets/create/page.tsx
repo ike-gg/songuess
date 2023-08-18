@@ -79,7 +79,6 @@ const CreateSetPage = async ({
       .from("sets")
       .select("*")
       .eq("id", setid)
-      .eq("private", false)
       .single();
 
     if (!existingSet) return;
