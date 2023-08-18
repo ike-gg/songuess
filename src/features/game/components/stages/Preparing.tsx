@@ -15,6 +15,8 @@ const Preparing = () => {
   const availableRounds = [3, 5, 10, 15, 20].filter(
     (roundOption) => songs.length >= roundOption
   );
+  const availableTimes = [5, 15, 20, 30];
+  process.env.NODE_ENV === "development" && availableTimes.push(1200);
 
   return (
     <GameCard key="preparing" className="max-w-2xl flex-col md:flex-row md:p-6">
@@ -41,7 +43,7 @@ const Preparing = () => {
         </div>
         <Paragraph>Choose time per round</Paragraph>
         <div className="flex gap-2">
-          {[5, 15, 20, 30].map((setTime, index) => {
+          {availableTimes.map((setTime, index) => {
             return (
               <Button
                 variant={setTime === roundTime ? "primary" : "secondary"}

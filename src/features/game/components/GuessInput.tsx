@@ -1,15 +1,10 @@
-import { FormEvent, forwardRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { twMerge } from "tailwind-merge";
-import splitWordsWithSpaces from "@/utils/splitWordsWithSpaces";
+import { FormEvent, forwardRef, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import parseTitleToGuess from "@/utils/parseTitleToGuess";
 import { stringSimilarity } from "string-similarity-js";
 import { gameActions } from "@/features/game/store/gameSlice";
-import addAlpha from "@/utils/addAlphaHex";
 import parseDiacriticalChars from "@/utils/parseDiacriticalChars";
 import { isIOS } from "react-device-detect";
-import { MotionWrapper, Paragraph } from "@/components/ui";
+import { Paragraph } from "@/components/ui";
 
 interface Props {
   onGuess?: () => void;
@@ -21,15 +16,14 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
     const [guess, setGuess] = useState("");
 
     const dispatch = useAppDispatch();
-    const { isInputFocused } = useAppSelector((state) => state.game.round);
-
-    const parsedSecret = parseTitleToGuess(secretPhrase);
-    const secretWordsArray = splitWordsWithSpaces(parsedSecret);
+    const { isInputFocused, similarity } = useAppSelector(
+      (state) => state.game.round
+    );
 
     const handleGuessInput = (e: FormEvent<HTMLInputElement>) => {
       const inputValue = e.currentTarget.value;
       const inputGuess = parseDiacriticalChars(inputValue).toLowerCase();
-      const toGuess = parsedSecret.toLowerCase();
+      const toGuess = secretPhrase.toLowerCase();
 
       dispatch(
         gameActions.setSimilarity(stringSimilarity(inputGuess, toGuess))
@@ -45,6 +39,15 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
       setGuess(e.currentTarget.value);
     };
 
+    // const nextround = (e: KeyboardEvent) => {
+    //   console.log(e);
+    // };
+
+    // useEffect(() => {
+    //   window.addEventListener("keydown", nextround);
+    //   return () => window.removeEventListener("keydown", nextround);
+    // }, []);
+
     return (
       <div className="my-3">
         <Paragraph className="mb-3 text-sm opacity-80">
@@ -56,7 +59,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
           autoComplete="off"
           autoFocus
           type="search"
-          className="static bottom-0 left-0 -z-50 block h-full w-full bg-zinc-800/80 p-2 text-zinc-100 caret-transparent opacity-100 outline-none md:absolute md:opacity-0"
+          className="w-full rounded-lg bg-zinc-800/70 p-2 text-center text-zinc-100 outline-none"
           value={guess}
           onInput={handleGuessInput}
           onFocus={() => dispatch(gameActions.setInputFocus(true))}
@@ -68,74 +71,6 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
             e.target.focus();
           }}
         />
-        <div className="relative hidden flex-wrap justify-center gap-y-3 text-center md:flex">
-          {secretWordsArray.map((word, wordIndex, wordsArray) => {
-            return (
-              <div className="flex" key={word + wordIndex}>
-                {word.split("").map((letter, letterIndex) => {
-                  //realIndex represents current char's index of whole phrase
-                  //inside the splitted by words scope
-                  const realIndex =
-                    wordsArray.slice(0, wordIndex).reduce((prev, curr) => {
-                      return curr.length + prev;
-                    }, 0) + letterIndex;
-
-                  const userLetterGuess = guess[realIndex];
-
-                  const letterToGuess = letter.toLowerCase();
-                  const userLetterGuessParsed = parseDiacriticalChars(
-                    userLetterGuess || ""
-                  ).toLowerCase();
-
-                  const correctLetter = letterToGuess === userLetterGuessParsed;
-
-                  return (
-                    <motion.div
-                      key={wordIndex + letter + letterIndex}
-                      className={twMerge(
-                        "flex h-[2.25rem] w-6 scale-[100.7%] items-center justify-center overflow-hidden border-y border-zinc-800 bg-zinc-800/75 text-center transition-all",
-                        //box before space
-                        parsedSecret[realIndex + 1] === " " &&
-                          "rounded-r-lg border-r",
-                        //box after space
-                        parsedSecret[realIndex - 1] === " " &&
-                          "rounded-l-lg border-l",
-                        //fist box
-                        realIndex === 0 && "rounded-l-lg border-l",
-                        //last box
-                        realIndex === parsedSecret.length - 1 &&
-                          "rounded-r-lg border-r",
-                        //box containing correct letter guess
-                        correctLetter && "bg-zinc-100 text-zinc-800",
-                        //box containing secret space
-                        letter === " " && "w-4lov border-none bg-transparent"
-                      )}
-                    >
-                      <AnimatePresence>
-                        {userLetterGuess && (
-                          <motion.div
-                            key={wordIndex + letter + letterIndex + "inner"}
-                            className="block"
-                            initial={{ y: 20, scale: 1, opacity: 0 }}
-                            animate={{ y: 0, scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            {userLetterGuess === " " ? (
-                              <span>&nbsp;</span>
-                            ) : (
-                              userLetterGuess
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
       </div>
     );
   }

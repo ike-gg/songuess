@@ -1,14 +1,12 @@
 "use client";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
 
 import type { Database } from "../../../types/supabase";
 import SignupForm from "./SignupForm";
 import { useState } from "react";
 
 export default function Signup() {
-  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
@@ -38,7 +36,7 @@ export default function Signup() {
       return;
     }
 
-    const { error, data } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {

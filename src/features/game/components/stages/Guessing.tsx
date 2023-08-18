@@ -8,6 +8,7 @@ import { Button, Heading, MotionWrapper, Paragraph } from "@/components/ui";
 import { gameActions } from "../../store/gameSlice";
 import useCountdown from "@bradgarropy/use-countdown";
 import { RxArrowRight } from "react-icons/rx";
+import parseTitleToGuess from "@/utils/parseTitleToGuess";
 
 const Guessing = () => {
   const inputGuessRef = useRef<HTMLInputElement>(null);
@@ -34,6 +35,8 @@ const Guessing = () => {
 
   const { artworkUrl, bgColor } = parseArtwork(artwork);
 
+  const titleToGuess = parseTitleToGuess(name);
+
   return (
     <GameCard
       onClick={() => handleFocusToInput()}
@@ -44,7 +47,7 @@ const Guessing = () => {
           <MotionWrapper key={"guessinput_element"}>
             <GuessInput
               ref={inputGuessRef}
-              secretPhrase={name}
+              secretPhrase={titleToGuess}
               onGuess={() => {
                 dispatch(gameActions.setRoundStatus("guessed"));
               }}
