@@ -50,8 +50,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export interface ProvidedValuesSetCreator
-  extends Omit<FormData, "songs" | "private"> {
+export interface ProvidedValuesSetCreator extends Omit<FormData, "songs"> {
   playlist: SearchQuerySong[];
 }
 
@@ -85,7 +84,7 @@ const SetCreator = ({ values, existingId, isrcs }: Props) => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: values
-      ? { ...values, songs: [], private: false }
+      ? { ...values, songs: [] }
       : { cover: undefined, private: false, songs: [] },
   });
 
