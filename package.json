@@ -27,6 +27,7 @@
     "cryptr": "^6.2.0",
     "eslint": "8.41.0",
     "eslint-config-next": "^13.4.8",
+    "focus-trap-react": "^10.2.1",
     "framer-motion": "^10.12.16",
     "next": "^13.4.8",
     "postcss": "8.4.24",
