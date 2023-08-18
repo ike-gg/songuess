@@ -8,7 +8,7 @@ import { HiPlay, HiPause } from "react-icons/hi2";
 import removeParentheses from "@/utils/removeParentheses";
 import addAlpha from "@/utils/addAlphaHex";
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props extends HTMLAttributes<HTMLButtonElement> {
   songData: SongAttributes;
   colorful?: boolean;
   colorfulPlay?: boolean;
@@ -57,7 +57,7 @@ const SongItem = ({
   const colored = colorful || (colorfulPlay && isPlaying);
 
   return (
-    <div
+    <button
       style={{
         backgroundColor: colored ? bgColor : undefined,
         color: colored ? primColor : undefined,
@@ -68,6 +68,7 @@ const SongItem = ({
         className
       )}
       onClick={onClick}
+      type="button"
       {...props}
     >
       {children && children}
@@ -75,7 +76,7 @@ const SongItem = ({
       {showArtwork && (
         <img src={mini} className="rounded-sm" alt={`cover of ${albumName}`} />
       )}
-      <div className="flex shrink flex-col gap-1 leading-none">
+      <div className="flex shrink flex-col items-start gap-1 text-left leading-none">
         <span className="line-clamp-2 font-semibold">
           {shortName ? removeParentheses(name) : name}
         </span>
@@ -99,7 +100,7 @@ const SongItem = ({
           {!isPlaying && <HiPlay />}
         </div>
       )}
-    </div>
+    </button>
   );
 };
 

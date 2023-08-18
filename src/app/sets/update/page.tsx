@@ -45,7 +45,14 @@ const UpdateSetPage = async ({
       redirect(routes.sets.browser);
     }
 
-    const { name, cover, description, songs, id } = existingSet;
+    const {
+      name,
+      cover,
+      description,
+      songs,
+      id,
+      private: isPrivate,
+    } = existingSet;
 
     const response = await fetch(
       `https://harmony-backend.vercel.app/api/getSongs?ids=${songs.join(",")}`
@@ -58,6 +65,7 @@ const UpdateSetPage = async ({
       playlist: songsData.data,
       cover: cover || "",
       description: description || "",
+      private: isPrivate,
     };
   }
 

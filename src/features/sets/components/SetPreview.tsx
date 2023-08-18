@@ -48,7 +48,15 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
     router.replace(routes.sets.browser);
   };
 
-  const { description, featured, name, songs, cover, id } = set;
+  const {
+    description,
+    featured: isFeatured,
+    private: isPrivate,
+    name,
+    songs,
+    cover,
+    id,
+  } = set;
 
   return (
     <>
@@ -91,9 +99,11 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
         <BackButton href={routes.sets.browser}>Back to sets</BackButton>
       </nav>
       <div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col-reverse items-start gap-2 break-all md:flex-row md:items-center md:gap-4">
           <Heading>{name}</Heading>
-          <Badge>{featured ? "Featured" : "Community"}</Badge>
+          <Badge className="whitespace-nowrap">
+            {isPrivate ? "Private" : isFeatured ? "Featured" : "Community"}
+          </Badge>
         </div>
         <Paragraph>{songs.length} tracks</Paragraph>
       </div>

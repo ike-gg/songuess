@@ -38,6 +38,7 @@ const CreateSetPage = async ({
   }
 
   let providedData: ProvidedValuesSetCreator | undefined;
+
   let isrcs: {
     album: string;
     isrc: string;
@@ -67,6 +68,7 @@ const CreateSetPage = async ({
         playlist: relationships.tracks?.data || [],
         cover: large,
         description: description,
+        private: false,
       };
     } catch (error) {
       console.log(error);
@@ -78,12 +80,13 @@ const CreateSetPage = async ({
       .from("sets")
       .select("*")
       .eq("id", setid)
-      .eq("private", false)
       .single();
 
     if (!existingSet) return;
 
-    const { name, cover, description, songs } = existingSet;
+    const { name, cover, description, songs, private: isPrivate } = existingSet;
+
+    console.log(isPrivate);
 
     const response = await fetch(
       `https://harmony-backend.vercel.app/api/getSongs?ids=${songs.join(",")}`
@@ -96,6 +99,7 @@ const CreateSetPage = async ({
       playlist: songsData.data,
       cover: cover || "",
       description: description || "",
+      private: isPrivate,
     };
   }
 
@@ -121,6 +125,7 @@ const CreateSetPage = async ({
       playlist: [],
       cover: images[0].url,
       description,
+      private: false,
     };
   }
 

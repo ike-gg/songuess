@@ -33,7 +33,11 @@ import ISRCImport from "./ISRCImport";
 import getUrlAuthSpotify from "@/lib/spotify/getUrlAuthSpotify";
 
 const schema = z.object({
-  name: z.string().trim().min(6, "Minimal 6 characters"),
+  name: z
+    .string()
+    .trim()
+    .min(6, "Min 6 characters")
+    .max(24, "Max 24 characters"),
   description: z.optional(z.string()),
   cover: z.string().url().optional(),
   songs: z
@@ -46,8 +50,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export interface ProvidedValuesSetCreator
-  extends Omit<FormData, "songs" | "private"> {
+export interface ProvidedValuesSetCreator extends Omit<FormData, "songs"> {
   playlist: SearchQuerySong[];
 }
 
@@ -95,7 +98,7 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: values
-      ? { ...values, songs: [], private: false }
+      ? { ...values, songs: [] }
       : { cover: undefined, private: false, songs: [] },
   });
 

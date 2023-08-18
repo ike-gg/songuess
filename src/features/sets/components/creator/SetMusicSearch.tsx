@@ -69,6 +69,8 @@ const SetMusicSearch = ({ clickHandler, className, used }: Props) => {
                     isAdded && "border-zinc-700 bg-zinc-900 opacity-100"
                   )}
                   showArtist
+                  tabIndex={0}
+                  role="button"
                   shortName
                   showAlbum
                   showArtwork
