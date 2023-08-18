@@ -6,7 +6,6 @@ import {
   RxLink1,
   RxLockClosed,
   RxPencil2,
-  RxReset,
 } from "react-icons/rx";
 import SetMusicSearch from "./SetMusicSearch";
 import { useEffect, useState } from "react";
@@ -31,6 +30,7 @@ import {
 } from "@/components/ui";
 import useFeedback from "@/hooks/useFeedback";
 import ISRCImport from "./ISRCImport";
+import getUrlAuthSpotify from "@/lib/spotify/getUrlAuthSpotify";
 
 const schema = z.object({
   name: z.string().trim().min(6, "Minimal 6 characters"),
@@ -58,9 +58,10 @@ interface Props {
     album: string;
     isrc: string;
   }[];
+  spotifyAuthUrl?: string;
 }
 
-const SetCreator = ({ values, existingId, isrcs }: Props) => {
+const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
   const updateMode = existingId ? true : false;
   const isIsrcs = Array.isArray(isrcs) && isrcs.length > 0;
 
@@ -71,6 +72,19 @@ const SetCreator = ({ values, existingId, isrcs }: Props) => {
   const [playlist, setPlaylist] = useState<SearchQuerySong[]>(
     values?.playlist || []
   );
+
+  const openInternalSpotify = (e: KeyboardEvent) => {
+    if (!spotifyAuthUrl) return;
+    const { shiftKey, ctrlKey, key } = e;
+    if (shiftKey && ctrlKey && key.toLowerCase() === "z") {
+      router.push(spotifyAuthUrl);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", openInternalSpotify);
+    return () => window.removeEventListener("keydown", openInternalSpotify);
+  }, []);
 
   const {
     register,

@@ -10,7 +10,6 @@ import parseArtwork from "@/utils/parseArtwork";
 import { SongType } from "@/types/musicApi/Song";
 import getUrlAuthSpotify from "@/lib/spotify/getUrlAuthSpotify";
 import getPlaylistSpotify from "@/lib/spotify/getPlaylistSpotify";
-import getSongsByISRC from "@/lib/getSongsByISRC";
 import removeTags from "@/utils/removeTags";
 import { BackButton, Button, Heading } from "@/components/ui";
 import { routes } from "@/constants";
@@ -133,13 +132,14 @@ const CreateSetPage = async ({
           <Button variant="apple" size="small" href={routes.sets.amimport}>
             Templates
           </Button>
-          <Button disabled variant="spotify" size="small">
-            Spotify temporary disabled
-          </Button>
         </div>
       </nav>
       <Heading>Create set</Heading>
-      <SetCreator isrcs={isrcs} values={providedData} />
+      <SetCreator
+        isrcs={isrcs}
+        values={providedData}
+        spotifyAuthUrl={spotifyAuthUrl}
+      />
     </>
   );
 };
