@@ -60,11 +60,12 @@ npm install
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
+SECRET=
+
+//spotify for internal use, not required
 SPOTIFY_CLIENT_ID=
 SPOTIFY_CLIENT_SECRET=
 SPOTIFY_CALLBACK_URL=
-
-SECRET=
 ```
 
 4. TODO: Prepare structure of database
@@ -80,9 +81,10 @@ npm run start
 ## Roadmap
 
 - [x] First game interface
+- [x] Creating accounts (sign in, sign up, recovery password, oauth with providers)
 - [x] Creating sets
 - [x] Modyfying (edit, delete) sets
-- [x] Import user Spotify playlists
+- [x] Import user Spotify playlists _(removed because spotify does not allow to integrate with quiz/trivia music games/apps. 😭)_
 - [x] Import Apple Music playlists
 - [x] Game redesign
 - [ ] Refactor and enhance codebase 🔥💀

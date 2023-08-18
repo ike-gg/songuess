@@ -18,12 +18,9 @@ const SetSpotifyPage = async () => {
       <BackButton href="/sets/create">Back to set creator</BackButton>
       <div>
         <Heading className="flex items-center gap-2">
-          Import your playlist from Spotify <Badge>BETA</Badge>
+          Import your playlist from Spotify <Badge>INTERNAL USE</Badge>
         </Heading>
-        <Paragraph>
-          Keep in mind that the feature is in beta. Currently limited to only
-          take up to 50 first tracks from the playlist.
-        </Paragraph>
+        <Paragraph>Feature for internal use.</Paragraph>
       </div>
       <div className="flex flex-col gap-3">
         {userPlaylists.items.map((playlist) => {
