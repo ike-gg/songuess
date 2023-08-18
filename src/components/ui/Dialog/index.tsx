@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { Card } from "../Card";
 import Motion from "@/components/providers/Motion";
 import FocusTrap from "focus-trap-react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 interface Props {
   children?: ReactNode;
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const Dialog = ({ handleState, state, children }: Props) => {
+  useHotkeys("esc", () => handleState(false), { enableOnFormTags: true });
+
   return (
     <Motion duration={0.3}>
       <AnimatePresence>
