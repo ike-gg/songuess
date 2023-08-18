@@ -33,7 +33,11 @@ import useFeedback from "@/hooks/useFeedback";
 import ISRCImport from "./ISRCImport";
 
 const schema = z.object({
-  name: z.string().trim().min(6, "Minimal 6 characters"),
+  name: z
+    .string()
+    .trim()
+    .min(6, "Min 6 characters")
+    .max(24, "Max 24 characters"),
   description: z.optional(z.string()),
   cover: z.string().url().optional(),
   songs: z
