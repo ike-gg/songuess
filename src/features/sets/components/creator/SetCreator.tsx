@@ -30,7 +30,7 @@ import {
 } from "@/components/ui";
 import useFeedback from "@/hooks/useFeedback";
 import ISRCImport from "./ISRCImport";
-import getUrlAuthSpotify from "@/lib/spotify/getUrlAuthSpotify";
+import { useHotkeys } from "react-hotkeys-hook";
 
 const schema = z.object({
   name: z
@@ -65,6 +65,10 @@ interface Props {
 }
 
 const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
+  useHotkeys("shift+ctrl+z", () => {
+    spotifyAuthUrl && router.push(spotifyAuthUrl);
+  });
+
   const updateMode = existingId ? true : false;
   const isIsrcs = Array.isArray(isrcs) && isrcs.length > 0;
 
@@ -83,11 +87,6 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
       router.push(spotifyAuthUrl);
     }
   };
-
-  useEffect(() => {
-    window.addEventListener("keydown", openInternalSpotify);
-    return () => window.removeEventListener("keydown", openInternalSpotify);
-  }, []);
 
   const {
     register,
