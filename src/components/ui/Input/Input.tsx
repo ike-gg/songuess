@@ -13,17 +13,26 @@ interface Props extends HTMLProps<HTMLInputElement> {
   icon?: ReactNode;
   tooltip?: string;
   loading?: boolean;
+  hideLabel?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
-  const { label, className, error, icon, tooltip, loading, ...props } =
-    inputProps;
+  const {
+    hideLabel = false,
+    label,
+    className,
+    error,
+    icon,
+    tooltip,
+    loading,
+    ...props
+  } = inputProps;
   return (
     <label
       htmlFor={label}
       className={twMerge("flex flex-col overflow-hidden", className)}
     >
-      {label && (
+      {label && !hideLabel && (
         <span className="flex gap-1 pb-2 text-sm leading-none text-zinc-600">
           {label}
           {tooltip && <Tooltip>{tooltip}</Tooltip>}
@@ -31,7 +40,7 @@ const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
       )}
       <div
         className={twMerge(
-          "mb-1 flex items-center gap-3 rounded-md border border-transparent bg-zinc-800 p-1 px-3 transition-colors hover:border-zinc-600",
+          "mb-1 flex items-center gap-3 rounded-lg border border-transparent bg-zinc-800 p-1 px-3 transition-colors hover:border-zinc-600",
           error && "border-red-900/60 bg-red-900/20 hover:border-red-800"
         )}
       >

@@ -1,5 +1,13 @@
+export type SetCategories = "featured" | "community" | "personal";
+
 const sets = {
-  browser: "/xsets",
+  browser: (category: SetCategories = "featured", query?: string) => {
+    const params = new URLSearchParams();
+    params.set("category", category);
+    query && params.set("query", query);
+
+    return `/xsets?` + params.toString();
+  },
   amimport: "/sets/templates",
   spotify: "/sets/spotify",
   set: (id: string) => `/sets/${id}`,

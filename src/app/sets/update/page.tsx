@@ -76,7 +76,7 @@ const UpdateSetPage = async ({
   return (
     <>
       <nav className="flex items-start justify-between">
-        <BackButton href={routes.sets.browser}>Back to sets</BackButton>
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
       </nav>
       <Heading>
         Update <b>{providedData.name}</b> set

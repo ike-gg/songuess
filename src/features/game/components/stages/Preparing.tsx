@@ -23,7 +23,7 @@ const Preparing = () => {
     <GameCard key="preparing" className="max-w-2xl flex-col md:flex-row md:p-6">
       <img src={cover || ""} className="rounded-lg md:h-40" alt="game cover" />
       <div className="flex flex-col gap-3">
-        <BackButton href={routes.sets.browser}>Back to sets</BackButton>
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
         <Heading>{name}</Heading>
         <Paragraph>{songs.length} tracks</Paragraph>
         <Paragraph>Choose number of rounds</Paragraph>

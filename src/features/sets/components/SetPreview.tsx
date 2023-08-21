@@ -96,7 +96,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
         {!cover && <div className="h-52 w-full" />}
       </div>
       <nav className="flex justify-between">
-        <BackButton href={routes.sets.browser}>Back to sets</BackButton>
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
       </nav>
       <div>
         <div className="flex flex-col-reverse items-start gap-2 break-all md:flex-row md:items-center md:gap-4">

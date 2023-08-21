@@ -18,7 +18,7 @@ const SetPage = async ({
   );
 
   if (!setId) {
-    redirect(routes.sets.browser);
+    redirect(routes.sets.browser());
   }
 
   const { data: setDetails } = await supabase
@@ -29,7 +29,7 @@ const SetPage = async ({
     .single();
 
   if (!setDetails) {
-    redirect(routes.sets.browser);
+    redirect(routes.sets.browser());
   }
 
   const response = await fetch(

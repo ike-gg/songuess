@@ -136,7 +136,7 @@ const CreateSetPage = async ({
   return (
     <>
       <nav className="flex items-start justify-between">
-        <BackButton href={routes.sets.browser}>Back to sets</BackButton>
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
         <div className="flex flex-row gap-2">
           <Button variant="apple" size="small" href={routes.sets.amimport}>
             Templates
