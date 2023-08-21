@@ -34,7 +34,7 @@ const CreateSetPage = async ({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/signin");
+    redirect(routes.auth.signin);
   }
 
   let providedData: ProvidedValuesSetCreator | undefined;
