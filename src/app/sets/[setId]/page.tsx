@@ -1,3 +1,4 @@
+import { routes } from "@/constants";
 import SetPreview from "@/features/sets/components/SetPreview";
 import getAlbumsArtistsFromSet from "@/lib/getAlbumsArtistsFromSet";
 import { Database } from "@/types/supabase";
@@ -18,7 +19,7 @@ const SetPage = async ({
     .eq("id", setId)
     .single();
 
-  if (!setDetails) redirect("/sets");
+  if (!setDetails) redirect(routes.sets.browser);
 
   const {
     data: { user: requestingUser },

@@ -64,7 +64,7 @@ const SetSelector = ({ sets }: SetSelectorProps) => {
 
   return (
     <>
-      <aside className="static top-12 flex h-fit flex-col gap-4 md:sticky md:my-12 md:h-screen">
+      <aside className="static top-12 flex h-fit flex-col gap-4 md:sticky md:my-12">
         <Heading>Sets</Heading>
         <Button
           className="w-full"
