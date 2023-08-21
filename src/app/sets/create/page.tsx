@@ -56,6 +56,8 @@ const CreateSetPage = async ({
 
       const {
         artworkUrl: { large },
+        bgColor,
+        primColor,
       } = parseArtwork(artwork);
 
       const description =
@@ -69,6 +71,8 @@ const CreateSetPage = async ({
         cover: large,
         description: description,
         private: false,
+        bgColor,
+        textColor: primColor,
       };
     } catch (error) {
       console.log(error);
@@ -132,7 +136,7 @@ const CreateSetPage = async ({
   return (
     <>
       <nav className="flex items-start justify-between">
-        <BackButton href="/sets">Back to sets</BackButton>
+        <BackButton href={routes.sets.browser}>Back to sets</BackButton>
         <div className="flex flex-row gap-2">
           <Button variant="apple" size="small" href={routes.sets.amimport}>
             Templates

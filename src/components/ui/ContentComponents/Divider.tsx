@@ -10,13 +10,13 @@ const Divider = ({ children, className }: Props) => {
     <div
       className={twMerge(
         "my-2 flex items-center text-sm uppercase text-zinc-500",
-        className,
-        children && "gap-4"
+        children && "gap-4",
+        className
       )}
     >
-      <hr className="h-0.5 grow rounded-full border-none bg-gradient-to-r from-transparent to-zinc-700" />
+      <hr className="h-0.5 grow border-none bg-gradient-to-r from-transparent to-zinc-700" />
       {children && children}
-      <hr className="h-0.5 grow rounded-full border-none bg-gradient-to-l from-transparent to-zinc-700" />
+      <hr className="h-0.5 grow border-none bg-gradient-to-l from-transparent to-zinc-700" />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { Heading, Paragraph, BackButton } from "@/components/ui";
+import { routes } from "@/constants";
 import SetImportPlaylist from "@/features/sets/components/importplaylist/SetImportPlaylist";
 import getPopularPlaylists from "@/lib/getPopularPlaylists";
 
@@ -7,7 +8,9 @@ const SetTemplatesPage = async () => {
 
   return (
     <>
-      <BackButton href="/sets/create">Back to set creator</BackButton>
+      <BackButton href={routes.sets.create.blank}>
+        Back to set creator
+      </BackButton>
       <div>
         <Heading>Import playlist as a set template</Heading>
         <Paragraph>

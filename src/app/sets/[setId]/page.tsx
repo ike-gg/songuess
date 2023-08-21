@@ -16,7 +16,6 @@ const SetPage = async ({
     .from("sets")
     .select("*")
     .eq("id", setId)
-    .limit(1)
     .single();
 
   if (!setDetails) redirect("/sets");
