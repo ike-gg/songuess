@@ -145,7 +145,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
             <Button
               icon={<RxCopy />}
               variant="secondary"
-              href={`/sets/create?setid=${id}`}
+              href={routes.sets.create.existingSet(id)}
             >
               Duplicate
             </Button>
@@ -160,7 +160,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
             >
               Share
             </Button>
-            <Button icon={<RxPlay />} href={`/game/${id}`}>
+            <Button icon={<RxPlay />} href={routes.game.set(id)}>
               Play
             </Button>
           </div>

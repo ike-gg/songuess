@@ -11,6 +11,7 @@ import {
 } from "@/components/ui";
 import Link from "next/link";
 import { useEffect } from "react";
+import { routes } from "@/constants";
 
 interface Props {
   handleSignUp: (
@@ -93,7 +94,7 @@ const SignupForm = ({
         Sign up
       </Button>
       <Link
-        href="/signin"
+        href={routes.auth.signin}
         className="mb-0 text-center text-sm text-zinc-500 opacity-75 hover:opacity-100"
       >
         Already have an account? <span className="text-zinc-300">Sign in</span>

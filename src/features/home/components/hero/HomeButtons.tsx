@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui";
+import { routes } from "@/constants";
 import { RxPerson } from "react-icons/rx";
 
 const HomeButtons = () => {
   return (
     <div className="flex flex-wrap justify-center gap-3">
-      <Button href="/sets" icon={<RxPerson />}>
+      <Button href={routes.sets.browser} icon={<RxPerson />}>
         Solo Mode
       </Button>
       <Button

@@ -46,6 +46,8 @@ const schema = z.object({
     .min(5, { message: "At least 5 songs." })
     .max(100, { message: "Max 100 tracks per set." }),
   private: z.boolean(),
+  bgColor: z.string().optional(),
+  textColor: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -80,13 +82,7 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
     values?.playlist || []
   );
 
-  const openInternalSpotify = (e: KeyboardEvent) => {
-    if (!spotifyAuthUrl) return;
-    const { shiftKey, ctrlKey, key } = e;
-    if (shiftKey && ctrlKey && key.toLowerCase() === "z") {
-      router.push(spotifyAuthUrl);
-    }
-  };
+  console.log(values);
 
   const {
     register,
@@ -140,6 +136,8 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
       description,
       cover: coverProvided,
       private: setPrivate,
+      bgColor,
+      textColor,
     } = form;
     const cover =
       coverProvided ??
@@ -154,6 +152,8 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
             cover,
             description,
             private: setPrivate,
+            bgColor,
+            textColor,
           })
           .eq("id", existingId)
           .select()
@@ -166,6 +166,8 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
             cover,
             description,
             private: setPrivate,
+            bgColor,
+            textColor,
           })
           .select();
 
@@ -206,6 +208,8 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
           })}
         />
       </div>
+      <input type="color" {...register("bgColor")} />
+      <input type="color" {...register("textColor")} />
       <Divider>trakclist</Divider>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">

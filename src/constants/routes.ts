@@ -1,7 +1,8 @@
 const sets = {
-  browser: "/sets",
+  browser: "/xsets",
   amimport: "/sets/templates",
   spotify: "/sets/spotify",
+  set: (id: string) => `/sets/${id}`,
   update: (id: string) => `/sets/update?setid=${id}`,
   create: {
     blank: "/sets/create",
@@ -18,6 +19,15 @@ const auth = {
   recovery: "/recovery",
 };
 
+const user = {
+  profile: "/user",
+  id: (userId: string) => `/user/${userId}`,
+};
+
+const game = {
+  set: (setId: string) => `/game/${setId}`,
+};
+
 const home = "/";
 
-export const routes = { sets, auth, home };
+export const routes = { sets, auth, home, user, game };

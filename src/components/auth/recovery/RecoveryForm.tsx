@@ -10,6 +10,7 @@ import {
   Paragraph,
   SuccessBlock,
 } from "@/components/ui";
+import { routes } from "@/constants";
 
 interface Props {
   handleRecovery: (email: string) => Promise<void>;
@@ -38,7 +39,7 @@ const RecoveryForm = ({ handleRecovery, loading, error, success }: Props) => {
       className="flex flex-col gap-2"
       onSubmit={handleSubmit((e) => handleRecovery(e.email))}
     >
-      <BackButton href="/signin">Back to sign in</BackButton>
+      <BackButton href={routes.auth.signin}>Back to sign in</BackButton>
       {error && <ErrorBlock>{error}</ErrorBlock>}
       {success && <SuccessBlock>{success}</SuccessBlock>}
       <Paragraph className="my-2">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { twMerge } from "tailwind-merge";
+import { routes } from "@/constants";
 
 interface Props {
   className?: string;
@@ -9,7 +10,7 @@ interface Props {
 const LogoName = ({ className }: Props) => {
   return (
     <Link
-      href="/"
+      href={routes.home}
       className={twMerge(
         "flex items-center gap-2 text-lg font-medium",
         className
