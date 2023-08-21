@@ -24,6 +24,7 @@
     "@types/react-dom": "18.2.4",
     "@vercel/analytics": "^1.0.1",
     "autoprefixer": "10.4.14",
+    "color": "^4.2.3",
     "cryptr": "^6.2.0",
     "eslint": "8.41.0",
     "eslint-config-next": "^13.4.8",
@@ -47,6 +48,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/color": "^3.0.3",
     "@types/three": "^0.155.0",
     "encoding": "^0.1.13",
     "prettier": "^2.8.8",
