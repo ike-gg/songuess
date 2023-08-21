@@ -6,7 +6,7 @@ const sets = {
     params.set("category", category);
     query && params.set("query", query);
 
-    return `/xsets?` + params.toString();
+    return `/sets?` + params.toString();
   },
   amimport: "/sets/templates",
   spotify: "/sets/spotify",
