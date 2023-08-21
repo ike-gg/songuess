@@ -20,6 +20,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "small" | "medium" | "large";
   icon?: ReactNode;
   className?: string;
+  mobileCol?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, Props>(
@@ -32,6 +33,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
       icon,
       loading,
       className,
+      mobileCol,
       ...props
     },
     ref
@@ -56,6 +58,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
       size === "small" && "text-sm px-2.5 py-1",
       size === "medium" && "px-4 py-1.5",
       size === "large" && "px-5 py-3",
+      mobileCol && "flex-col-reverse md:flex-row gap-1",
       variant === "navigator" &&
         "bg-transparent rounded-full active:bg-zinc-800/60 hover:bg-zinc-800/40 p-2",
       className

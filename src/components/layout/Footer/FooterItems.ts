@@ -16,7 +16,7 @@ const links: FooterCategory[] = [
     items: [
       {
         label: "Set browser",
-        href: routes.sets.browser,
+        href: routes.sets.browser(),
       },
       {
         label: "Apple Music import",

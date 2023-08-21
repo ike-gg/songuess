@@ -8,7 +8,7 @@ export default function SetsLayout({
   return (
     <section>
       <Navbar displayLinks={false} />
-      <div className="mx-auto flex max-w-screen-xl flex-col gap-6 px-4 md:flex-row">
+      <div className="mx-auto flex max-w-screen-2xl flex-col gap-6 px-4 md:flex-row">
         {children}
       </div>
     </section>

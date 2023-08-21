@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Badge, Paragraph, SubHeading } from "@/components/ui";
+import { Badge, Paragraph, SubHeading, Transition } from "@/components/ui";
 import { routes } from "@/constants";
 import { Database } from "@/types/supabase";
 import addAlpha from "@/utils/addAlphaHex";
@@ -11,12 +11,11 @@ type Set = Database["public"]["Tables"]["sets"]["Row"];
 
 interface Props {
   set: Set;
-  key: string;
   index?: number;
 }
 
 const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
-  ({ set, key, index }, ref) => {
+  ({ set, index }, ref) => {
     const { id, name, bgColor, textColor, cover, recommendation, description } =
       set;
 
@@ -30,11 +29,11 @@ const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
       bgColor || "black"
     }, transparent)`;
 
-    console.log("for set:", name, "gradients:", gradient);
+    const gradients = [gradient];
+    if (recommendation) gradients.push(recommendationGradient);
 
     return (
       <motion.a
-        key={key}
         ref={ref}
         initial={{ opacity: 0 }}
         animate={{
@@ -42,27 +41,31 @@ const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
         }}
         exit={{ opacity: 0, scale: 0.99 }}
         href={routes.sets.set(id)}
-        transition={{ delay: 0.03 * (index || 1) }}
+        transition={{ delay: 0.04 * (index || 1), type: "spring", bounce: 0 }}
         className={twMerge(
           "relative col-span-1 row-span-1 aspect-square h-full w-full overflow-hidden rounded-lg",
           recommendation && "col-span-2 row-span-2"
         )}
+        whileHover={{
+          boxShadow: `0 0 25px ${
+            bgColor ? addAlpha(bgColor, 0.5) : "transparent"
+          }`,
+          zIndex: 0,
+          transition: { delay: 0 },
+        }}
         style={{ color: textColor || undefined }}
       >
         <img
-          className="absolute left-0 top-0 aspect-square w-full shadow-lg"
+          className="absolute left-0 top-0 aspect-square h-full w-full bg-zinc-800 object-cover shadow-lg"
           src={cover || ""}
           alt={name + " set cover"}
         />
         <motion.div
           style={{
-            // background: `${gradient}, ${
-            //   recommendation ? recommendationGradient : ""
-            // }`,
-            background: gradient,
+            background: gradients.join(","),
           }}
           initial={{ opacity: 0.2 }}
-          whileHover={{ opacity: 0.9 }}
+          whileHover={{ opacity: 1 }}
           className="pointer-events-auto absolute flex h-full w-full flex-col justify-end p-3"
           onMouseEnter={() => setShowDescription(true)}
           onMouseLeave={() => setShowDescription(false)}
@@ -73,19 +76,11 @@ const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
             </Badge>
           )}
           <SubHeading className="line-clamp-1 opacity-100">{name}</SubHeading>
-          <AnimatePresence>
-            {showDescription && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-              >
-                <Paragraph className="font-ligh line-clamp-4 opacity-90">
-                  {description}
-                </Paragraph>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <Transition state={showDescription}>
+            <Paragraph className="font-ligh line-clamp-4 opacity-90">
+              {description}
+            </Paragraph>
+          </Transition>
         </motion.div>
       </motion.a>
     );

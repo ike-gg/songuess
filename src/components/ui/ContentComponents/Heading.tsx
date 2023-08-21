@@ -8,7 +8,14 @@ interface Props extends HTMLAttributes<HTMLHeadingElement> {
 
 const Heading = ({ children, className }: Props) => {
   return (
-    <h1 className={twMerge("text-3xl font-semibold", className)}>{children}</h1>
+    <h1
+      className={twMerge(
+        "bg-gradient-to-br from-zinc-100 to-zinc-400 bg-clip-text text-3xl font-semibold text-transparent",
+        className
+      )}
+    >
+      {children}
+    </h1>
   );
 };
 
