@@ -42,7 +42,7 @@ const UpdateSetPage = async ({
     if (!existingSet) return;
 
     if (existingSet.owner !== user.id) {
-      redirect(routes.sets.browser);
+      redirect(routes.sets.browser());
     }
 
     const {
@@ -70,13 +70,13 @@ const UpdateSetPage = async ({
   }
 
   if (!providedData) {
-    redirect(routes.sets.browser);
+    redirect(routes.sets.browser());
   }
 
   return (
     <>
       <nav className="flex items-start justify-between">
-        <BackButton href="/sets">Back to sets</BackButton>
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
       </nav>
       <Heading>
         Update <b>{providedData.name}</b> set

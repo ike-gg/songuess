@@ -11,6 +11,7 @@ export interface Database {
     Tables: {
       sets: {
         Row: {
+          bgColor: string | null
           cover: string | null
           created_at: string | null
           description: string | null
@@ -19,9 +20,12 @@ export interface Database {
           name: string
           owner: string
           private: boolean
+          recommendation: string | null
           songs: string[]
+          textColor: string | null
         }
         Insert: {
+          bgColor?: string | null
           cover?: string | null
           created_at?: string | null
           description?: string | null
@@ -30,9 +34,12 @@ export interface Database {
           name: string
           owner?: string
           private?: boolean
+          recommendation?: string | null
           songs: string[]
+          textColor?: string | null
         }
         Update: {
+          bgColor?: string | null
           cover?: string | null
           created_at?: string | null
           description?: string | null
@@ -41,7 +48,9 @@ export interface Database {
           name?: string
           owner?: string
           private?: boolean
+          recommendation?: string | null
           songs?: string[]
+          textColor?: string | null
         }
         Relationships: [
           {

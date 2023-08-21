@@ -51,7 +51,7 @@ const UserProfile = ({ user }: Props) => {
 
   return (
     <>
-      <BackButton href={routes.sets.browser}>Back to sets</BackButton>
+      <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
       {error && <ErrorBlock>{error}</ErrorBlock>}
       <div className="flex items-center gap-4 rounded-lg bg-gradient-to-r from-zinc-800 to-zinc-800/30 p-4">
         <ProfilePicture avatarUrl={user.avatar_url || undefined} />

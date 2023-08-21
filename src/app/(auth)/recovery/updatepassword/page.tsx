@@ -1,4 +1,5 @@
 import UpdatePassword from "@/components/auth/updatepassword/UpdatePassword";
+import { routes } from "@/constants";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
@@ -15,7 +16,7 @@ const RecoveryUpdatePasswordPage = async () => {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/");
+    redirect(routes.home);
   }
 
   return <UpdatePassword />;

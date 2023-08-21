@@ -45,7 +45,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
       setError(error.message);
       return;
     }
-    router.replace(routes.sets.browser);
+    router.replace(routes.sets.browser());
   };
 
   const {
@@ -96,7 +96,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
         {!cover && <div className="h-52 w-full" />}
       </div>
       <nav className="flex justify-between">
-        <BackButton href={routes.sets.browser}>Back to sets</BackButton>
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
       </nav>
       <div>
         <div className="flex flex-col-reverse items-start gap-2 break-all md:flex-row md:items-center md:gap-4">
@@ -145,7 +145,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
             <Button
               icon={<RxCopy />}
               variant="secondary"
-              href={`/sets/create?setid=${id}`}
+              href={routes.sets.create.existingSet(id)}
             >
               Duplicate
             </Button>
@@ -160,7 +160,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
             >
               Share
             </Button>
-            <Button icon={<RxPlay />} href={`/game/${id}`}>
+            <Button icon={<RxPlay />} href={routes.game.set(id)}>
               Play
             </Button>
           </div>

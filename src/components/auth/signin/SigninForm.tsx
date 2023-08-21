@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RxLockClosed, RxEnvelopeClosed } from "react-icons/rx";
 import { Button, Divider, ErrorBlock, Input } from "@/components/ui";
 import Link from "next/link";
+import { routes } from "@/constants";
 
 interface Props {
   handleSignIn: (email: string, password: string) => Promise<void>;
@@ -54,13 +55,13 @@ const SigninForm = ({ handleSignIn, handleSpotify, loading, error }: Props) => {
         Sign in
       </Button>
       <Link
-        href="/signup"
+        href={routes.auth.signup}
         className="mb-0 text-center text-sm text-zinc-500 opacity-75 hover:opacity-100"
       >
         Dont have an account? <span className="text-zinc-300">Sign up</span>
       </Link>
       <Link
-        href="/recovery"
+        href={routes.auth.recovery}
         className=" text-center text-sm text-zinc-500 opacity-75 hover:opacity-100"
       >
         Forget password? <span className="text-zinc-300">Recovery</span>

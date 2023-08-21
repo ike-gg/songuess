@@ -1,7 +1,16 @@
+export type SetCategories = "featured" | "community" | "personal";
+
 const sets = {
-  browser: "/sets",
+  browser: (category: SetCategories = "featured", query?: string) => {
+    const params = new URLSearchParams();
+    params.set("category", category);
+    query && params.set("query", query);
+
+    return `/sets?` + params.toString();
+  },
   amimport: "/sets/templates",
   spotify: "/sets/spotify",
+  set: (id: string) => `/sets/${id}`,
   update: (id: string) => `/sets/update?setid=${id}`,
   create: {
     blank: "/sets/create",
@@ -18,6 +27,15 @@ const auth = {
   recovery: "/recovery",
 };
 
+const user = {
+  profile: "/user",
+  id: (userId: string) => `/user/${userId}`,
+};
+
+const game = {
+  set: (setId: string) => `/game/${setId}`,
+};
+
 const home = "/";
 
-export const routes = { sets, auth, home };
+export const routes = { sets, auth, home, user, game };

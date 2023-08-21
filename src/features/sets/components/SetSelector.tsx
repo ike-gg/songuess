@@ -22,6 +22,7 @@ import {
   Transition,
 } from "@/components/ui";
 import { current } from "@reduxjs/toolkit";
+import { routes } from "@/constants";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
 
@@ -83,8 +84,8 @@ const SetSelector = ({ sets }: SetSelectorProps) => {
   return (
     <>
       <nav className="flex items-start justify-between">
-        <BackButton href="/">Back to main page</BackButton>
-        <Button href="/sets/create" size="small" icon={<RxPlus />}>
+        <BackButton href={routes.home}>Back to main page</BackButton>
+        <Button href={routes.sets.create.blank} size="small" icon={<RxPlus />}>
           Create set
         </Button>
       </nav>

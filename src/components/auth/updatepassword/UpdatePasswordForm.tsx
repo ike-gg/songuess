@@ -11,6 +11,7 @@ import {
   SuccessBlock,
 } from "@/components/ui";
 import { useEffect } from "react";
+import { routes } from "@/constants";
 
 interface Props {
   handlePasswordUpdate: (password: string) => Promise<void>;
@@ -49,7 +50,7 @@ const UpdatePasswordForm = ({
       className="flex flex-col gap-2"
       onSubmit={handleSubmit((e) => handlePasswordUpdate(e.password))}
     >
-      <BackButton href="/">Back to main page</BackButton>
+      <BackButton href={routes.home}>Back to main page</BackButton>
       <Paragraph className="my-2">Update your password</Paragraph>
       {error && <ErrorBlock>{error}</ErrorBlock>}
       {success && <SuccessBlock>{success}</SuccessBlock>}

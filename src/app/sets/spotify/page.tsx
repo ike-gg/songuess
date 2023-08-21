@@ -15,7 +15,9 @@ const SetSpotifyPage = async () => {
 
   return (
     <>
-      <BackButton href="/sets/create">Back to set creator</BackButton>
+      <BackButton href={routes.sets.create.blank}>
+        Back to set creator
+      </BackButton>
       <div>
         <Heading className="flex items-center gap-2">
           Import your playlist from Spotify <Badge>INTERNAL USE</Badge>

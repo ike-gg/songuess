@@ -3,6 +3,7 @@ import { Database } from "@/types/supabase";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CardItem, Paragraph, SubHeading } from "@/components/ui";
+import { routes } from "@/constants";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
 
@@ -15,7 +16,7 @@ const SetListItem = ({ set }: Props) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <CardItem href={`/sets/${id}`}>
+    <CardItem href={routes.sets.set(id)}>
       {cover && (
         <motion.img
           onLoad={() => setLoaded(true)}

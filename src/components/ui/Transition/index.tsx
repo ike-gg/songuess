@@ -8,6 +8,7 @@ import {
   motion,
 } from "framer-motion";
 import { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 interface Props {
   children: ReactNode;
@@ -18,16 +19,12 @@ interface Props {
   exit?: Target;
 }
 
-const Transition = ({
-  children,
-  state,
-  className,
-}: Props) => {
+const Transition = ({ children, state, className }: Props) => {
   return (
     <AnimatePresence>
       {state && (
         <motion.div
-          className={className}
+          className={twMerge("overflow-hidden", className)}
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
