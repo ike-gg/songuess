@@ -19,7 +19,7 @@ const SetPage = async ({
     .eq("id", setId)
     .single();
 
-  if (!setDetails) redirect(routes.sets.browser);
+  if (!setDetails) redirect(routes.sets.browser());
 
   const {
     data: { user: requestingUser },

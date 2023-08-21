@@ -45,7 +45,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
       setError(error.message);
       return;
     }
-    router.replace(routes.sets.browser);
+    router.replace(routes.sets.browser());
   };
 
   const {

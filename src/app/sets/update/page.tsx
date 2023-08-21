@@ -42,7 +42,7 @@ const UpdateSetPage = async ({
     if (!existingSet) return;
 
     if (existingSet.owner !== user.id) {
-      redirect(routes.sets.browser);
+      redirect(routes.sets.browser());
     }
 
     const {
@@ -70,7 +70,7 @@ const UpdateSetPage = async ({
   }
 
   if (!providedData) {
-    redirect(routes.sets.browser);
+    redirect(routes.sets.browser());
   }
 
   return (
