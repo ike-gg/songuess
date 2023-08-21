@@ -14,8 +14,6 @@ const SetsPage = async ({
 }) => {
   const { category, query } = searchParams;
 
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-
   if (
     category !== "community" &&
     category !== "featured" &&
