@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 const RecoveryUpdatePasswordPage = async () => {
   const supabase = await createServerComponentClient({ cookies });
+
   const {
     data: { user },
   } = await supabase.auth.getUser();

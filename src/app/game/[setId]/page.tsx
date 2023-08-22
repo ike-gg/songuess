@@ -2,9 +2,8 @@
 import { routes } from "@/constants";
 import Game from "@/features/game/Game";
 import GameProvider from "@/features/game/GameProvider";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 import { SongType } from "@/types/musicApi/Song";
-import { Database } from "@/types/supabase";
-import { createClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 
 const SetPage = async ({
@@ -12,21 +11,13 @@ const SetPage = async ({
 }: {
   params: { setId: string };
 }) => {
-  const supabase = createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const database = new DatabaseClient({ type: "server" });
 
   if (!setId) {
     redirect(routes.sets.browser());
   }
 
-  const { data: setDetails } = await supabase
-    .from("sets")
-    .select("*")
-    .eq("id", setId)
-    .limit(1)
-    .single();
+  const { data: setDetails } = await database.sets.get(setId);
 
   if (!setDetails) {
     redirect(routes.sets.browser());

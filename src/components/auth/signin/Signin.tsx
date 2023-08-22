@@ -5,31 +5,28 @@ import { useRouter } from "next/navigation";
 
 import type { Database } from "../../../types/supabase";
 import LoginForm from "./SigninForm";
-import { useState } from "react";
+import useFeedback from "@/hooks/useFeedback";
 
 export default function Signin() {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>();
+  const { loading, setLoading, error, setError } = useFeedback();
 
   const handleSignIn = async (email: string, password: string) => {
-    setIsLoading(true);
-    setError(undefined);
+    setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    if (!error) {
-      router.push("/");
+    if (error) {
+      setError(error.message);
       return;
     }
-    setIsLoading(false);
-    setError(error.message);
+    router.push("/");
   };
 
   const handleSpotify = async () => {
-    setIsLoading(true);
+    setLoading(true);
     await supabase.auth.signInWithOAuth({
       provider: "spotify",
       options: {
@@ -41,7 +38,7 @@ export default function Signin() {
   return (
     <LoginForm
       error={error}
-      loading={isLoading}
+      loading={loading}
       handleSignIn={handleSignIn}
       handleSpotify={handleSpotify}
     />

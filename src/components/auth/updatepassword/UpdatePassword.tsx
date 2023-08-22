@@ -3,33 +3,29 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import type { Database } from "../../../types/supabase";
-import { useState } from "react";
 import UpdatePasswordForm from "./UpdatePasswordForm";
+import useFeedback from "@/hooks/useFeedback";
 
 export default function UpdatePassword() {
   const supabase = createClientComponentClient<Database>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>();
-  const [success, setSuccess] = useState<string>();
+  const { error, loading, setError, setLoading, setSuccess, success } =
+    useFeedback();
 
   const handlePasswordUpdate = async (password: string) => {
-    setIsLoading(true);
-    setError(undefined);
-    setSuccess(undefined);
+    setLoading(true);
     const { error } = await supabase.auth.updateUser({ password });
-    setIsLoading(false);
-    if (!error) {
-      setSuccess("Your password has been successfully updated.");
+    if (error) {
+      setError(error.message);
       return;
     }
-    setError(error.message);
+    setSuccess("Your password has been successfully updated.");
   };
 
   return (
     <UpdatePasswordForm
       success={success}
       error={error}
-      loading={isLoading}
+      loading={loading}
       handlePasswordUpdate={handlePasswordUpdate}
     />
   );

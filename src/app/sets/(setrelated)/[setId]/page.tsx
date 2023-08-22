@@ -1,5 +1,6 @@
 import { routes } from "@/constants";
 import SetPreview from "@/features/sets/components/SetPreview";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 import getAlbumsArtistsFromSet from "@/lib/getAlbumsArtistsFromSet";
 import { Database } from "@/types/supabase";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -11,19 +12,15 @@ const SetPage = async ({
 }: {
   params: { setId: string };
 }) => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const database = new DatabaseClient({ type: "serverComponent", cookies });
 
-  const { data: setDetails } = await supabase
-    .from("sets")
-    .select("*")
-    .eq("id", setId)
-    .single();
+  const { data: setDetails } = await database.sets.get(setId);
 
   if (!setDetails) redirect(routes.sets.browser());
 
   const {
     data: { user: requestingUser },
-  } = await supabase.auth.getUser();
+  } = await database.currentUser.auth();
 
   const setContent = await getAlbumsArtistsFromSet(setDetails.songs);
 

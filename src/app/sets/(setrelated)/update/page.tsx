@@ -1,73 +1,58 @@
 import SetCreator, {
   ProvidedValuesSetCreator,
 } from "@/features/sets/components/creator/SetCreator";
-import { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SongType } from "@/types/musicApi/Song";
 import { BackButton, Heading } from "@/components/ui";
 import { routes } from "@/constants";
-
-interface SearchParams {
-  playlistid?: string;
-  setid?: string;
-  spotifyplaylistid?: string;
-}
+import { DatabaseClient } from "@/lib/database/databaseClient";
 
 const UpdateSetPage = async ({
   searchParams: { setid },
 }: {
-  searchParams: SearchParams;
+  searchParams: { setid?: string };
 }) => {
-  const supabase = await createServerComponentClient<Database>({ cookies });
+  if (!setid) redirect(routes.sets.browser());
+
+  const database = new DatabaseClient({ type: "serverComponent", cookies });
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await database.currentUser.auth();
+  if (!user) redirect(routes.auth.signin);
 
-  if (!user) {
-    redirect(routes.auth.signin);
+  const { data: existingSet } = await database.sets.get(setid);
+  if (!existingSet) return;
+
+  if (existingSet.owner !== user.id) {
+    redirect(routes.sets.browser());
   }
 
   let providedData: ProvidedValuesSetCreator | undefined;
 
-  if (setid) {
-    const { data: existingSet } = await supabase
-      .from("sets")
-      .select("*")
-      .eq("id", setid)
-      .single();
+  const {
+    name,
+    cover,
+    description,
+    songs,
+    id,
+    private: isPrivate,
+  } = existingSet;
 
-    if (!existingSet) return;
+  const response = await fetch(
+    `https://harmony-backend.vercel.app/api/getSongs?ids=${songs.join(",")}`
+  );
 
-    if (existingSet.owner !== user.id) {
-      redirect(routes.sets.browser());
-    }
+  const songsData = (await response.json()) as SongType;
 
-    const {
-      name,
-      cover,
-      description,
-      songs,
-      id,
-      private: isPrivate,
-    } = existingSet;
-
-    const response = await fetch(
-      `https://harmony-backend.vercel.app/api/getSongs?ids=${songs.join(",")}`
-    );
-
-    const songsData = (await response.json()) as SongType;
-
-    providedData = {
-      name,
-      playlist: songsData.data,
-      cover: cover || "",
-      description: description || "",
-      private: isPrivate,
-    };
-  }
+  providedData = {
+    name,
+    playlist: songsData.data,
+    cover: cover || "",
+    description: description || "",
+    private: isPrivate,
+  };
 
   if (!providedData) {
     redirect(routes.sets.browser());

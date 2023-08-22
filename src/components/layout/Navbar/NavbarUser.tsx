@@ -9,6 +9,7 @@ import { routes } from "@/constants";
 
 const NavbarUser = () => {
   const { isLogged, loading, username } = useUserClient();
+
   return (
     <div className="flex h-8 items-center justify-end gap-2">
       {loading && <CgSpinner className="animate-spin" />}

@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useFeedback from "@/hooks/useFeedback";
 import { routes } from "@/constants";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
 
@@ -34,13 +35,13 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { error, setError, loading, setLoading } = useFeedback();
 
-  const supabase = createClientComponentClient<Database>();
+  const database = new DatabaseClient({ type: "clientComponent" });
 
   const router = useRouter();
 
   const removeSet = async () => {
     setLoading(true);
-    const { error } = await supabase.from("sets").delete().eq("id", set.id);
+    const { error } = await database.sets.remove(set.id);
     if (error) {
       setError(error.message);
       return;

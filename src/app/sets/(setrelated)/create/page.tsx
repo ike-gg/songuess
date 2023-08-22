@@ -1,8 +1,6 @@
 import SetCreator, {
   ProvidedValuesSetCreator,
 } from "@/features/sets/components/creator/SetCreator";
-import { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import getPlaylistDetails from "@/lib/getPlaylistDetails";
@@ -14,6 +12,7 @@ import removeTags from "@/utils/removeTags";
 import { BackButton, Button, Heading } from "@/components/ui";
 import { routes } from "@/constants";
 import getAlbumDetails from "@/lib/getAlbumDetails";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 
 interface SearchParams {
   playlistid?: string;
@@ -28,10 +27,11 @@ const CreateSetPage = async ({
   searchParams: SearchParams;
 }) => {
   const spotifyAuthUrl = getUrlAuthSpotify();
-  const supabase = await createServerComponentClient<Database>({ cookies });
+  const database = new DatabaseClient({ type: "serverComponent", cookies });
+
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await database.currentUser.auth();
 
   if (!user) {
     redirect(routes.auth.signin);
@@ -80,11 +80,7 @@ const CreateSetPage = async ({
   }
 
   if (setid) {
-    const { data: existingSet } = await supabase
-      .from("sets")
-      .select("*")
-      .eq("id", setid)
-      .single();
+    const { data: existingSet } = await database.sets.get(setid);
 
     if (!existingSet) return;
 
