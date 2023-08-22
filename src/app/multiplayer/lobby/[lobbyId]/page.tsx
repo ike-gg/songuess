@@ -24,9 +24,15 @@ const MultiplayerIndexPage = async ({
   const database = new DatabaseClient({ type: "serverComponent", cookies });
   const { error } = await database.currentUser.auth();
 
-  if (error) redirect(routes.auth.signin);
+  if (error)
+    return (
+      <>
+        <Paragraph>login to continue</Paragraph>
+        <Button href={routes.auth.signin}></Button>
+      </>
+    );
 
-  return <>siema</>;
+  return <>witam :D</>;
 };
 
 export default MultiplayerIndexPage;

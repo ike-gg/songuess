@@ -41,10 +41,6 @@ export default async function Image({
     .eq("id", lobbyId)
     .single();
 
-  console.log(lobbyData);
-
-  lobbyData?.users?.username;
-
   return new ImageResponse(
     (
       <div
