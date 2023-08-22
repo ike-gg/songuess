@@ -5,7 +5,6 @@ import { Database } from "@/types/supabase";
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import {
-  RxCross1,
   RxGlobe,
   RxMagnifyingGlass,
   RxPerson,
@@ -14,10 +13,8 @@ import {
   RxStar,
 } from "react-icons/rx";
 import {
-  BackButton,
   Button,
   Card,
-  CardFooter,
   Divider,
   Heading,
   Input,
@@ -25,14 +22,10 @@ import {
   SubHeading,
   Transition,
 } from "@/components/ui";
-import { current } from "@reduxjs/toolkit";
 import { SetCategories, routes } from "@/constants";
-import Link from "next/link";
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import addAlpha from "@/utils/addAlphaHex";
-import { text } from "stream/consumers";
+import { AnimatePresence, motion } from "framer-motion";
 import useDebounceQuery from "@/hooks/useDebounceQuery";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SetCardItem from "./SetCardItem";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
@@ -94,8 +87,6 @@ const SetSelector = ({ sets }: SetSelectorProps) => {
       icon: <RxPerson />,
     });
   }
-
-  console.log(currentSet);
 
   return (
     <>

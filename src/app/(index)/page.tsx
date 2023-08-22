@@ -1,21 +1,15 @@
 import Home from "@/features/home/components/Home";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 import getPopularAlbums from "@/lib/getPopularAlbums";
 import getPopularSongs from "@/lib/getPopularSongs";
-import { Database } from "@/types/supabase";
-import { createClient } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
 
 const HomePage = async () => {
-  const supabase = createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const database = new DatabaseClient({ type: "serverComponent", cookies });
 
   const popularAlbums = await getPopularAlbums();
   const popularSongs = await getPopularSongs();
-  const { data: featuredSets } = await supabase
-    .from("sets")
-    .select()
-    .eq("featured", true);
+  const { data: featuredSets } = await database.sets.getFeatured();
 
   return (
     <Home

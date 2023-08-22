@@ -31,6 +31,7 @@ import {
 import useFeedback from "@/hooks/useFeedback";
 import ISRCImport from "./ISRCImport";
 import { useHotkeys } from "react-hotkeys-hook";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 
 const schema = z.object({
   name: z
@@ -77,12 +78,14 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
   const { setError, error, setLoading, loading } = useFeedback();
 
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const database = new DatabaseClient({
+    type: "clientComponent",
+  });
+  const { insert, update } = database.sets;
+
   const [playlist, setPlaylist] = useState<SearchQuerySong[]>(
     values?.playlist || []
   );
-
-  console.log(values);
 
   const {
     register,
@@ -144,39 +147,32 @@ const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
       parseArtwork(playlist[0].attributes.artwork).artworkUrl.large;
 
     const { data, error } = updateMode
-      ? await supabase
-          .from("sets")
-          .update({
-            name,
-            songs,
-            cover,
-            description,
-            private: setPrivate,
-            bgColor,
-            textColor,
-          })
-          .eq("id", existingId)
-          .select()
-      : await supabase
-          .from("sets")
-          .insert({
-            featured: false,
-            name,
-            songs,
-            cover,
-            description,
-            private: setPrivate,
-            bgColor,
-            textColor,
-          })
-          .select();
+      ? await update(existingId!, {
+          name,
+          songs,
+          cover,
+          description,
+          private: setPrivate,
+          bgColor,
+          textColor,
+        })
+      : await insert({
+          featured: false,
+          name,
+          songs,
+          cover,
+          description,
+          private: setPrivate,
+          bgColor,
+          textColor,
+        });
 
     if (error) {
       setError(error.message);
       return;
     }
 
-    router.replace(`/sets/${data[0].id}`);
+    router.replace(`/sets/${data.id}`);
   };
 
   return (

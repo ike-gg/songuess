@@ -1,26 +1,17 @@
 import { routes } from "@/constants";
 import UserProfile from "@/features/user/components/UserProfile";
-import { Database } from "@/types/supabase";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const UserPage = async () => {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const database = new DatabaseClient({ type: "serverComponent", cookies });
 
-  const { data: authData, error: authError } = await supabase.auth.getUser();
+  const userProfile = await database.currentUser.profile();
 
-  if (authError) redirect(routes.auth.signin);
+  if (userProfile.error) redirect(routes.auth.signin);
 
-  const { data: userData } = await supabase
-    .from("users")
-    .select()
-    .eq("id", authData.user.id)
-    .single();
-
-  if (!userData) redirect(routes.auth.signup);
-
-  return <UserProfile user={userData} />;
+  return <UserProfile user={userProfile.data} />;
 };
 
 export default UserPage;
