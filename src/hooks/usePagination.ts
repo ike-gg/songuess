@@ -1,5 +1,5 @@
 import chunkArrayBySize from "@/utils/chunkArrayBySize";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface PaginationOptions<T> {
   items: Array<T>;
