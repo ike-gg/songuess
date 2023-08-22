@@ -24,6 +24,8 @@ const useUserClient = () => {
         return;
       }
 
+      setLoading(false);
+      setIsLogged(true);
       setUserData(user.data);
     };
 

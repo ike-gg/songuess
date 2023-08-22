@@ -3,7 +3,7 @@ import { Badge, Paragraph, SubHeading, Transition } from "@/components/ui";
 import { routes } from "@/constants";
 import { Database } from "@/types/supabase";
 import addAlpha from "@/utils/addAlphaHex";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { forwardRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
