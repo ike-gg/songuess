@@ -1,10 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { Logo } from "@/components/ui";
 import { ImageResponse } from "next/server";
 
 export const runtime = "edge";
 
-export const alt = "Music set";
+export const alt = "Lobby preview";
 export const size = {
   width: 1200,
   height: 600,
@@ -38,15 +37,13 @@ export default async function Image({
 
   const { data: lobbyData, error } = await supabase
     .from("lobbies")
-    .select()
+    .select("id, name, leader, users!lobbies_leader_fkey (username)")
     .eq("id", lobbyId)
     .single();
 
-  const { data: leaderData } = await supabase
-    .from("users")
-    .select()
-    .eq("id", lobbyData?.leader)
-    .single();
+  console.log(lobbyData);
+
+  lobbyData?.users?.username;
 
   return new ImageResponse(
     (
@@ -78,7 +75,7 @@ export default async function Image({
             Multiplayer invitation
           </p>
           <h1 style={{ margin: 0, fontSize: 72 }}>
-            {leaderData?.username || "user"} invites you
+            {lobbyData?.users?.username || "user"} invites you
           </h1>
           <p style={{ margin: 0, fontSize: 64 }}>
             {lobbyData?.name || "Lobby"}
