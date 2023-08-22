@@ -14,10 +14,12 @@ interface Props extends HTMLProps<HTMLInputElement> {
   tooltip?: string;
   loading?: boolean;
   hideLabel?: boolean;
+  children?: ReactNode;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
   const {
+    children,
     hideLabel = false,
     label,
     className,
@@ -40,7 +42,7 @@ const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
       )}
       <div
         className={twMerge(
-          "mb-1 flex items-center gap-3 rounded-lg border border-transparent bg-zinc-800 p-1 px-3 transition-colors hover:border-zinc-600",
+          "flex items-center gap-3 rounded-lg border border-transparent bg-zinc-800 p-1 px-3 transition-colors hover:border-zinc-600",
           error && "border-red-900/60 bg-red-900/20 hover:border-red-800"
         )}
       >
@@ -62,6 +64,7 @@ const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
           ref={ref}
           id={label}
         />
+        {children}
       </div>
       <Transition state={error ? true : false}>
         <ErrorParagraph className="mt-1">{error}</ErrorParagraph>
