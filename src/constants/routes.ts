@@ -21,6 +21,11 @@ const sets = {
   },
 };
 
+const multiplayer = {
+  index: "/multiplayer",
+  lobby: (lobbyId: string) => `/multiplayer/lobby/${lobbyId}`,
+};
+
 const auth = {
   signin: "/signin",
   signup: "/signup",
@@ -38,4 +43,9 @@ const game = {
 
 const home = "/";
 
-export const routes = { sets, auth, home, user, game };
+const github = {
+  repo: "https://github.com/ike-gg/songuess",
+  issues: "https://github.com/ike-gg/songuess/issues",
+};
+
+export const routes = { sets, auth, home, user, game, multiplayer, github };

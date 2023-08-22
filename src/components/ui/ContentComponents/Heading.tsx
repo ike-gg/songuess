@@ -10,7 +10,7 @@ const Heading = ({ children, className }: Props) => {
   return (
     <h1
       className={twMerge(
-        "bg-gradient-to-br from-zinc-100 to-zinc-400 bg-clip-text text-3xl font-semibold text-transparent",
+        "bg-gradient-to-br from-zinc-200 to-zinc-300 bg-clip-text text-3xl font-semibold text-transparent",
         className
       )}
     >

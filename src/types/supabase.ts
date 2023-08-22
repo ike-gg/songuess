@@ -9,6 +9,67 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      lobbies: {
+        Row: {
+          id: string
+          leader: string
+          name: string
+          player1: string
+          player2: string | null
+          player3: string | null
+          player4: string | null
+        }
+        Insert: {
+          id?: string
+          leader?: string
+          name: string
+          player1?: string
+          player2?: string | null
+          player3?: string | null
+          player4?: string | null
+        }
+        Update: {
+          id?: string
+          leader?: string
+          name?: string
+          player1?: string
+          player2?: string | null
+          player3?: string | null
+          player4?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lobbies_leader_fkey"
+            columns: ["leader"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lobbies_player1_fkey"
+            columns: ["player1"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lobbies_player2_fkey"
+            columns: ["player2"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lobbies_player3_fkey"
+            columns: ["player3"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lobbies_player4_fkey"
+            columns: ["player4"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       sets: {
         Row: {
           bgColor: string | null
