@@ -9,7 +9,7 @@ const HomeButtons = () => {
         Solo Mode
       </Button>
       <Button
-        href={routes.multiplayer.index}
+        disabled
         icon={
           <>
             <RxPerson />
@@ -18,7 +18,7 @@ const HomeButtons = () => {
         }
         variant="secondary"
       >
-        Play with friends
+        Play with friends 👀
       </Button>
     </div>
   );
