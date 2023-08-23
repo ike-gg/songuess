@@ -2,17 +2,18 @@ import {
   BackButton,
   Badge,
   Button,
+  CardFooter,
+  Dialog,
   Divider,
   Heading,
   Paragraph,
   SubHeading,
 } from "@/components/ui";
 import { routes } from "@/constants";
-import CreateLobbyForm from "@/features/multiplayer/components/lobby/CreateLobbyForm";
+import Lobby from "@/features/multiplayer/components/lobby/Lobby";
 import { DatabaseClient } from "@/lib/database/databaseClient";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { CgFlag } from "react-icons/cg";
 
 const MultiplayerIndexPage = async ({
   params: { lobbyId },
@@ -26,13 +27,15 @@ const MultiplayerIndexPage = async ({
 
   if (error)
     return (
-      <>
-        <Paragraph>login to continue</Paragraph>
-        <Button href={routes.auth.signin}></Button>
-      </>
+      <Dialog state>
+        <Heading>Sign in to continue</Heading>
+        <CardFooter>
+          <Button href={routes.auth.signin}>Sign in</Button>
+        </CardFooter>
+      </Dialog>
     );
 
-  return <>witam :D</>;
+  return <Lobby id={lobbyId} />;
 };
 
 export default MultiplayerIndexPage;

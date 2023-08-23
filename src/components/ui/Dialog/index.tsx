@@ -10,11 +10,15 @@ import { useHotkeys } from "react-hotkeys-hook";
 interface Props {
   children?: ReactNode;
   state: boolean;
-  handleState: (state: boolean) => void;
+  handleState?: (state: boolean) => void;
 }
 
 const Dialog = ({ handleState, state, children }: Props) => {
-  useHotkeys("esc", () => handleState(false), { enableOnFormTags: true });
+  const handleClose = () => {
+    handleState && handleState(false);
+  };
+
+  useHotkeys("esc", () => handleClose(), { enableOnFormTags: true });
 
   return (
     <Motion duration={0.3}>
@@ -23,7 +27,7 @@ const Dialog = ({ handleState, state, children }: Props) => {
           <FocusTrap>
             <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center">
               <motion.div
-                onClick={() => handleState(false)}
+                onClick={() => handleClose()}
                 className="absolute h-full w-full bg-black/75"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
