@@ -8,7 +8,7 @@ import { CgSpinner } from "react-icons/cg";
 import { routes } from "@/constants";
 
 const NavbarUser = () => {
-  const { isLogged, loading, username } = useUserClient();
+  const { isLogged, loading, username, userData, id } = useUserClient();
 
   return (
     <div className="flex h-8 items-center justify-end gap-2">
@@ -16,7 +16,7 @@ const NavbarUser = () => {
       {!loading && isLogged && (
         <Button
           size="small"
-          href={routes.user.profile}
+          href={routes.user.id(id!)}
           variant="secondary"
           icon={<RxPerson />}
         >
