@@ -104,7 +104,7 @@ class DatabaseClient {
 
   users = {
     getProfile: async (userId: string) =>
-      await this.instance.from("users").select().eq("id", userId).select(),
+      await this.instance.from("users").select().eq("id", userId).single(),
     setSets: async (userId: string) =>
       await this.instance.from("sets").select().eq("owner", userId),
   };

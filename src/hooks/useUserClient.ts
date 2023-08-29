@@ -1,6 +1,6 @@
 import { DatabaseClient } from "@/lib/database/databaseClient";
 import { Database } from "@/types/supabase";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { User } from "@supabase/supabase-js";
 import { useEffect, useMemo, useState } from "react";
 
 const useUserClient = () => {
@@ -11,19 +11,22 @@ const useUserClient = () => {
 
   const [userData, setUserData] =
     useState<Database["public"]["Tables"]["users"]["Row"]>();
+  const [auth, setAuth] = useState<User>();
   const [loading, setLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
     const getUser = async () => {
+      const auth = await database.currentUser.auth();
       const user = await database.currentUser.profile();
 
-      if (user.error) {
+      if (user.error || auth.error) {
         setLoading(false);
         setIsLogged(false);
         return;
       }
 
+      setAuth(auth.data.user);
       setLoading(false);
       setIsLogged(true);
       setUserData(user.data);
@@ -38,6 +41,7 @@ const useUserClient = () => {
   };
 
   return {
+    auth,
     userData,
     loading,
     isLogged,

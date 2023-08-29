@@ -60,9 +60,10 @@ const Input = forwardRef<HTMLInputElement, Props>((inputProps, ref) => {
             "grow bg-transparent py-1 text-zinc-200 outline-none transition-colors placeholder:text-zinc-600",
             error && "text-red-500 placeholder:text-red-400/50"
           )}
-          {...props}
+          name={label}
           ref={ref}
           id={label}
+          {...props}
         />
         {children}
       </div>
