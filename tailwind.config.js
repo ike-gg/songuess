@@ -8,6 +8,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      transitionDuration: {
+        1500: "1500ms",
+        1000: "1000ms",
+        750: "750ms",
+        100: "100ms",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(black)",
         "gradient-conic":
@@ -19,6 +25,7 @@ module.exports = {
         slowlyRotate: "spinBackground 90s linear infinite",
         "gradient-x": "gradient-x 15s ease infinite",
         spin: "spin 2s linear infinite",
+        pulsePing: "pulsePing 2s ease-out infinite",
       },
       backgroundSize: {
         button: "100% 150%",
@@ -55,6 +62,11 @@ module.exports = {
         "3xl": "inset 0 10px 20px -10px rgba(0, 0, 0, 0.3)",
       },
       keyframes: {
+        pulsePing: {
+          "0%": { scale: "100%", opacity: 0.7 },
+          "75%": { scale: "350%", opacity: 0 },
+          "100%": { opacity: 0 },
+        },
         bgposition: {
           "0%": { objectPosition: "0% 0%" },
           "100%": { objectPosition: "0% 100%" },

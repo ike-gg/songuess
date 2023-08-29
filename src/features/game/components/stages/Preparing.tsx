@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import GameCard from "../GameCard";
 import { BackButton, Badge, Button, Heading, Paragraph } from "@/components/ui";
+import { routes } from "@/constants";
 
 const Preparing = () => {
   const { maxRounds, roundTime, set } = useAppSelector((state) => state.game);
@@ -10,20 +11,22 @@ const Preparing = () => {
 
   if (!set) return null;
 
-  const { cover, description, name, featured, songs } = set;
+  const { cover, name, songs } = set;
 
   const availableRounds = [3, 5, 10, 15, 20].filter(
     (roundOption) => songs.length >= roundOption
   );
+  const availableTimes = [5, 15, 20, 30];
+  process.env.NODE_ENV === "development" && availableTimes.push(1200);
 
   return (
     <GameCard key="preparing" className="max-w-2xl flex-col md:flex-row md:p-6">
       <img src={cover || ""} className="rounded-lg md:h-40" alt="game cover" />
       <div className="flex flex-col gap-3">
-        <BackButton href="/sets">Back to sets</BackButton>
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
         <Heading>{name}</Heading>
         <Paragraph>{songs.length} tracks</Paragraph>
-        <Badge className="w-fit">Select rounds</Badge>
+        <Paragraph>Choose number of rounds</Paragraph>
         <div className="flex gap-2">
           {availableRounds.map((setRounds, index) => {
             return (
@@ -39,9 +42,9 @@ const Preparing = () => {
             );
           })}
         </div>
-        <Badge className="w-fit">Select time each round</Badge>
+        <Paragraph>Choose time per round</Paragraph>
         <div className="flex gap-2">
-          {[5, 15, 20, 30, 1200].map((setTime, index) => {
+          {availableTimes.map((setTime, index) => {
             return (
               <Button
                 variant={setTime === roundTime ? "primary" : "secondary"}

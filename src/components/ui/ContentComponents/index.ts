@@ -7,7 +7,7 @@ export * from "./ErrorParagraph";
 export * from "./ExtendingParagraph";
 export * from "./Heading";
 export * from "./Paragraph";
-export * from "./SubHeader";
+export * from "./SubHeading";
 export * from "./SuccessBlock";
 export * from "./Label";
 export * from "./WarningBlock";

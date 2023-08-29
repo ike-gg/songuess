@@ -2,14 +2,16 @@
 
 import { SongAttributes } from "@/types/musicApi/Song";
 import parseArtwork from "@/utils/parseArtwork";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { HTMLAttributes, ReactNode, useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { RxPlay, RxPause } from "react-icons/rx";
+import { HiPlay, HiPause } from "react-icons/hi2";
 import removeParentheses from "@/utils/removeParentheses";
+import addAlpha from "@/utils/addAlphaHex";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLButtonElement> {
   songData: SongAttributes;
   colorful?: boolean;
+  colorfulPlay?: boolean;
   showArtist?: boolean;
   showAlbum?: boolean;
   showPreview?: boolean;
@@ -29,15 +31,17 @@ const SongItem = ({
   showArtwork = false,
   showPreview = false,
   shortName = false,
+  colorfulPlay = false,
   className,
   children,
+  ...props
 }: Props) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (!audioRef.current) return;
-    audioRef.current.volume = 0.4;
+    audioRef.current.volume = 0.3;
     if (isPlaying) audioRef.current.play();
     else audioRef.current.pause();
   }, [isPlaying, audioRef]);
@@ -49,29 +53,35 @@ const SongItem = ({
     bgColor,
     primColor,
   } = parseArtwork(artwork);
+
+  const colored = colorful || (colorfulPlay && isPlaying);
+
   return (
-    <div
+    <button
       style={{
-        backgroundColor: colorful ? bgColor : undefined,
-        color: colorful ? primColor : undefined,
+        backgroundColor: colored ? bgColor : undefined,
+        color: colored ? primColor : undefined,
+        borderColor: colored ? addAlpha(primColor, 0.25) : undefined,
       }}
       className={twMerge(
         "flex items-center gap-3 rounded p-3 transition-all duration-150",
         className
       )}
       onClick={onClick}
+      type="button"
+      {...props}
     >
-      {children && <div>{children}</div>}
+      {children && children}
       {showPreview && <audio loop ref={audioRef} src={previewUrl} />}
       {showArtwork && (
         <img src={mini} className="rounded-sm" alt={`cover of ${albumName}`} />
       )}
-      <div className="flex shrink flex-col gap-1 leading-none">
-        <span className="font-semibold line-clamp-2">
+      <div className="flex shrink flex-col items-start gap-1 text-left leading-none">
+        <span className="line-clamp-2 font-semibold">
           {shortName ? removeParentheses(name) : name}
         </span>
         {(showArtist || showAlbum) && (
-          <span className="font-lights opacity-60 line-clamp-1">
+          <span className="font-lights line-clamp-1 opacity-60">
             {showArtist && !showAlbum && artistName}
             {showAlbum && !showArtist && albumName}
             {showAlbum && showArtist && `${artistName} from ${albumName}`}
@@ -86,11 +96,11 @@ const SongItem = ({
             setIsPlaying((p) => !p);
           }}
         >
-          {isPlaying && <RxPause />}
-          {!isPlaying && <RxPlay />}
+          {isPlaying && <HiPause />}
+          {!isPlaying && <HiPlay />}
         </div>
       )}
-    </div>
+    </button>
   );
 };
 

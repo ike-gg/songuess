@@ -2,6 +2,7 @@
 
 import { current } from "@reduxjs/toolkit";
 import { motion } from "framer-motion";
+import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
   delay?: number;
   size?: number;
   strokeWidth?: number;
-  caption?: string;
+  caption?: ReactNode;
   className?: string;
   currentColor?: boolean;
 }

@@ -29,11 +29,11 @@ export interface GameSlice {
 
 const initialState: GameSlice = {
   status: "preparing",
-  maxRounds: 10,
+  maxRounds: 5,
   roundTime: 30,
   currRound: 0,
   points: 0,
-  volume: 0.5,
+  volume: 0.4,
   round: {
     status: "countdown",
     similarity: 0,
@@ -88,7 +88,7 @@ export const gameSlice = createSlice({
       state.round.status = newStatus;
     },
     nextRound: (state) => {
-      const { currRound, playlist } = state;
+      const { currRound } = state;
       const newRound = currRound + 1;
       if (newRound >= state.maxRounds) {
         state.status = "ended";
@@ -97,7 +97,10 @@ export const gameSlice = createSlice({
       state.currRound = newRound;
       state.round.similarity = 0;
       state.round.status = "countdown";
-      if (playlist) state.round.currentSong = playlist[newRound];
+    },
+    loadNextSong: (state) => {
+      const { playlist, currRound } = state;
+      if (playlist) state.round.currentSong = playlist[currRound];
     },
     setSimilarity: (state, action: PayloadAction<number>) => {
       state.round.similarity = action.payload;

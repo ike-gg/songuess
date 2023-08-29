@@ -9,9 +9,9 @@ import {
   ExtendingParagraph,
   Heading,
   Paragraph,
-  SubHeader,
   Dialog,
   ErrorBlock,
+  SubHeading,
 } from "@/components/ui";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useFeedback from "@/hooks/useFeedback";
 import { routes } from "@/constants";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
 
@@ -34,21 +35,29 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { error, setError, loading, setLoading } = useFeedback();
 
-  const supabase = createClientComponentClient<Database>();
+  const database = new DatabaseClient({ type: "clientComponent" });
 
   const router = useRouter();
 
   const removeSet = async () => {
     setLoading(true);
-    const { error } = await supabase.from("sets").delete().eq("id", set.id);
+    const { error } = await database.sets.remove(set.id);
     if (error) {
       setError(error.message);
       return;
     }
-    router.replace(routes.sets.browser);
+    router.replace(routes.sets.browser());
   };
 
-  const { description, featured, name, songs, cover, id } = set;
+  const {
+    description,
+    featured: isFeatured,
+    private: isPrivate,
+    name,
+    songs,
+    cover,
+    id,
+  } = set;
 
   return (
     <>
@@ -88,12 +97,14 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
         {!cover && <div className="h-52 w-full" />}
       </div>
       <nav className="flex justify-between">
-        <BackButton href={routes.sets.browser}>Back to sets</BackButton>
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
       </nav>
       <div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col-reverse items-start gap-2 break-all md:flex-row md:items-center md:gap-4">
           <Heading>{name}</Heading>
-          <Badge>{featured ? "Featured" : "Community"}</Badge>
+          <Badge className="whitespace-nowrap">
+            {isPrivate ? "Private" : isFeatured ? "Featured" : "Community"}
+          </Badge>
         </div>
         <Paragraph>{songs.length} tracks</Paragraph>
       </div>
@@ -102,7 +113,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
       </ExtendingParagraph>
       {setContent && (
         <div className="mt-8 flex flex-col gap-2">
-          <SubHeader>Set includes:</SubHeader>
+          <SubHeading>Set includes:</SubHeading>
           <ExtendingParagraph>
             {`Albums: ${setContent.albums.join(", ")}`}
           </ExtendingParagraph>
@@ -135,7 +146,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
             <Button
               icon={<RxCopy />}
               variant="secondary"
-              href={`/sets/create?setid=${id}`}
+              href={routes.sets.create.existingSet(id)}
             >
               Duplicate
             </Button>
@@ -150,7 +161,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
             >
               Share
             </Button>
-            <Button icon={<RxPlay />} href={`/game/${id}`}>
+            <Button icon={<RxPlay />} href={routes.game.set(id)}>
               Play
             </Button>
           </div>

@@ -18,7 +18,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import parseArtwork from "@/utils/parseArtwork";
 import { useRouter } from "next/navigation";
-import sleep from "@/utils/sleep";
 import {
   Button,
   CardFooter,
@@ -30,9 +29,16 @@ import {
   Tooltip,
 } from "@/components/ui";
 import useFeedback from "@/hooks/useFeedback";
+import ISRCImport from "./ISRCImport";
+import { useHotkeys } from "react-hotkeys-hook";
+import { DatabaseClient } from "@/lib/database/databaseClient";
 
 const schema = z.object({
-  name: z.string().trim().min(6, "Minimal 6 characters"),
+  name: z
+    .string()
+    .trim()
+    .min(6, "Min 6 characters")
+    .max(24, "Max 24 characters"),
   description: z.optional(z.string()),
   cover: z.string().url().optional(),
   songs: z
@@ -41,26 +47,42 @@ const schema = z.object({
     .min(5, { message: "At least 5 songs." })
     .max(100, { message: "Max 100 tracks per set." }),
   private: z.boolean(),
+  bgColor: z.string().optional(),
+  textColor: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
 
-export interface ProvidedValuesSetCreator
-  extends Omit<FormData, "songs" | "private"> {
+export interface ProvidedValuesSetCreator extends Omit<FormData, "songs"> {
   playlist: SearchQuerySong[];
 }
 
 interface Props {
   values?: ProvidedValuesSetCreator;
   existingId?: string;
+  isrcs?: {
+    album: string;
+    isrc: string;
+  }[];
+  spotifyAuthUrl?: string;
 }
 
-const SetCreator = ({ values, existingId }: Props) => {
+const SetCreator = ({ values, existingId, isrcs, spotifyAuthUrl }: Props) => {
+  useHotkeys("shift+ctrl+z", () => {
+    spotifyAuthUrl && router.push(spotifyAuthUrl);
+  });
+
   const updateMode = existingId ? true : false;
+  const isIsrcs = Array.isArray(isrcs) && isrcs.length > 0;
 
   const { setError, error, setLoading, loading } = useFeedback();
+
   const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
+  const database = new DatabaseClient({
+    type: "clientComponent",
+  });
+  const { insert, update } = database.sets;
+
   const [playlist, setPlaylist] = useState<SearchQuerySong[]>(
     values?.playlist || []
   );
@@ -74,7 +96,7 @@ const SetCreator = ({ values, existingId }: Props) => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: values
-      ? { ...values, songs: [], private: false }
+      ? { ...values, songs: [] }
       : { cover: undefined, private: false, songs: [] },
   });
 
@@ -97,6 +119,14 @@ const SetCreator = ({ values, existingId }: Props) => {
     });
   };
 
+  const newSongHandler = (newSong: SearchQuerySong) => {
+    setPlaylist((prev) => {
+      const isAdded = prev.some((currSongs) => currSongs.id === newSong.id);
+      if (isAdded) return prev;
+      return [...prev, newSong];
+    });
+  };
+
   const removeSongHandler = (songId: string) => {
     setPlaylist((prev) => prev.filter(({ id }) => id !== songId));
   };
@@ -109,41 +139,40 @@ const SetCreator = ({ values, existingId }: Props) => {
       description,
       cover: coverProvided,
       private: setPrivate,
+      bgColor,
+      textColor,
     } = form;
     const cover =
       coverProvided ??
       parseArtwork(playlist[0].attributes.artwork).artworkUrl.large;
 
     const { data, error } = updateMode
-      ? await supabase
-          .from("sets")
-          .update({
-            name,
-            songs,
-            cover,
-            description,
-            private: setPrivate,
-          })
-          .eq("id", existingId)
-          .select()
-      : await supabase
-          .from("sets")
-          .insert({
-            featured: false,
-            name,
-            songs,
-            cover,
-            description,
-            private: setPrivate,
-          })
-          .select();
+      ? await update(existingId!, {
+          name,
+          songs,
+          cover,
+          description,
+          private: setPrivate,
+          bgColor,
+          textColor,
+        })
+      : await insert({
+          featured: false,
+          name,
+          songs,
+          cover,
+          description,
+          private: setPrivate,
+          bgColor,
+          textColor,
+        });
 
     if (error) {
       setError(error.message);
       return;
     }
 
-    router.replace(`/sets/${data[0].id}`);
+    router.replace(`/sets/${data.id}`);
   };
 
   return (
@@ -151,6 +180,7 @@ const SetCreator = ({ values, existingId }: Props) => {
       onSubmit={handleSubmit(handleSetSubmit)}
       className="flex flex-col gap-3"
     >
+      {isIsrcs && <ISRCImport isrcs={isrcs} addHandler={newSongHandler} />}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Input
           label="Set name"
@@ -174,6 +204,8 @@ const SetCreator = ({ values, existingId }: Props) => {
           })}
         />
       </div>
+      <input type="color" {...register("bgColor")} />
+      <input type="color" {...register("textColor")} />
       <Divider>trakclist</Divider>
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
@@ -181,6 +213,9 @@ const SetCreator = ({ values, existingId }: Props) => {
             <Paragraph className="flex items-center gap-2">
               <Tooltip>Minimum 5 tracks, maximum 100 tracks per set.</Tooltip>
               Playlist inludes {songsAdded.length} songs.
+              {songsAdded.length > 0 && (
+                <span className="opacity-50">Tap on song to delete it.</span>
+              )}
             </Paragraph>
             {errors.songs?.message && (
               <ErrorParagraph>{errors.songs.message}</ErrorParagraph>
@@ -192,9 +227,11 @@ const SetCreator = ({ values, existingId }: Props) => {
           {playlist.map((song) => {
             return (
               <SongItem
-                className="cursor-pointer border border-zinc-700/40 bg-zinc-800 p-2 pr-5 hover:scale-[98%] hover:opacity-80"
+                className="cursor-pointer border border-zinc-700/40 bg-zinc-800 p-2 pr-4 opacity-80 hover:opacity-100"
                 shortName
                 showArtist
+                showPreview
+                colorfulPlay
                 showArtwork
                 songData={song.attributes}
                 key={song.id + "added"}

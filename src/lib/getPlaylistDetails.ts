@@ -11,7 +11,7 @@ const getPlaylistDetails = async (playlistId: string) => {
 
   const data = (await res.json()) as PlaylistType;
 
-  return data;
+  return data.data[0];
 };
 
 export default getPlaylistDetails;

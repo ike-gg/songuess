@@ -3,23 +3,21 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import type { Database } from "../../../types/supabase";
-import { useState } from "react";
 import RecoveryForm from "./RecoveryForm";
+import useFeedback from "@/hooks/useFeedback";
 
 export default function Recovery() {
   const supabase = createClientComponentClient<Database>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>();
-  const [success, setSuccess] = useState<string>();
+  const { loading, setLoading, error, setError, success, setSuccess } =
+    useFeedback();
 
   const handleRecovery = async (email: string) => {
-    setIsLoading(true);
-    setError(undefined);
-    setSuccess(undefined);
+    setLoading(true);
+
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${location.origin}/auth/callback?next=/recovery/updatepassword`,
     });
-    setIsLoading(false);
+
     if (!error) {
       setSuccess(
         "If you have provided a valid email address, you will soon receive an email with instructions to reset your password."
@@ -33,7 +31,7 @@ export default function Recovery() {
     <RecoveryForm
       success={success}
       error={error}
-      loading={isLoading}
+      loading={loading}
       handleRecovery={handleRecovery}
     />
   );

@@ -1,10 +1,9 @@
 import { SongType } from "@/types/musicApi/Song";
 
-const getSongsByISRC = async (isrc: string[]) => {
+const getSongsByISRC = async (isrc: string[] | string) => {
+  const isrcQuery = Array.isArray(isrc) ? isrc.join(",") : isrc;
   const res = await fetch(
-    `https://harmony-backend.vercel.app/api/getSongs?ids=${isrc.join(
-      ","
-    )}&isrc=true`
+    `https://harmony-backend.vercel.app/api/getSongs?ids=${isrcQuery}&isrc=true`
   );
 
   if (!res.ok) {
@@ -13,18 +12,20 @@ const getSongsByISRC = async (isrc: string[]) => {
 
   const { data } = (await res.json()) as SongType;
 
-  const uniqueISRC: string[] = [];
-  const songs: SongType["data"] = [];
+  return data;
 
-  for (const song of data) {
-    const { isrc } = song.attributes;
-    if (uniqueISRC.includes(isrc)) continue;
-    if (song.attributes.previews.length === 0) continue;
-    songs.push(song);
-    uniqueISRC.push(isrc);
-  }
+  // const uniqueISRC: string[] = [];
+  // const songs: SongType["data"] = [];
 
-  return songs;
+  // for (const song of data) {
+  //   const { isrc } = song.attributes;
+  //   if (uniqueISRC.includes(isrc)) continue;
+  //   if (song.attributes.previews.length === 0) continue;
+  //   songs.push(song);
+  //   uniqueISRC.push(isrc);
+  // }
+
+  // return songs;
 };
 
 export default getSongsByISRC;

@@ -23,18 +23,19 @@ const AnimatedText = ({ children, className }: Props) => {
       <motion.span
         variants={wordVariants}
         className={twMerge("inline-block pb-1", className)}
-        //
         key={word + index}
       >
         {word}
       </motion.span>
     );
   });
+
   return (
     <Motion>
       <motion.span
         initial="hidden"
-        animate="show"
+        whileInView="show"
+        viewport={{ once: true, margin: "-100px" }}
         className="block whitespace-pre-wrap "
       >
         {animatedWords}

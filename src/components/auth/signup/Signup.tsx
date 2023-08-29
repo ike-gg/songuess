@@ -1,65 +1,58 @@
 "use client";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
 
 import type { Database } from "../../../types/supabase";
 import SignupForm from "./SignupForm";
-import { useState } from "react";
+import useFeedback from "@/hooks/useFeedback";
 
 export default function Signup() {
-  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>();
-  const [success, setSuccess] = useState<string>();
+  const { error, loading, setError, setLoading, setSuccess, success } =
+    useFeedback();
 
   const handleSignUp = async (
     username: string,
     email: string,
     password: string
   ) => {
-    setIsLoading(true);
-    setError(undefined);
-    setSuccess(undefined);
+    setLoading(true);
     const { data: dataUsername, error: errorUsername } = await supabase
       .from("users")
       .select()
       .ilike("username", username);
     if (errorUsername) {
       setError(errorUsername.message);
-      setIsLoading(false);
-      return;
-    }
-    if (dataUsername && dataUsername.length >= 1) {
-      setError("Username is alredy taken.");
-      setIsLoading(false);
       return;
     }
 
-    const { error, data } = await supabase.auth.signUp({
+    if (dataUsername && dataUsername.length >= 1) {
+      setError("Username is alredy taken.");
+      return;
+    }
+
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: `${location.origin}/auth/callback`,
         data: {
-          username,
+          full_name: username,
         },
       },
     });
-    console.log(error, data);
-    setIsLoading(false);
-    if (!error) {
-      setSuccess(
-        "If you haven't registered with this email address before, you will receive an activation link for your account shortly."
-      );
+
+    if (error) {
+      setError(error.message);
       return;
     }
-    setError(error?.message);
+    setSuccess(
+      "If you haven't registered with this email address before, you will receive an activation link for your account shortly."
+    );
   };
 
   const handleSpotify = async () => {
-    setIsLoading(true);
+    setLoading(true);
     await supabase.auth.signInWithOAuth({
       provider: "spotify",
       options: {
@@ -70,7 +63,7 @@ export default function Signup() {
 
   return (
     <SignupForm
-      loading={isLoading}
+      loading={loading}
       error={error}
       success={success}
       handleSpotify={handleSpotify}

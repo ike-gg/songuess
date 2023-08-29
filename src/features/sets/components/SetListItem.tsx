@@ -2,7 +2,8 @@
 import { Database } from "@/types/supabase";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CardItem, Paragraph, SubHeader } from "@/components/ui";
+import { CardItem, Paragraph, SubHeading } from "@/components/ui";
+import { routes } from "@/constants";
 
 type Set = Database["public"]["Tables"]["sets"]["Row"];
 
@@ -15,7 +16,7 @@ const SetListItem = ({ set }: Props) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <CardItem href={`/sets/${id}`}>
+    <CardItem href={routes.sets.set(id)}>
       {cover && (
         <motion.img
           onLoad={() => setLoaded(true)}
@@ -31,8 +32,8 @@ const SetListItem = ({ set }: Props) => {
       {!cover && <div className="h-14 w-14 rounded-sm bg-zinc-700" />}
       <div className="flex grow items-center justify-between">
         <div className="flex basis-8/12 flex-col gap-1">
-          <SubHeader className="leading-none">{name}</SubHeader>
-          <Paragraph className="text-sm leading-tight line-clamp-1">
+          <SubHeading className="text-lg leading-none">{name}</SubHeading>
+          <Paragraph className="line-clamp-1 text-sm leading-tight">
             {description}
           </Paragraph>
         </div>

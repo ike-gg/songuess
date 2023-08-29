@@ -14,11 +14,13 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "transparent"
     | "spotify"
     | "apple"
-    | "white";
+    | "white"
+    | "navigator";
   loading?: boolean;
   size?: "small" | "medium" | "large";
   icon?: ReactNode;
   className?: string;
+  mobileCol?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, Props>(
@@ -31,6 +33,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
       icon,
       loading,
       className,
+      mobileCol,
       ...props
     },
     ref
@@ -39,7 +42,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
       "whitespace-nowrap flex items-center justify-center gap-1.5 rounded-lg transition-all duration-300 w-fit",
       "disabled:opacity-50 border-2 border-transparent",
       variant === "primary" &&
-        "bg-indigo-700 text-indigo-100 hover:bg-indigo-800 active:border-indigo-600",
+        "bg-indigo-600 text-indigo-100 hover:bg-indigo-700 active:border-indigo-500",
       variant === "secondary" &&
         " bg-zinc-800 text-zinc-300 hover:bg-zinc-700 active:border-zinc-600",
       variant === "transparent" &&
@@ -55,6 +58,9 @@ const Button = forwardRef<HTMLButtonElement, Props>(
       size === "small" && "text-sm px-2.5 py-1",
       size === "medium" && "px-4 py-1.5",
       size === "large" && "px-5 py-3",
+      mobileCol && "flex-col-reverse md:flex-row gap-1",
+      variant === "navigator" &&
+        "bg-transparent rounded-full active:bg-zinc-800/60 hover:bg-zinc-800/40 p-2",
       className
     );
 

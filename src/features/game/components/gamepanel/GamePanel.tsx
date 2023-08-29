@@ -30,8 +30,6 @@ const GamePanel = forwardRef<HTMLInputElement>((_, ref) => {
             onGuess={() => {
               dispatch(gameActions.setRoundStatus("guessed"));
             }}
-            backgroundColor={bgColor}
-            textColor={primColor}
           />
         )}
         {(status === "guessed" || status === "timeout") && (

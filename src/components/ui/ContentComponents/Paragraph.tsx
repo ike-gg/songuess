@@ -8,7 +8,10 @@ interface Props extends HTMLAttributes<HTMLParagraphElement> {
 
 const Paragraph = ({ children, className, ...props }: Props) => {
   return (
-    <p {...props} className={twMerge("leading-tight opacity-60", className)}>
+    <p
+      {...props}
+      className={twMerge("text-sm leading-tight opacity-60", className)}
+    >
       {children}
     </p>
   );
