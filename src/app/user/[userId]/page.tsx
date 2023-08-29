@@ -13,12 +13,17 @@ const UserByIdPage = async ({
   if (!userId) redirect(routes.user.profile);
 
   const db = new DatabaseClient({ type: "serverComponent", cookies });
-
   const { data: profile, error } = await db.users.getProfile(userId);
+  const currentUser = await db.currentUser.auth();
 
   if (error) redirect(routes.user.profile);
 
-  return <UserProfile user={profile} />;
+  return (
+    <UserProfile
+      user={profile}
+      authProfile={currentUser.data.user?.id === profile.id}
+    />
+  );
 };
 
 export default UserByIdPage;

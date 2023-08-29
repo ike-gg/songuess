@@ -1,5 +1,4 @@
 import { routes } from "@/constants";
-import UserProfile from "@/features/user/components/UserProfile";
 import { DatabaseClient } from "@/lib/database/databaseClient";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

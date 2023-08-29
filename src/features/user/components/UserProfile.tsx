@@ -23,16 +23,17 @@ import { twMerge } from "tailwind-merge";
 
 interface Props {
   user: Database["public"]["Tables"]["users"]["Row"];
+  authProfile?: boolean;
 }
 
-const UserProfile = ({ user }: Props) => {
+const UserProfile = ({ user, authProfile }: Props) => {
   const { loading, setLoading, error, setError } = useFeedback();
   const { replace } = useRouter();
 
   const supabase = createClientComponentClient<Database>();
 
-  const level = useMemo(() => Math.floor(Math.random() * 100), []);
-  const exp = useMemo(() => Math.floor(Math.random() * 100), []);
+  const level = 8;
+  const exp = 45;
 
   const signOut = async () => {
     setLoading(true);
@@ -46,7 +47,10 @@ const UserProfile = ({ user }: Props) => {
 
   return (
     <>
-      <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
+      <div className="flex justify-between">
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
+        {authProfile && <div>Hey, its you!</div>}
+      </div>
       {error && <ErrorBlock>{error}</ErrorBlock>}
       <div className="flex items-center gap-4 rounded-lg bg-gradient-to-r from-zinc-800 to-zinc-800/30 p-4">
         <ProfilePicture avatarUrl={user.avatar_url || undefined} />
