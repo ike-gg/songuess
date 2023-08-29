@@ -6,7 +6,6 @@ import {
   CardFooter,
   CircleProgress,
   ErrorBlock,
-  Heading,
   Label,
   Paragraph,
   ProfilePicture,
@@ -18,7 +17,7 @@ import useFeedback from "@/hooks/useFeedback";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { RxExit } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
 
@@ -29,15 +28,11 @@ interface Props {
 const UserProfile = ({ user }: Props) => {
   const { loading, setLoading, error, setError } = useFeedback();
   const { replace } = useRouter();
-  const [level, setLevel] = useState<number>(0);
-  const [exp, setExp] = useState<number>(0);
 
   const supabase = createClientComponentClient<Database>();
 
-  useEffect(() => {
-    setLevel(Math.floor(Math.random() * 10));
-    setExp(Math.floor(Math.random() * 100));
-  }, []);
+  const level = useMemo(() => Math.floor(Math.random() * 100), []);
+  const exp = useMemo(() => Math.floor(Math.random() * 100), []);
 
   const signOut = async () => {
     setLoading(true);
