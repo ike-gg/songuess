@@ -6,7 +6,6 @@ import {
   CardFooter,
   CircleProgress,
   ErrorBlock,
-  Heading,
   Label,
   Paragraph,
   ProfilePicture,
@@ -18,26 +17,23 @@ import useFeedback from "@/hooks/useFeedback";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { RxExit } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
   user: Database["public"]["Tables"]["users"]["Row"];
+  authProfile?: boolean;
 }
 
-const UserProfile = ({ user }: Props) => {
+const UserProfile = ({ user, authProfile }: Props) => {
   const { loading, setLoading, error, setError } = useFeedback();
   const { replace } = useRouter();
-  const [level, setLevel] = useState<number>(0);
-  const [exp, setExp] = useState<number>(0);
 
   const supabase = createClientComponentClient<Database>();
 
-  useEffect(() => {
-    setLevel(Math.floor(Math.random() * 10));
-    setExp(Math.floor(Math.random() * 100));
-  }, []);
+  const level = 8;
+  const exp = 45;
 
   const signOut = async () => {
     setLoading(true);
@@ -51,7 +47,10 @@ const UserProfile = ({ user }: Props) => {
 
   return (
     <>
-      <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
+      <div className="flex justify-between">
+        <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
+        {authProfile && <div>Hey, its you!</div>}
+      </div>
       {error && <ErrorBlock>{error}</ErrorBlock>}
       <div className="flex items-center gap-4 rounded-lg bg-gradient-to-r from-zinc-800 to-zinc-800/30 p-4">
         <ProfilePicture avatarUrl={user.avatar_url || undefined} />

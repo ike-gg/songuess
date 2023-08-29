@@ -35,6 +35,7 @@ const useUserClient = () => {
   const shorthands = {
     username: userData?.username,
     avatar: userData?.avatar_url,
+    id: userData?.id,
   };
 
   return {
