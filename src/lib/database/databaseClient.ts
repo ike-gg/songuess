@@ -4,7 +4,6 @@ import {
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import { SupabaseClient, createClient } from "@supabase/supabase-js";
-import { createServer } from "http";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 const supabaseCreateClient = () => {
