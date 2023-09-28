@@ -4,8 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CardItem, Paragraph, SubHeading } from "@/components/ui";
 import { routes } from "@/constants";
-
-type Set = Database["public"]["Tables"]["sets"]["Row"];
+import { Set } from "@/types/databaseTypes";
 
 interface Props {
   set: Set;

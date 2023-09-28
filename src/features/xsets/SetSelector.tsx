@@ -27,8 +27,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import useDebounceQuery from "@/hooks/useDebounceQuery";
 import { useRouter, useSearchParams } from "next/navigation";
 import SetCardItem from "./SetCardItem";
-
-type Set = Database["public"]["Tables"]["sets"]["Row"];
+import { Set } from "@/types/databaseTypes";
 
 export interface SetSelectorProps {
   sets: {

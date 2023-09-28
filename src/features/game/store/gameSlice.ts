@@ -1,10 +1,9 @@
+import { Set } from "@/types/databaseTypes";
 import { SongType } from "@/types/musicApi/Song";
 import { Database } from "@/types/supabase";
 import calculatePoints from "@/utils/calculatePoints";
 import getRandomElements from "@/utils/getRandomElements";
 import { PayloadAction, createSlice, current } from "@reduxjs/toolkit";
-
-type Set = Database["public"]["Tables"]["sets"]["Row"];
 
 export interface RoundState {
   status: "countdown" | "guessing" | "guessed" | "timeout";

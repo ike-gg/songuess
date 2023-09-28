@@ -2,14 +2,14 @@ import { SongAttributes, SongType } from "@/types/musicApi/Song";
 import Hero from "./hero/Hero";
 import { AlbumAttributes } from "@/types/musicApi/Album";
 import HomeSets from "./sets/HomeSets";
-import { Database } from "@/types/supabase";
 import FeaturesHome from "./features/FeaturesHome";
 import HomeMultiplayer from "./multiplayer/HomeMultiplayer";
+import { Set } from "@/types/databaseTypes";
 
 interface Props {
   songs: SongAttributes[];
   albums: AlbumAttributes[];
-  sets: Database["public"]["Tables"]["sets"]["Row"][];
+  sets: Set[];
 }
 
 const Home = ({ albums, songs, sets }: Props) => {

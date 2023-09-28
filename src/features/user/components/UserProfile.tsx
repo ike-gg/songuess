@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import {
@@ -13,24 +14,42 @@ import {
   WarningBlock,
 } from "@/components/ui";
 import { routes } from "@/constants";
+import SetCardItem from "@/features/xsets/SetCardItem";
 import useFeedback from "@/hooks/useFeedback";
+import { DatabaseClient } from "@/lib/database/databaseClient";
+import { Set, User } from "@/types/databaseTypes";
 import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { RxExit } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  user: Database["public"]["Tables"]["users"]["Row"];
-  authProfile?: boolean;
+  user: User;
+  currentUser?: boolean;
 }
 
-const UserProfile = ({ user, authProfile }: Props) => {
+const UserProfile = ({ user, currentUser }: Props) => {
   const { loading, setLoading, error, setError } = useFeedback();
   const { replace } = useRouter();
+  const [userSets, setUserSets] = useState<Set[]>([]);
 
   const supabase = createClientComponentClient<Database>();
+  const db = new DatabaseClient({ type: "clientComponent" });
+
+  useEffect(() => {
+    const fetchUserSets = async () => {
+      const { data, error } = await db.users.getSets(user.id);
+      if (error) {
+        setError(error.message);
+        return;
+      }
+      setUserSets(data);
+    };
+
+    fetchUserSets();
+  }, [user]);
 
   const level = 8;
   const exp = 45;
@@ -49,12 +68,11 @@ const UserProfile = ({ user, authProfile }: Props) => {
     <>
       <div className="flex justify-between">
         <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
-        {authProfile && <div>Hey, its you!</div>}
       </div>
       {error && <ErrorBlock>{error}</ErrorBlock>}
       <div className="flex items-center gap-4 rounded-lg bg-gradient-to-r from-zinc-800 to-zinc-800/30 p-4">
         <ProfilePicture avatarUrl={user.avatar_url || undefined} />
-        <div className="flex h-full flex-col justify-between">
+        <div className="flex h-full flex-col justify-between gap-1.5">
           <Label className="leading-none">user profile</Label>
           <SubHeading className="leading-none">{user.username}</SubHeading>
           <Paragraph className="text-xs leading-none">
@@ -85,7 +103,12 @@ const UserProfile = ({ user, authProfile }: Props) => {
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         {[
-          { name: "Sets created", value: 4 },
+          {
+            name: `Sets created (includes ${
+              userSets.filter((s) => s.private).length
+            } private sets)`,
+            value: userSets.length,
+          },
           { name: "Sets played", value: 54 },
           { name: "Received feedback", value: 5.4 },
         ].map((data) => (
@@ -98,21 +121,36 @@ const UserProfile = ({ user, authProfile }: Props) => {
           </div>
         ))}
       </div>
+      <div className="-mx-6 grid grid-flow-col-dense grid-rows-1 gap-4 overflow-x-auto pl-6">
+        {userSets
+          .filter((s) => !s.private)
+          .map((set) => {
+            return (
+              <SetCardItem
+                className="col-span-1 row-span-1 flex w-44"
+                set={set}
+                key={set.id}
+              />
+            );
+          })}
+      </div>
       <WarningBlock>
         Current data on profile page is static. More content on profile page
         coming soon...
       </WarningBlock>
-      <CardFooter>
-        <Button
-          loading={loading}
-          onClick={signOut}
-          variant="danger"
-          size="small"
-          icon={<RxExit />}
-        >
-          Sign out
-        </Button>
-      </CardFooter>
+      {currentUser && (
+        <CardFooter>
+          <Button
+            loading={loading}
+            onClick={signOut}
+            variant="danger"
+            size="small"
+            icon={<RxExit />}
+          >
+            Sign out
+          </Button>
+        </CardFooter>
+      )}
     </>
   );
 };

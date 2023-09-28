@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui";
-import { Database } from "@/types/supabase";
+import { Set } from "@/types/databaseTypes";
 import { RxShare2 } from "react-icons/rx";
-
-type Set = Database["public"]["Tables"]["sets"]["Row"];
 
 interface Props {
   set: Set;

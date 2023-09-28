@@ -13,8 +13,6 @@ import {
   ErrorBlock,
   SubHeading,
 } from "@/components/ui";
-import { Database } from "@/types/supabase";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import { RxCopy, RxPencil2, RxPlay, RxShare2, RxTrash } from "react-icons/rx";
 import { useState } from "react";
@@ -22,8 +20,7 @@ import { useRouter } from "next/navigation";
 import useFeedback from "@/hooks/useFeedback";
 import { routes } from "@/constants";
 import { DatabaseClient } from "@/lib/database/databaseClient";
-
-type Set = Database["public"]["Tables"]["sets"]["Row"];
+import { Set } from "@/types/databaseTypes";
 
 interface Props {
   set: Set;

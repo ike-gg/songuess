@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { Badge, Paragraph, SubHeading, Transition } from "@/components/ui";
 import { routes } from "@/constants";
+import { Set } from "@/types/databaseTypes";
 import { Database } from "@/types/supabase";
 import addAlpha from "@/utils/addAlphaHex";
 import { motion } from "framer-motion";
 import { forwardRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
-
-type Set = Database["public"]["Tables"]["sets"]["Row"];
 
 interface Props {
   set: Set;

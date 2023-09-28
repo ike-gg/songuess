@@ -1,6 +1,5 @@
 import { DatabaseClient } from "@/lib/database/databaseClient";
-import { Database } from "@/types/supabase";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { User } from "@/types/databaseTypes";
 import { useEffect, useMemo, useState } from "react";
 
 const useUserClient = () => {
@@ -9,8 +8,7 @@ const useUserClient = () => {
     []
   );
 
-  const [userData, setUserData] =
-    useState<Database["public"]["Tables"]["users"]["Row"]>();
+  const [userData, setUserData] = useState<User>();
   const [loading, setLoading] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
 

@@ -13,8 +13,7 @@ import Motion from "../../components/providers/Motion";
 import BackgroundImage from "./components/BackgroundImage";
 import parseArtwork from "@/utils/parseArtwork";
 import { AnimatePresence } from "framer-motion";
-
-type Set = Database["public"]["Tables"]["sets"]["Row"];
+import { Set } from "@/types/databaseTypes";
 
 interface Props {
   setDetails: Set;
