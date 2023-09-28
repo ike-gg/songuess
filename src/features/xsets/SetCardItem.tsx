@@ -12,10 +12,11 @@ type Set = Database["public"]["Tables"]["sets"]["Row"];
 interface Props {
   set: Set;
   index?: number;
+  className?: string;
 }
 
 const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
-  ({ set, index }, ref) => {
+  ({ set, index, className }, ref) => {
     const { id, name, bgColor, textColor, cover, recommendation, description } =
       set;
 
@@ -44,7 +45,8 @@ const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
         transition={{ delay: 0.04 * (index || 1), type: "spring", bounce: 0 }}
         className={twMerge(
           "relative col-span-1 row-span-1 aspect-square h-full w-full overflow-hidden rounded-lg",
-          recommendation && "col-span-2 row-span-2"
+          recommendation && "col-span-2 row-span-2",
+          className
         )}
         whileHover={{
           boxShadow: `0 0 25px ${
