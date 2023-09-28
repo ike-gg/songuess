@@ -21,7 +21,7 @@ const UserByIdPage = async ({
   return (
     <UserProfile
       user={profile}
-      authProfile={currentUser.data.user?.id === profile.id}
+      currentUser={currentUser.data.user?.id === profile.id}
     />
   );
 };
