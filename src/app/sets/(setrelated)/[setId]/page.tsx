@@ -22,12 +22,21 @@ const SetPage = async ({
     data: { user: requestingUser },
   } = await database.currentUser.auth();
 
+  const { data: ownerProfile } = await database.users.getProfile(
+    setDetails.owner
+  );
+
   const setContent = await getAlbumsArtistsFromSet(setDetails.songs);
 
   const isOwner = requestingUser?.id === setDetails.owner;
 
   return (
-    <SetPreview set={setDetails} setContent={setContent} owner={isOwner} />
+    <SetPreview
+      set={setDetails}
+      setContent={setContent}
+      isOwner={isOwner}
+      owner={ownerProfile}
+    />
   );
 };
 

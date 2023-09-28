@@ -20,15 +20,16 @@ import { useRouter } from "next/navigation";
 import useFeedback from "@/hooks/useFeedback";
 import { routes } from "@/constants";
 import { DatabaseClient } from "@/lib/database/databaseClient";
-import { Set } from "@/types/databaseTypes";
+import { Set, User } from "@/types/databaseTypes";
 
 interface Props {
   set: Set;
   setContent: { albums: string[]; artists: string[] };
-  owner?: boolean;
+  isOwner: boolean;
+  owner?: User | null;
 }
 
-const SetPreview = ({ set, setContent, owner }: Props) => {
+const SetPreview = ({ set, setContent, owner, isOwner }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { error, setError, loading, setLoading } = useFeedback();
 
@@ -93,7 +94,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
         )}
         {!cover && <div className="h-52 w-full" />}
       </div>
-      <nav className="flex justify-between">
+      <nav className="flex items-start justify-between">
         <BackButton href={routes.sets.browser()}>Back to sets</BackButton>
       </nav>
       <div>
@@ -109,7 +110,7 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
         {description || "Description not found."}
       </ExtendingParagraph>
       {setContent && (
-        <div className="mt-8 flex flex-col gap-2">
+        <div className="mt-4 flex flex-col gap-2">
           <SubHeading>Set includes:</SubHeading>
           <ExtendingParagraph>
             {`Albums: ${setContent.albums.join(", ")}`}
@@ -119,10 +120,34 @@ const SetPreview = ({ set, setContent, owner }: Props) => {
           </ExtendingParagraph>
         </div>
       )}
+      {owner && (
+        <div className="mt-2 flex flex-col gap-2">
+          <SubHeading>Created by</SubHeading>
+          <Button
+            href={routes.user.id(owner.id)}
+            size="small"
+            variant="secondary"
+          >
+            <div className="flex items-center gap-2">
+              {owner.avatar_url && (
+                <img
+                  className="h-7 w-7 rounded-full bg-zinc-500"
+                  alt="user profile image"
+                  src={owner.avatar_url || ""}
+                />
+              )}
+              {!owner.avatar_url && (
+                <div className="h-7 w-7 rounded-full bg-zinc-500" />
+              )}
+              <p>{owner.username}</p>
+            </div>
+          </Button>
+        </div>
+      )}
       <CardFooter>
         <div className="flex justify-between gap-3">
           <div className="flex gap-2">
-            {owner && (
+            {isOwner && (
               <>
                 <Button
                   icon={<RxTrash />}
