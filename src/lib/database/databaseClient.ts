@@ -110,7 +110,7 @@ class DatabaseClient {
         .eq("id", userId)
         .select()
         .single(),
-    setSets: async (userId: string) =>
+    getSets: async (userId: string) =>
       await this.instance.from("sets").select().eq("owner", userId),
   };
 }
