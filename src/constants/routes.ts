@@ -35,6 +35,7 @@ const auth = {
 const user = {
   profile: "/user",
   id: (userId: string) => `/user/${userId}`,
+  sets: (userId: string) => `/user/${userId}/sets`,
 };
 
 const game = {
