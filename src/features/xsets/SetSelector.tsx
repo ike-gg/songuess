@@ -89,7 +89,7 @@ const SetSelector = ({ sets }: SetSelectorProps) => {
 
   return (
     <>
-      <aside className="static top-12 flex h-fit max-h-screen w-full flex-col gap-4 md:sticky md:w-full md:max-w-[18rem]">
+      <aside className="static top-12 flex h-fit max-h-screen w-full flex-col gap-4 md:sticky md:w-full md:max-w-[16rem]">
         <div className="flex items-center justify-between">
           <Heading>Sets</Heading>
           <div className="flex gap-2">
@@ -137,7 +137,7 @@ const SetSelector = ({ sets }: SetSelectorProps) => {
                 mobileCol
                 variant={activeSet === name ? "primary" : "secondary"}
                 className={twMerge(
-                  "w-full capitalize",
+                  "w-full justify-start capitalize",
                   activeSet === name && "shadow-lg shadow-indigo-700/50"
                 )}
               >

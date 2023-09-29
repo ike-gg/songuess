@@ -5,6 +5,7 @@ import { Set } from "@/types/databaseTypes";
 import addAlpha from "@/utils/addAlphaHex";
 import { motion } from "framer-motion";
 import { forwardRef, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
@@ -18,7 +19,10 @@ const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
     const { id, name, bgColor, textColor, cover, recommendation, description } =
       set;
 
+    useHotkeys("control", () => setCompact((p) => !p));
+
     const [showDescription, setShowDescription] = useState(false);
+    const [compact, setCompact] = useState(false);
 
     const recommendationGradient = `linear-gradient(150deg, ${
       bgColor || "black"
@@ -49,12 +53,18 @@ const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
           recommendation && "col-span-2 row-span-2",
           className
         )}
-        style={{ color: textColor || undefined }}
+        style={{
+          color: textColor || undefined,
+          backgroundColor: bgColor || undefined,
+        }}
         onFocus={() => setShowDescription(true)}
         onBlur={() => setShowDescription(false)}
       >
         <img
-          className="absolute left-0 top-0 aspect-square h-full w-full bg-zinc-800 object-cover shadow-lg"
+          className={twMerge(
+            "absolute left-0 top-0 aspect-square h-full w-full rounded-lg bg-zinc-800 object-cover shadow-lg transition-all duration-500",
+            compact && "left-3 top-3 h-3/5 w-3/5"
+          )}
           src={cover || ""}
           alt={name + " set cover"}
         />
@@ -63,14 +73,21 @@ const SetCardItem = forwardRef<HTMLAnchorElement, Props>(
             background: gradients.join(","),
           }}
           animate={{
-            opacity: showDescription ? 1 : 0.2,
+            opacity: showDescription ? 1 : 0.75,
           }}
-          className="pointer-events-auto absolute flex h-full w-full flex-col justify-end p-3"
+          className={twMerge(
+            "pointer-events-auto absolute flex h-full w-full flex-col justify-end p-3 transition-all"
+          )}
           onMouseEnter={() => setShowDescription(true)}
           onMouseLeave={() => setShowDescription(false)}
         >
           {recommendation && (
-            <Badge className="mb-auto w-fit border-zinc-400 text-white mix-blend-difference">
+            <Badge
+              className={twMerge(
+                "mb-auto ml-0 w-fit border-zinc-400 text-white mix-blend-difference transition-all",
+                compact && "ml-auto"
+              )}
+            >
               {recommendation}
             </Badge>
           )}
