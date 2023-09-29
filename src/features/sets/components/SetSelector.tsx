@@ -1,9 +1,7 @@
 "use client";
 
-import { Database } from "@/types/supabase";
 import SetListItem from "./SetListItem";
 import { ReactNode, useState } from "react";
-import { twMerge } from "tailwind-merge";
 import usePagination from "@/hooks/usePagination";
 import {
   RxGlobe,
@@ -21,10 +19,8 @@ import {
   Paragraph,
   Transition,
 } from "@/components/ui";
-import { current } from "@reduxjs/toolkit";
 import { routes } from "@/constants";
-
-type Set = Database["public"]["Tables"]["sets"]["Row"];
+import { Set } from "@/types/databaseTypes";
 
 export interface SetSelectorProps {
   sets: {

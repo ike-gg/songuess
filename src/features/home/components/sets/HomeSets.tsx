@@ -2,7 +2,6 @@
 
 import { Paragraph, SubHeading } from "@/components/ui";
 import SetListItem from "@/features/sets/components/SetListItem";
-import { Database } from "@/types/supabase";
 import {
   useMotionValueEvent,
   useScroll,
@@ -14,6 +13,7 @@ import { useRef, useState } from "react";
 import { RxGlobe, RxPerson, RxStar } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
 import * as HomeSection from "../shared/HomeSection";
+import { Set } from "@/types/databaseTypes";
 
 const setsInfo = [
   {
@@ -34,7 +34,7 @@ const setsInfo = [
 ];
 
 interface Props {
-  sets: Database["public"]["Tables"]["sets"]["Row"][];
+  sets: Set[];
 }
 
 const HomeSets = ({ sets }: Props) => {

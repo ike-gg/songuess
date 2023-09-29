@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { ReactNode } from "react";
 import { RxArrowLeft } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  children: string;
+  children: ReactNode;
   href: string;
   className?: string;
 }
@@ -18,7 +19,7 @@ const BackButton = ({ children, href, className }: Props) => {
       )}
     >
       <RxArrowLeft className="transition-transform group-hover:-translate-x-0.5" />
-      {children}
+      <div>{children}</div>
     </Link>
   );
 };

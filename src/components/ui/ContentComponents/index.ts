@@ -11,3 +11,4 @@ export * from "./SubHeading";
 export * from "./SuccessBlock";
 export * from "./Label";
 export * from "./WarningBlock";
+export * from "./AnimatedCounter";
