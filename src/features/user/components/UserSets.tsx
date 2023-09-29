@@ -7,16 +7,23 @@ import SetListItem from "@/features/sets/components/SetListItem";
 import SetCardItem from "@/features/xsets/SetCardItem";
 import { Set, User } from "@/types/databaseTypes";
 import { useState } from "react";
-import { RxCardStack, RxListBullet } from "react-icons/rx";
+import { RxCardStack, RxListBullet, RxPlus } from "react-icons/rx";
 
 interface Props {
   userSets: Set[];
   userProfile: User;
   isOwner: boolean;
   privateCount: number;
+  setsCount: number;
 }
 
-const UserSets = ({ isOwner, userSets, privateCount, userProfile }: Props) => {
+const UserSets = ({
+  isOwner,
+  userSets,
+  privateCount,
+  userProfile,
+  setsCount,
+}: Props) => {
   const [listView, setListView] = useState(false);
 
   return (
@@ -36,24 +43,33 @@ const UserSets = ({ isOwner, userSets, privateCount, userProfile }: Props) => {
           {listView ? "List view" : "Card view"}
         </Button>
       </div>
-      <div>
+      <div className="flex flex-col gap-1">
         <Heading>{userProfile.username} sets</Heading>
         <Paragraph>
-          {isOwner
-            ? `You have created ${userSets.length} sets and ${privateCount} of them are private.`
-            : `User has created ${
-                userSets.length + privateCount
-              } sets, out of which ${privateCount} are private.`}
+          {isOwner &&
+            setsCount > 0 &&
+            `You have created ${userSets.length} sets and ${privateCount} of them are private.`}
+          {isOwner && setsCount === 0 && "You have not created any set."}
+
+          {!isOwner &&
+            setsCount > 0 &&
+            `User has created ${setsCount} sets, out of which ${privateCount} are private.`}
+          {!isOwner && setsCount === 0 && "User has not created any set."}
         </Paragraph>
       </div>
-      {!listView && (
+      {isOwner && setsCount === 0 && (
+        <Button icon={<RxPlus />} href={routes.sets.create.blank}>
+          Create your first set
+        </Button>
+      )}
+      {setsCount > 0 && !listView && (
         <div className="grid grid-cols-4 gap-4">
           {userSets.map((set) => (
             <SetCardItem key={set.id} set={set} />
           ))}
         </div>
       )}
-      {listView && (
+      {setsCount > 0 && listView && (
         <div className="flex flex-col gap-4">
           {userSets.map((set) => (
             <SetListItem set={set} key={set.id} />

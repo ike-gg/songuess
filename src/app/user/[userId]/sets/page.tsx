@@ -36,6 +36,7 @@ const UserSetsPage = async ({
       userSets={isOwner ? allUserSets : publicUserSets}
       privateCount={privateCount}
       userProfile={profileData}
+      setsCount={allUserSets.length}
     />
   );
 };
