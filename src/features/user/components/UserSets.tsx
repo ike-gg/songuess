@@ -35,12 +35,12 @@ const UserSets = ({
         <Button
           variant="secondary"
           size="small"
-          icon={listView ? <RxListBullet /> : <RxCardStack />}
+          icon={listView ? <RxCardStack /> : <RxListBullet />}
           onClick={() => {
             setListView((p) => !p);
           }}
         >
-          {listView ? "List view" : "Card view"}
+          {listView ? "Card view" : "List view"}
         </Button>
       </div>
       <div className="flex flex-col gap-1">
