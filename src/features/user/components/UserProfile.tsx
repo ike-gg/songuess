@@ -13,8 +13,8 @@ import {
   SubHeading,
   WarningBlock,
 } from "@/components/ui";
+import { AnimatedCounter } from "@/components/ui/ContentComponents/AnimatedCounter";
 import { routes } from "@/constants";
-import SetCardItem from "@/features/xsets/SetCardItem";
 import useFeedback from "@/hooks/useFeedback";
 import { DatabaseClient } from "@/lib/database/databaseClient";
 import { Set, User } from "@/types/databaseTypes";
@@ -33,26 +33,24 @@ interface Props {
 const UserProfile = ({ user, currentUser }: Props) => {
   const { loading, setLoading, error, setError } = useFeedback();
   const { replace } = useRouter();
-  const [userSets, setUserSets] = useState<Set[]>([]);
+
+  const [setsCount, setSetsCount] = useState(0);
 
   const supabase = createClientComponentClient<Database>();
   const db = new DatabaseClient({ type: "clientComponent" });
 
-  useEffect(() => {
-    const fetchUserSets = async () => {
-      const { data, error } = await db.users.getSets(user.id);
-      if (error) {
-        setError(error.message);
-        return;
-      }
-      setUserSets(data);
-    };
-
-    fetchUserSets();
-  }, [user]);
-
   const level = 8;
   const exp = 45;
+
+  useEffect(() => {
+    const getSetsCount = async () => {
+      const { count, data, error } = await db.users.getSets(user.id);
+      if ((!count && !data) || error) setError("Fetching sets failed");
+      setSetsCount(count || data?.length || 0);
+    };
+
+    getSetsCount();
+  }, []);
 
   const signOut = async () => {
     setLoading(true);
@@ -102,42 +100,18 @@ const UserProfile = ({ user, currentUser }: Props) => {
         )}
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-        {[
-          {
-            name: `Sets created (includes ${
-              userSets.filter((s) => s.private).length
-            } private sets)`,
-            value: userSets.length,
-          },
-          { name: "Sets played", value: 54 },
-          { name: "Received feedback", value: 5.4 },
-        ].map((data) => (
-          <div
-            key={data.name + data.value}
-            className="rounded-lg bg-zinc-800/50 p-6 pt-12 text-right hover:bg-zinc-800"
-          >
-            <SubHeading className="text-5xl">{data.value}</SubHeading>
-            <Paragraph>{data.name}</Paragraph>
-          </div>
-        ))}
+        <Button
+          className="h-36 w-full flex-col items-end justify-end"
+          variant="secondary"
+          size="large"
+          href={routes.user.sets(user.id)}
+        >
+          <SubHeading className="text-5xl">
+            <AnimatedCounter value={setsCount}></AnimatedCounter>
+          </SubHeading>
+          <Paragraph>Created sets</Paragraph>
+        </Button>
       </div>
-      <div className="-mx-6 grid grid-flow-col-dense grid-rows-1 gap-4 overflow-x-auto pl-6">
-        {userSets
-          .filter((s) => !s.private)
-          .map((set) => {
-            return (
-              <SetCardItem
-                className="col-span-1 row-span-1 flex w-44"
-                set={set}
-                key={set.id}
-              />
-            );
-          })}
-      </div>
-      <WarningBlock>
-        Current data on profile page is static. More content on profile page
-        coming soon...
-      </WarningBlock>
       {currentUser && (
         <CardFooter>
           <Button
