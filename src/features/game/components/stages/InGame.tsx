@@ -1,14 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import Countdown from "./Countdown";
 import Guessing from "./Guessing";
-import { RxCross2 } from "react-icons/rx";
-import { gameActions } from "@/features/game/store/gameSlice";
-import { Button } from "@/components/ui";
 import { AnimatePresence } from "framer-motion";
-import BackgroundImage from "../BackgroundImage";
-import parseArtwork from "@/utils/parseArtwork";
-import GameNavigator from "../gamenavigator/GameNavigator";
-import GuessInput from "../GuessInput";
 import { useEffect, useRef } from "react";
 import CountdownNavigator from "../gamenavigator/countdown/CountdownNavigator";
 import GuessingNavigator from "../gamenavigator/guessing/GuessingNavigator";

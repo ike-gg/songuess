@@ -2,7 +2,6 @@
 "use client";
 
 import { SongType } from "@/types/musicApi/Song";
-import { Database } from "@/types/supabase";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import { useEffect } from "react";

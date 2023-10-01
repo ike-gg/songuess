@@ -2,7 +2,7 @@
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import GameCard from "../GameCard";
-import { BackButton, Badge, Button, Heading, Paragraph } from "@/components/ui";
+import { BackButton, Button, Heading, Paragraph } from "@/components/ui";
 import { routes } from "@/constants";
 
 const Preparing = () => {

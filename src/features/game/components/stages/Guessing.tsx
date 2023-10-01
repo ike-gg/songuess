@@ -4,10 +4,9 @@ import { useEffect, useRef } from "react";
 import parseArtwork from "@/utils/parseArtwork";
 import GuessInput from "../GuessInput";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button, Heading, MotionWrapper, Paragraph } from "@/components/ui";
+import { Heading, MotionWrapper, Paragraph } from "@/components/ui";
 import { gameActions } from "../../store/gameSlice";
 import useCountdown from "@bradgarropy/use-countdown";
-import { RxArrowRight } from "react-icons/rx";
 import parseTitleToGuess from "@/utils/parseTitleToGuess";
 
 const Guessing = () => {
