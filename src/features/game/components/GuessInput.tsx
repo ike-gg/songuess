@@ -1,5 +1,9 @@
-import { FormEvent, forwardRef, useEffect, useState } from "react";
+import { FormEvent, forwardRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { twMerge } from "tailwind-merge";
+import splitWordsWithSpaces from "@/utils/splitWordsWithSpaces";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import parseTitleToGuess from "@/utils/parseTitleToGuess";
 import { stringSimilarity } from "string-similarity-js";
 import { gameActions } from "@/features/game/store/gameSlice";
 import parseDiacriticalChars from "@/utils/parseDiacriticalChars";
@@ -9,21 +13,42 @@ import { Paragraph } from "@/components/ui";
 interface Props {
   onGuess?: () => void;
   secretPhrase: string;
+  showHint: boolean;
 }
 
 const GuessInput = forwardRef<HTMLInputElement, Props>(
-  ({ secretPhrase, onGuess }, inputRef) => {
+  ({ secretPhrase, onGuess, showHint = false }, inputRef) => {
     const [guess, setGuess] = useState("");
+    const [hint, setHint] = useState(
+      secretPhrase
+        .split("")
+        .map((letter) => (letter !== " " ? "_" : " "))
+        .join("")
+    );
 
     const dispatch = useAppDispatch();
-    const { isInputFocused, similarity } = useAppSelector(
-      (state) => state.game.round
-    );
+    const { isInputFocused } = useAppSelector((state) => state.game.round);
 
     const handleGuessInput = (e: FormEvent<HTMLInputElement>) => {
       const inputValue = e.currentTarget.value;
       const inputGuess = parseDiacriticalChars(inputValue).toLowerCase();
       const toGuess = secretPhrase.toLowerCase();
+
+      const input = inputGuess.split("");
+      const guess = toGuess.split("");
+
+      setHint((current) => {
+        const newHint = current
+          .split("")
+          .map((place, index) => {
+            if (place !== "_") return place;
+            if (input[index] === guess[index]) return input[index];
+            return "_";
+          })
+          .join("");
+
+        return newHint;
+      });
 
       dispatch(
         gameActions.setSimilarity(stringSimilarity(inputGuess, toGuess))
@@ -39,15 +64,6 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
       setGuess(e.currentTarget.value);
     };
 
-    // const nextround = (e: KeyboardEvent) => {
-    //   console.log(e);
-    // };
-
-    // useEffect(() => {
-    //   window.addEventListener("keydown", nextround);
-    //   return () => window.removeEventListener("keydown", nextround);
-    // }, []);
-
     return (
       <div className="my-3">
         <Paragraph className="mb-3 text-sm opacity-80">
@@ -59,7 +75,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
           autoComplete="off"
           autoFocus
           type="search"
-          className="w-full rounded-lg bg-zinc-800/70 p-2 text-center text-zinc-100 outline-none"
+          className="w-full rounded-t-lg bg-zinc-800/70 p-2 text-center text-zinc-100 outline-none"
           value={guess}
           onInput={handleGuessInput}
           onFocus={() => dispatch(gameActions.setInputFocus(true))}
@@ -71,6 +87,36 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
             e.target.focus();
           }}
         />
+        <motion.div
+          className="overflow-hidden rounded-b-lg bg-zinc-800/40 p-4 font-mono text-sm text-zinc-100/50"
+          initial={{ height: 0 }}
+          animate={{ height: "auto" }}
+          exit={{ height: 0 }}
+          onClick={() =>
+            setHint(
+              secretPhrase
+                .split("")
+                .map((letter) => (letter !== " " ? "_" : " "))
+                .join("")
+            )
+          }
+        >
+          <h5 className="font-sans text-sm font-semibold">HINT</h5>
+          <AnimatePresence>
+            {hint.split("").map((letter, index) => {
+              return (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, position: "absolute" }}
+                  key={letter + index}
+                >
+                  {letter}
+                </motion.span>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
       </div>
     );
   }
