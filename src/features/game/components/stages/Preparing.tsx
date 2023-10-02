@@ -4,20 +4,24 @@ import { gameActions } from "@/features/game/store/gameSlice";
 import GameCard from "../GameCard";
 import { BackButton, Button, Heading, Paragraph } from "@/components/ui";
 import { routes } from "@/constants";
+import { useGameState } from "../../zstore/gameSlice";
 
 const Preparing = () => {
-  const { maxRounds, roundTime, set } = useAppSelector((state) => state.game);
-  const dispatch = useAppDispatch();
+  const { loaded, rounds, time, set } = useGameState((state) => state.config);
+  const setConfig = useGameState((state) => state.setConfig);
+  const startGame = useGameState((state) => state.startGame);
 
-  if (!set) return null;
+  if (!loaded) return null;
 
   const { cover, name, songs } = set;
 
   const availableRounds = [3, 5, 10, 15, 20].filter(
     (roundOption) => songs.length >= roundOption
   );
+
   const availableTimes = [5, 15, 20, 30];
   process.env.NODE_ENV === "development" && availableTimes.push(1200);
+  process.env.NODE_ENV === "development" && availableTimes.push(1);
 
   return (
     <GameCard key="preparing" className="max-w-2xl flex-col md:flex-row md:p-6">
@@ -31,11 +35,9 @@ const Preparing = () => {
           {availableRounds.map((setRounds, index) => {
             return (
               <Button
-                variant={setRounds === maxRounds ? "primary" : "secondary"}
+                variant={setRounds === rounds ? "primary" : "secondary"}
                 key={index + "roundSelector"}
-                onClick={() => {
-                  dispatch(gameActions.setRounds(setRounds));
-                }}
+                onClick={() => setConfig({ rounds: setRounds, time })}
               >
                 {setRounds}
               </Button>
@@ -47,22 +49,16 @@ const Preparing = () => {
           {availableTimes.map((setTime, index) => {
             return (
               <Button
-                variant={setTime === roundTime ? "primary" : "secondary"}
+                variant={setTime === time ? "primary" : "secondary"}
                 key={index + "timePicker"}
-                onClick={() => dispatch(gameActions.setTimeRound(setTime))}
+                onClick={() => setConfig({ rounds, time: setTime })}
               >
                 {setTime}
               </Button>
             );
           })}
         </div>
-        <Button
-          onClick={() => {
-            dispatch(gameActions.startGame());
-          }}
-        >
-          Play lll
-        </Button>
+        <Button onClick={() => startGame()}>Play lll</Button>
       </div>
     </GameCard>
   );

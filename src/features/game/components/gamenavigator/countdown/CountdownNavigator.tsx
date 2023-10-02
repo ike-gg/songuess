@@ -1,14 +1,14 @@
 import { CircleProgress } from "@/components/ui";
 import GameNavigatorContainer from "../GameNavigatorContainer";
-import { useAppDispatch } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import { motion } from "framer-motion";
 import useCountdown from "@bradgarropy/use-countdown";
 import { useEffect } from "react";
 import CountdownPreloadAudio from "./CountdownPreloadAudio";
+import { useGameState } from "@/features/game/zstore/gameSlice";
 
 const CountdownNavigator = () => {
-  const dispatch = useAppDispatch();
+  const beginGuessing = useGameState((state) => state.beginGuessing);
 
   const countdownTime = 3;
 
@@ -22,13 +22,9 @@ const CountdownNavigator = () => {
   // rendered before changing round status state.
   useEffect(() => {
     if (isInactive && seconds === 0) {
-      dispatch(gameActions.setRoundStatus("guessing"));
+      beginGuessing();
     }
   });
-
-  useEffect(() => {
-    dispatch(gameActions.loadNextSong());
-  }, [dispatch]);
 
   return (
     <GameNavigatorContainer

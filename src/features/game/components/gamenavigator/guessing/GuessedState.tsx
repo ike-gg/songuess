@@ -1,9 +1,8 @@
-import { useAppSelector } from "@/hooks";
 import { TbConfetti } from "react-icons/tb";
 import { motion } from "framer-motion";
 
 const GuessedState = () => {
-  const { points } = useAppSelector((state) => state.game);
+  // const { points } = useAppSelector((state) => state.game);
 
   return (
     <div className="mx-3 flex items-center gap-3">
@@ -14,7 +13,7 @@ const GuessedState = () => {
         <TbConfetti />
       </motion.span>
       <p className="text-sm uppercase">
-        <span className="opacity-50">points</span> {points}
+        <span className="opacity-50">points UNAVAILABLE</span>
       </p>
     </div>
   );

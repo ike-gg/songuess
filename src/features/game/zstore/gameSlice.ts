@@ -62,7 +62,7 @@ export interface GameMethods {
   timeout: () => void;
   guessed: () => void;
   setSimilarity: (similarity: number) => void;
-  restart: () => void;
+  resetState: () => void;
 }
 
 export type GameState = GameProperties & GameMethods;
@@ -125,11 +125,13 @@ export const useGameState = create<GameState>()(
       nextRound: () =>
         set((state) => {
           const newRound = state.round.current + 1;
-          const newSong = state.config.playlist?.at(newRound);
-          if (!newSong) throw new Error("Playlist error");
           if (newRound >= state.config.rounds) {
             return { ...state, status: "ended" };
           }
+
+          const newSong = state.config.playlist?.at(newRound);
+          if (!newSong) throw new Error("Playlist error");
+
           return {
             ...state,
             round: {
@@ -166,7 +168,7 @@ export const useGameState = create<GameState>()(
           round: { ...state.round, similarity: newSimilarity },
         })),
 
-      restart: () => set(initialState),
+      resetState: () => set(initialState),
     }),
     { name: "game-data" }
   )

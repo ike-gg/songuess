@@ -4,27 +4,15 @@ import { AnimatePresence } from "framer-motion";
 import { useEffect, useRef } from "react";
 import CountdownNavigator from "../gamenavigator/countdown/CountdownNavigator";
 import GuessingNavigator from "../gamenavigator/guessing/GuessingNavigator";
+import { useGameState } from "../../zstore/gameSlice";
 
 const InGame = () => {
-  const ref = useRef<HTMLInputElement>(null);
-  const { status, currentSong } = useAppSelector((state) => state.game.round);
-  const dispatch = useAppDispatch();
+  const { status, song } = useGameState((state) => state.round);
 
-  useEffect(() => {
-    if (!ref.current) return;
-    ref.current.focus();
-  }, [ref]);
-
-  if (!currentSong) return <p>lol not found music</p>;
-
-  const { attributes, id } = currentSong;
-  const { name } = attributes;
-
-  const countdownStage = status === "countdown";
+  if (!song) return <p>lol not found music</p>;
 
   return (
     <AnimatePresence>
-      {/* <GameNavigator key="gamenavigator" /> */}
       {status === "countdown" && (
         <CountdownNavigator key="gamenavigator_countdown" />
       )}

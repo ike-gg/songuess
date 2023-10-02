@@ -3,17 +3,20 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { gameActions } from "@/features/game/store/gameSlice";
 import SongItem from "@/components/music/SongItem";
 import { Button, Heading, Paragraph } from "@/components/ui";
+import { useGameState } from "../../zstore/gameSlice";
 
 const Results = () => {
-  const { points, playlist } = useAppSelector((state) => state.game);
-  const dispatch = useAppDispatch();
+  // const { points } = useAppSelector((state) => state.game);
+  const playlist = useGameState((state) => state.config.playlist);
+  const resetState = useGameState((state) => state.resetState);
+
   return (
     <GameCard
       key="preparing"
       className="flex-col text-center md:max-w-xl md:p-6"
     >
       <Heading>You&apos;re a true musical expert!</Heading>
-      <Paragraph>You scored {points} points!</Paragraph>
+      <Paragraph>You scored AA---- points!</Paragraph>
       <Paragraph>Here&apos;s your playlist:</Paragraph>
       <div className="flex max-h-96 flex-col overflow-y-auto rounded-lg text-left">
         {playlist &&
@@ -33,7 +36,7 @@ const Results = () => {
       <Button
         className="w-full"
         variant="secondary"
-        onClick={() => dispatch(gameActions.restartState())}
+        onClick={() => resetState()}
       >
         Play again
       </Button>

@@ -5,16 +5,16 @@ import useCountdown from "@bradgarropy/use-countdown";
 import { useEffect } from "react";
 import { gameActions } from "@/features/game/store/gameSlice";
 import { RxTrackNext } from "react-icons/rx";
+import { useGameState } from "@/features/game/zstore/gameSlice";
 
 const GuessingState = () => {
-  const dispatch = useAppDispatch();
-  const { currRound, maxRounds, round, roundTime } = useAppSelector(
-    (state) => state.game
-  );
-  const { status } = round;
+  const { time, rounds } = useGameState((state) => state.config);
+  const { current, status } = useGameState((state) => state.round);
+
+  const timeout = useGameState((state) => state.timeout);
 
   const { seconds, minutes, pause, isInactive } = useCountdown({
-    seconds: roundTime,
+    seconds: time,
   });
 
   useEffect(() => {
@@ -22,28 +22,25 @@ const GuessingState = () => {
   }, [status, pause]);
 
   useEffect(() => {
-    if (isInactive && seconds === 0 && minutes === 0)
-      dispatch(gameActions.setRoundStatus("timeout"));
-  });
+    if (isInactive && seconds === 0 && minutes === 0) timeout();
+  }, [isInactive, seconds, minutes, timeout]);
 
   return (
     <div className="ml-3 flex items-center gap-3">
       <Similarity />
       <CircleProgress
-        percents={((roundTime - seconds + 1) / roundTime) * 100}
+        percents={((time - seconds + 1) / time) * 100}
         caption={<p className="text-sm">{seconds}</p>}
         size={35}
         stroke={"#FFFFFF"}
       />
       <p className="text-sm uppercase">
-        <span className="opacity-50">round</span> {currRound + 1}/{maxRounds}
+        <span className="opacity-50">round</span> {current + 1}/{rounds}
       </p>
       <Button
         variant="navigator"
         icon={<RxTrackNext />}
-        onClick={() => {
-          dispatch(gameActions.setRoundStatus("timeout"));
-        }}
+        onClick={() => timeout()}
       />
     </div>
   );
