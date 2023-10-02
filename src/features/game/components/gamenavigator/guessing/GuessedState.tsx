@@ -1,8 +1,9 @@
 import { TbConfetti } from "react-icons/tb";
 import { motion } from "framer-motion";
+import { useGameState } from "@/features/game/zstore/gameSlice";
 
 const GuessedState = () => {
-  // const { points } = useAppSelector((state) => state.game);
+  const totalPoints = useGameState((state) => state.totalPoints);
 
   return (
     <div className="mx-3 flex items-center gap-3">
@@ -13,7 +14,7 @@ const GuessedState = () => {
         <TbConfetti />
       </motion.span>
       <p className="text-sm uppercase">
-        <span className="opacity-50">points UNAVAILABLE</span>
+        <span className="opacity-50">points</span> {totalPoints}
       </p>
     </div>
   );

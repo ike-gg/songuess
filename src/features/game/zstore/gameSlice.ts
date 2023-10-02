@@ -1,6 +1,8 @@
 import { Set } from "@/types/databaseTypes";
 import { SongType } from "@/types/musicApi/Song";
+import calculatePoints from "@/utils/calculatePoints";
 import getRandomElements from "@/utils/getRandomElements";
+import { current } from "@reduxjs/toolkit";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -33,10 +35,18 @@ interface Round {
   similarity: number;
 }
 
+interface RoundPoints {
+  startTime: number;
+  guessIn: number;
+  gainedPoints: number;
+}
+
 export interface GameProperties {
   status: GameStatus;
   config: GameConfigLoaded | GameConfigNotLoaded;
   round: Round;
+  points: (false | RoundPoints)[];
+  totalPoints: number;
 }
 
 const initialState: GameProperties = {
@@ -51,6 +61,8 @@ const initialState: GameProperties = {
     status: "countdown",
   },
   status: "preparing",
+  points: [],
+  totalPoints: 0,
 };
 
 export interface GameMethods {
@@ -148,19 +160,54 @@ export const useGameState = create<GameState>()(
         set((state) => ({
           ...state,
           round: { ...state.round, status: "guessing" },
+          points: [
+            ...state.points,
+            { guessIn: 0, gainedPoints: 0, startTime: new Date().getTime() },
+          ],
         })),
 
       timeout: () =>
-        set((state) => ({
-          ...state,
-          round: { ...state.round, status: "timeout" },
-        })),
+        set((state) => {
+          const currentRound = state.round.current;
+          const points = state.points;
+          points[currentRound] = false;
+          return {
+            ...state,
+            round: { ...state.round, status: "timeout" },
+            points,
+          };
+        }),
 
       guessed: () =>
-        set((state) => ({
-          ...state,
-          round: { ...state.round, status: "guessed" },
-        })),
+        set((state) => {
+          const points = state.points as RoundPoints[];
+          const guessedAt = new Date().getTime();
+
+          const currentRound = state.round.current;
+          const startTime = points[currentRound].startTime;
+          const guessedInSeconds = (guessedAt - startTime) / 1000;
+          const gainedPoints = calculatePoints(guessedInSeconds);
+
+          points[currentRound] = {
+            gainedPoints,
+            guessIn: guessedAt - startTime,
+            startTime,
+          };
+
+          console.table({
+            currentRound,
+            startTime,
+            guessedInSeconds,
+            gainedPoints,
+          });
+
+          return {
+            ...state,
+            round: { ...state.round, status: "timeout" },
+            points,
+            totalPoints: state.totalPoints + gainedPoints,
+          };
+        }),
 
       setSimilarity: (newSimilarity) =>
         set((state) => ({

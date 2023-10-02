@@ -1,8 +1,9 @@
+import { useGameState } from "@/features/game/zstore/gameSlice";
 import { motion } from "framer-motion";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
 const TimeoutState = () => {
-  // const { points } = useAppSelector((state) => state.game);
+  const totalPoints = useGameState((state) => state.totalPoints);
 
   return (
     <div className="mx-3 flex items-center gap-3">
@@ -13,7 +14,7 @@ const TimeoutState = () => {
         <IoCloseCircleOutline />
       </motion.span>
       <p className="text-sm uppercase">
-        <span className="opacity-50">points</span> POINTS UNAVAILABLE
+        <span className="opacity-50">points</span> {totalPoints}
       </p>
     </div>
   );
