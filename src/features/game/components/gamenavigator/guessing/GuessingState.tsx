@@ -1,9 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/hooks";
 import Similarity from "./Similarity";
 import { Button, CircleProgress } from "@/components/ui";
 import useCountdown from "@bradgarropy/use-countdown";
 import { useEffect } from "react";
-import { gameActions } from "@/features/game/store/gameSlice";
 import { RxTrackNext } from "react-icons/rx";
 import { useGameState } from "@/features/game/zstore/gameSlice";
 

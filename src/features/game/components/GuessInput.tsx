@@ -1,9 +1,6 @@
-import { FormEvent, forwardRef, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { FormEvent, forwardRef, useState } from "react";
 import { stringSimilarity } from "string-similarity-js";
-import { gameActions } from "@/features/game/store/gameSlice";
 import parseDiacriticalChars from "@/utils/parseDiacriticalChars";
-import { isIOS } from "react-device-detect";
 import { Paragraph } from "@/components/ui";
 import { useGameState } from "../zstore/gameSlice";
 

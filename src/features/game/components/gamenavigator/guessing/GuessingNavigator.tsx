@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui";
 import GameNavigatorContainer from "../GameNavigatorContainer";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { gameActions } from "@/features/game/store/gameSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import { RxArrowRight, RxCross2 } from "react-icons/rx";
 import { ReactNode, forwardRef } from "react";

@@ -1,7 +1,5 @@
-import { useAppDispatch, useAppSelector } from "@/hooks";
 import Guessing from "./Guessing";
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useRef } from "react";
 import CountdownNavigator from "../gamenavigator/countdown/CountdownNavigator";
 import GuessingNavigator from "../gamenavigator/guessing/GuessingNavigator";
 import { useGameState } from "../../zstore/gameSlice";

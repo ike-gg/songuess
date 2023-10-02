@@ -1,4 +1,3 @@
-import { useAppSelector } from "@/hooks";
 import { motion } from "framer-motion";
 import { IoCloseCircleOutline } from "react-icons/io5";
 

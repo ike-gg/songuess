@@ -1,6 +1,5 @@
 import { CircleProgress } from "@/components/ui";
 import GameNavigatorContainer from "../GameNavigatorContainer";
-import { gameActions } from "@/features/game/store/gameSlice";
 import { motion } from "framer-motion";
 import useCountdown from "@bradgarropy/use-countdown";
 import { useEffect } from "react";

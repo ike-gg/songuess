@@ -1,6 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { gameActions } from "@/features/game/store/gameSlice";
 import GameCard from "../GameCard";
 import { BackButton, Button, Heading, Paragraph } from "@/components/ui";
 import { routes } from "@/constants";

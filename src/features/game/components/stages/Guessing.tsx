@@ -1,11 +1,9 @@
-import { useAppDispatch, useAppSelector } from "@/hooks";
 import GameCard from "../GameCard";
 import { useEffect, useRef } from "react";
 import parseArtwork from "@/utils/parseArtwork";
 import GuessInput from "../GuessInput";
 import { AnimatePresence, motion } from "framer-motion";
 import { Heading, MotionWrapper, Paragraph } from "@/components/ui";
-import { gameActions } from "../../store/gameSlice";
 import useCountdown from "@bradgarropy/use-countdown";
 import parseTitleToGuess from "@/utils/parseTitleToGuess";
 import { useGameState } from "../../zstore/gameSlice";

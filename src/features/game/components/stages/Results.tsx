@@ -1,6 +1,4 @@
 import GameCard from "../GameCard";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { gameActions } from "@/features/game/store/gameSlice";
 import SongItem from "@/components/music/SongItem";
 import { Button, Heading, Paragraph } from "@/components/ui";
 import { useGameState } from "../../zstore/gameSlice";

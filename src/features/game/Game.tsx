@@ -2,8 +2,6 @@
 "use client";
 
 import { SongType } from "@/types/musicApi/Song";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { gameActions } from "@/features/game/store/gameSlice";
 import { useEffect } from "react";
 import Preparing from "./components/stages/Preparing";
 import InGame from "./components/stages/InGame";
