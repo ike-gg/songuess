@@ -5,12 +5,14 @@ import getRandomElements from "@/utils/getRandomElements";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type GameStatus = "preparing" | "inprogress" | "ended";
-type RoundStatus = "countdown" | "guessing" | "guessed" | "timeout";
+export type GameStatus = "preparing" | "inprogress" | "ended";
+export type RoundStatus = "countdown" | "guessing" | "guessed" | "timeout";
+export type GameType = "classic" | "voice";
 
 interface GameConfigMutable {
   rounds: number;
   time: number;
+  type: GameType;
 }
 
 interface GameConfigNotLoaded extends GameConfigMutable {
@@ -53,6 +55,7 @@ const initialState: GameProperties = {
     loaded: false,
     rounds: 5,
     time: 30,
+    type: "classic",
   },
   round: {
     current: 0,
