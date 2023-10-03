@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import useCountdown from "@bradgarropy/use-countdown";
 import { useEffect } from "react";
 import CountdownPreloadAudio from "./CountdownPreloadAudio";
-import { useGameState } from "@/features/game/zstore/gameSlice";
+import { useGameState } from "@/features/game/store/gameSlice";
 
 const CountdownNavigator = () => {
   const beginGuessing = useGameState((state) => state.beginGuessing);

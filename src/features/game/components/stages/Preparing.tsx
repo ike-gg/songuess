@@ -2,7 +2,7 @@
 import GameCard from "../GameCard";
 import { BackButton, Button, Heading, Paragraph } from "@/components/ui";
 import { routes } from "@/constants";
-import { useGameState } from "../../zstore/gameSlice";
+import { useGameState } from "../../store/gameSlice";
 
 const Preparing = () => {
   const { loaded, rounds, time, set } = useGameState((state) => state.config);

@@ -1,4 +1,4 @@
-import { useGameState } from "@/features/game/zstore/gameSlice";
+import { useGameState } from "@/features/game/store/gameSlice";
 import { twMerge } from "tailwind-merge";
 
 const Similarity = () => {

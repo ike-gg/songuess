@@ -4,7 +4,7 @@ import { RxPause, RxPlay, RxSpeakerLoud, RxSpeakerOff } from "react-icons/rx";
 import { Button } from "@/components/ui";
 import { Root, Track, Range, Thumb } from "@radix-ui/react-slider";
 import { isIOS } from "react-device-detect";
-import { useGameState } from "@/features/game/zstore/gameSlice";
+import { useGameState } from "@/features/game/store/gameSlice";
 import { useLocalStorage } from "usehooks-ts";
 
 const Element = forwardRef<HTMLDivElement, { children: ReactNode }>(

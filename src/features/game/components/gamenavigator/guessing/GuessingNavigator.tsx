@@ -8,7 +8,7 @@ import GuessedState from "./GuessedState";
 import NavigatorDivider from "../NavigatorDivider";
 import TimeoutState from "./TimeoutState";
 import SongMusicState from "./SongMusicState";
-import { useGameState } from "@/features/game/zstore/gameSlice";
+import { useGameState } from "@/features/game/store/gameSlice";
 
 const NavigatorItemWrapper = forwardRef<
   HTMLDivElement,

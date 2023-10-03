@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Heading, MotionWrapper, Paragraph } from "@/components/ui";
 import useCountdown from "@bradgarropy/use-countdown";
 import parseTitleToGuess from "@/utils/parseTitleToGuess";
-import { useGameState } from "../../zstore/gameSlice";
+import { useGameState } from "../../store/gameSlice";
 
 const Guessing = () => {
   const inputGuessRef = useRef<HTMLInputElement>(null);

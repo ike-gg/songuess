@@ -1,4 +1,4 @@
-import { useGameState } from "@/features/game/zstore/gameSlice";
+import { useGameState } from "@/features/game/store/gameSlice";
 
 const CountdownPreloadAudio = () => {
   const song = useGameState((state) => state.round.song);

@@ -1,4 +1,4 @@
-import { useGameState } from "@/features/game/zstore/gameSlice";
+import { useGameState } from "@/features/game/store/gameSlice";
 import { motion } from "framer-motion";
 import { IoCloseCircleOutline } from "react-icons/io5";
 

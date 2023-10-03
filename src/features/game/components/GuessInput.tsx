@@ -2,7 +2,7 @@ import { FormEvent, forwardRef, useState } from "react";
 import { stringSimilarity } from "string-similarity-js";
 import parseDiacriticalChars from "@/utils/parseDiacriticalChars";
 import { Paragraph } from "@/components/ui";
-import { useGameState } from "../zstore/gameSlice";
+import { useGameState } from "../store/gameSlice";
 
 interface Props {
   onGuess?: () => void;

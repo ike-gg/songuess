@@ -1,7 +1,7 @@
 import GameCard from "../GameCard";
 import SongItem from "@/components/music/SongItem";
 import { Button, Heading, Paragraph } from "@/components/ui";
-import { useGameState } from "../../zstore/gameSlice";
+import { useGameState } from "../../store/gameSlice";
 
 const Results = () => {
   const playlist = useGameState((state) => state.config.playlist);

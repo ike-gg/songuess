@@ -3,7 +3,7 @@ import { Button, CircleProgress } from "@/components/ui";
 import useCountdown from "@bradgarropy/use-countdown";
 import { useEffect } from "react";
 import { RxTrackNext } from "react-icons/rx";
-import { useGameState } from "@/features/game/zstore/gameSlice";
+import { useGameState } from "@/features/game/store/gameSlice";
 
 const GuessingState = () => {
   const { time, rounds } = useGameState((state) => state.config);

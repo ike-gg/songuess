@@ -10,7 +10,7 @@ import Motion from "../../components/providers/Motion";
 import BackgroundImage from "./components/BackgroundImage";
 import { AnimatePresence } from "framer-motion";
 import { Set } from "@/types/databaseTypes";
-import { useGameState } from "./zstore/gameSlice";
+import { useGameState } from "./store/gameSlice";
 import parseArtwork from "@/utils/parseArtwork";
 
 interface Props {
