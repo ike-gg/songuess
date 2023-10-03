@@ -2,18 +2,16 @@
 "use client";
 
 import { SongType } from "@/types/musicApi/Song";
-import { Database } from "@/types/supabase";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { gameActions } from "@/features/game/store/gameSlice";
 import { useEffect } from "react";
 import Preparing from "./components/stages/Preparing";
 import InGame from "./components/stages/InGame";
 import Results from "./components/stages/Results";
 import Motion from "../../components/providers/Motion";
 import BackgroundImage from "./components/BackgroundImage";
-import parseArtwork from "@/utils/parseArtwork";
 import { AnimatePresence } from "framer-motion";
 import { Set } from "@/types/databaseTypes";
+import { useGameState } from "./store/gameSlice";
+import parseArtwork from "@/utils/parseArtwork";
 
 interface Props {
   setDetails: Set;
@@ -21,25 +19,24 @@ interface Props {
 }
 
 const Game = ({ setDetails, songs }: Props) => {
-  const { status, set, playlist, currRound, round } = useAppSelector(
-    (state) => state.game
-  );
-
-  const { currentSong, status: roundStatus } = round;
-
-  const dispatch = useAppDispatch();
+  const status = useGameState((state) => state.status);
+  const loadedSet = useGameState((state) => state.config.set);
+  const { song, status: roundStatus } = useGameState((state) => state.round);
+  const loadConfig = useGameState((state) => state.loadConfig);
+  const resetState = useGameState((state) => state.resetState);
 
   useEffect(() => {
-    if (set && set.id !== setDetails.id) {
-      dispatch(gameActions.restartState());
+    if (loadedSet && loadedSet.id !== setDetails.id) {
+      resetState();
     }
-    dispatch(gameActions.loadSet({ set: setDetails, tracks: songs }));
-  }, [set]);
+    loadConfig(setDetails, songs);
+  }, [loadedSet]);
 
-  let backgroundColor: string = "#09090b";
-  let accentColor: string = "#52525b";
-  if (roundStatus !== "countdown" && currentSong) {
-    const { bgColor, primColor } = parseArtwork(currentSong.attributes.artwork);
+  let backgroundColor: string = loadedSet?.bgColor || "#09090b";
+  let accentColor: string = loadedSet?.textColor || "#52525b";
+
+  if (song && roundStatus !== "countdown") {
+    const { bgColor, primColor } = parseArtwork(song.attributes.artwork);
     backgroundColor = bgColor;
     accentColor = primColor;
   }

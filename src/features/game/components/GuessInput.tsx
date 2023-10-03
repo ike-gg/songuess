@@ -1,10 +1,8 @@
-import { FormEvent, forwardRef, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { FormEvent, forwardRef, useState } from "react";
 import { stringSimilarity } from "string-similarity-js";
-import { gameActions } from "@/features/game/store/gameSlice";
 import parseDiacriticalChars from "@/utils/parseDiacriticalChars";
-import { isIOS } from "react-device-detect";
 import { Paragraph } from "@/components/ui";
+import { useGameState } from "../store/gameSlice";
 
 interface Props {
   onGuess?: () => void;
@@ -15,19 +13,14 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
   ({ secretPhrase, onGuess }, inputRef) => {
     const [guess, setGuess] = useState("");
 
-    const dispatch = useAppDispatch();
-    const { isInputFocused, similarity } = useAppSelector(
-      (state) => state.game.round
-    );
+    const setSimilarity = useGameState((state) => state.setSimilarity);
 
     const handleGuessInput = (e: FormEvent<HTMLInputElement>) => {
       const inputValue = e.currentTarget.value;
       const inputGuess = parseDiacriticalChars(inputValue).toLowerCase();
       const toGuess = secretPhrase.toLowerCase();
 
-      dispatch(
-        gameActions.setSimilarity(stringSimilarity(inputGuess, toGuess))
-      );
+      setSimilarity(stringSimilarity(inputGuess, toGuess));
 
       if (inputGuess === toGuess) onGuess && onGuess();
 
@@ -50,9 +43,7 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
 
     return (
       <div className="my-3">
-        <Paragraph className="mb-3 text-sm opacity-80">
-          {isInputFocused ? "Type to guess" : "Click to type"}
-        </Paragraph>
+        <Paragraph className="mb-3 text-sm opacity-80">Type to guess</Paragraph>
         <input
           ref={inputRef}
           autoCorrect="off"
@@ -62,14 +53,6 @@ const GuessInput = forwardRef<HTMLInputElement, Props>(
           className="w-full rounded-lg bg-zinc-800/70 p-2 text-center text-zinc-100 outline-none"
           value={guess}
           onInput={handleGuessInput}
-          onFocus={() => dispatch(gameActions.setInputFocus(true))}
-          onBlur={(e) => {
-            if (isIOS) {
-              dispatch(gameActions.setInputFocus(false));
-              return;
-            }
-            e.target.focus();
-          }}
         />
       </div>
     );

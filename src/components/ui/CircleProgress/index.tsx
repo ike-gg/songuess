@@ -1,6 +1,5 @@
 "use client";
 
-import { current } from "@reduxjs/toolkit";
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
@@ -61,9 +60,9 @@ const CircleProgress = ({
       className={twMerge("relative", className)}
     >
       {caption && (
-        <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           {caption}
-        </p>
+        </div>
       )}
       <svg
         viewBox="0 0 100 100"

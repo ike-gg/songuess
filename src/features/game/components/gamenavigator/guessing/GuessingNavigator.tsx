@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui";
 import GameNavigatorContainer from "../GameNavigatorContainer";
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { gameActions } from "@/features/game/store/gameSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import { RxArrowRight, RxCross2 } from "react-icons/rx";
 import { ReactNode, forwardRef } from "react";
@@ -10,6 +8,7 @@ import GuessedState from "./GuessedState";
 import NavigatorDivider from "../NavigatorDivider";
 import TimeoutState from "./TimeoutState";
 import SongMusicState from "./SongMusicState";
+import { useGameState } from "@/features/game/store/gameSlice";
 
 const NavigatorItemWrapper = forwardRef<
   HTMLDivElement,
@@ -32,12 +31,11 @@ const NavigatorItemWrapper = forwardRef<
 NavigatorItemWrapper.displayName = "itemwrapper";
 
 const GuessingNavigator = () => {
-  const dispatch = useAppDispatch();
-  const { round } = useAppSelector((state) => state.game);
+  const { song, status } = useGameState((state) => state.round);
+  const nextRound = useGameState((state) => state.nextRound);
+  const resetState = useGameState((state) => state.resetState);
 
-  const { status, currentSong } = round;
-
-  if (!currentSong) return <p>not found</p>;
+  if (!song) return <p>not found</p>;
 
   return (
     <GameNavigatorContainer
@@ -54,33 +52,33 @@ const GuessingNavigator = () => {
         className="flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap p-2"
       >
         <AnimatePresence mode="popLayout">
-          {(round.status === "guessed" || round.status === "timeout") && (
+          {(status === "guessed" || status === "timeout") && (
             <NavigatorItemWrapper key="nextround_button">
               <Button
                 variant="navigator"
                 className="bg-zinc-100 text-zinc-800 hover:bg-zinc-300 active:border-zinc-100 active:bg-zinc-300"
                 icon={<RxArrowRight />}
-                onClick={() => dispatch(gameActions.nextRound())}
+                onClick={() => nextRound()}
               />
             </NavigatorItemWrapper>
           )}
-          {round.status === "guessing" && (
+          {status === "guessing" && (
             <NavigatorItemWrapper key="guessingState">
               <GuessingState />
             </NavigatorItemWrapper>
           )}
-          {round.status === "guessed" && (
+          {status === "guessed" && (
             <NavigatorItemWrapper key="guessedState">
               <GuessedState />
             </NavigatorItemWrapper>
           )}
-          {round.status === "timeout" && (
+          {status === "timeout" && (
             <NavigatorItemWrapper key="timeoutState">
               <TimeoutState />
             </NavigatorItemWrapper>
           )}
           <NavigatorDivider key="dividerGameState" />
-          {round.status !== "countdown" && (
+          {status !== "countdown" && (
             <NavigatorItemWrapper key="audioState">
               <SongMusicState />
             </NavigatorItemWrapper>
@@ -91,7 +89,7 @@ const GuessingNavigator = () => {
               variant="navigator"
               className="text-red-600 hover:bg-red-600/20 active:bg-red-600/40"
               icon={<RxCross2 />}
-              onClick={() => dispatch(gameActions.restartState())}
+              onClick={() => resetState()}
             />
           </NavigatorItemWrapper>
         </AnimatePresence>

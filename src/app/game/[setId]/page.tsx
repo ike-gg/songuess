@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { routes } from "@/constants";
 import Game from "@/features/game/Game";
-import GameProvider from "@/features/game/GameProvider";
 import { DatabaseClient } from "@/lib/database/databaseClient";
 import { SongType } from "@/types/musicApi/Song";
 import { redirect } from "next/navigation";
@@ -31,11 +30,7 @@ const SetPage = async ({
 
   const songsData = (await response.json()) as SongType;
 
-  return (
-    <GameProvider>
-      <Game setDetails={setDetails} songs={songsData.data} />
-    </GameProvider>
-  );
+  return <Game setDetails={setDetails} songs={songsData.data} />;
 };
 
 export default SetPage;

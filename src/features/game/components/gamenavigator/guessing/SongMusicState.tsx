@@ -1,11 +1,11 @@
-import { useAppDispatch, useAppSelector } from "@/hooks";
 import { ReactNode, forwardRef, useEffect, useRef, useState } from "react";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import { RxPause, RxPlay, RxSpeakerLoud, RxSpeakerOff } from "react-icons/rx";
 import { Button } from "@/components/ui";
 import { Root, Track, Range, Thumb } from "@radix-ui/react-slider";
-import { gameActions } from "@/features/game/store/gameSlice";
 import { isIOS } from "react-device-detect";
+import { useGameState } from "@/features/game/store/gameSlice";
+import { useLocalStorage } from "usehooks-ts";
 
 const Element = forwardRef<HTMLDivElement, { children: ReactNode }>(
   ({ children }, ref) => {
@@ -28,16 +28,16 @@ Element.displayName = "sound_navigatorElement";
 const SongMusicState = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const dispatch = useAppDispatch();
-  const { round, volume: volumeSaved } = useAppSelector((state) => state.game);
-  const { currentSong, status } = round;
+  const song = useGameState((state) => state.round.song);
+  const status = useGameState((state) => state.round.status);
+  const [volumeSaved, setVolumeSaved] = useLocalStorage("volumeLevel", 0.5);
 
   const [muted, setMuted] = useState(false);
   const [volume, setVolume] = useState(volumeSaved);
   const [playing, setPlaying] = useState(!audioRef.current?.paused || false);
 
   useEffect(() => {
-    dispatch(gameActions.setVolume(volume));
+    setVolumeSaved(volume);
 
     if (!audioRef.current) return;
 
@@ -52,11 +52,15 @@ const SongMusicState = () => {
         })
       : audioRef.current.pause();
     audioRef.current.volume = muted ? 0 : volume;
-  }, [volume, playing, muted, dispatch, status]);
+  }, [volume, playing, muted, setVolumeSaved, status]);
 
-  if (!currentSong) return null;
+  useEffect(() => {
+    setPlaying(false);
+  }, [song]);
 
-  const { previews } = currentSong.attributes;
+  if (!song) return null;
+
+  const { previews } = song.attributes;
   const [audio] = previews;
   const audioPreview = audio.url;
 
