@@ -7,7 +7,7 @@ import { useGameState } from "../store/gameSlice";
 interface Props {
   onGuess?: () => void;
   secretPhrase: string;
-  showHint: boolean;
+  showHint?: boolean;
 }
 
 const GuessInput = forwardRef<HTMLInputElement, Props>(
