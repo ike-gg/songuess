@@ -19,16 +19,29 @@ const Results = () => {
       <Paragraph>Here&apos;s your playlist:</Paragraph>
       <div className="flex max-h-96 flex-col overflow-y-auto rounded-lg text-left">
         {playlist &&
-          playlist.map((song) => {
+          playlist.map((song, index) => {
+            const roundPoints = points[index];
+            const isGuessed = !!roundPoints;
             return (
-              <SongItem
-                showAlbum
-                showArtist
-                showArtwork
-                showPreview
+              <div
                 key={song.id}
-                songData={song.attributes}
-              />
+                className="flex items-center justify-between gap-2"
+              >
+                <SongItem
+                  showAlbum
+                  showArtist
+                  showArtwork
+                  showPreview
+                  songData={song.attributes}
+                />
+                <div className="w-44 text-right text-xs">
+                  <p>gained: {isGuessed ? roundPoints.gainedPoints : 0}</p>
+                  <p>
+                    guessed in:{" "}
+                    {isGuessed ? (roundPoints.guessIn / 1000).toFixed(2) : "❌"}
+                  </p>
+                </div>
+              </div>
             );
           })}
       </div>
