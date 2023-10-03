@@ -1,4 +1,4 @@
-const getRandomElements = (arr: any[], count: number) => {
+const getRandomElements = <T>(arr: T[], count: number): T[] => {
   const arrayCopy = arr;
   if (!Array.isArray(arrayCopy)) return [];
   return [...arrayCopy]
