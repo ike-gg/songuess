@@ -1,36 +1,34 @@
-import { useAppDispatch, useAppSelector } from "@/hooks";
 import GameCard from "../GameCard";
 import { useEffect, useRef } from "react";
 import parseArtwork from "@/utils/parseArtwork";
 import GuessInput from "../GuessInput";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button, Heading, MotionWrapper, Paragraph } from "@/components/ui";
-import { gameActions } from "../../store/gameSlice";
+import { Heading, MotionWrapper, Paragraph } from "@/components/ui";
 import useCountdown from "@bradgarropy/use-countdown";
-import { RxArrowRight } from "react-icons/rx";
 import parseTitleToGuess from "@/utils/parseTitleToGuess";
+import { useGameState } from "../../store/gameSlice";
 
 const Guessing = () => {
   const inputGuessRef = useRef<HTMLInputElement>(null);
 
-  const { round, roundTime } = useAppSelector((state) => state.game);
-  const { currentSong, status } = round;
-  const dispatch = useAppDispatch();
+  const { song, status } = useGameState((state) => state.round);
+  const { time } = useGameState((state) => state.config);
+  const guessed = useGameState((state) => state.guessed);
 
   useEffect(() => {
     if (inputGuessRef.current) inputGuessRef.current.focus();
   }, [inputGuessRef]);
 
-  const { seconds } = useCountdown({ seconds: roundTime });
-  const blur = Math.max(0, seconds - roundTime / 5);
+  const { seconds } = useCountdown({ seconds: time });
+  const blur = Math.max(0, seconds - time / 5);
 
-  if (!currentSong) return <p>current song empty</p>;
+  if (!song) return <p>current song empty</p>;
 
   const handleFocusToInput = () => {
     inputGuessRef.current?.focus();
   };
 
-  const { attributes } = currentSong;
+  const { attributes } = song;
   const { artwork, name, artistName, albumName } = attributes;
 
   const { artworkUrl, bgColor } = parseArtwork(artwork);
@@ -48,9 +46,7 @@ const Guessing = () => {
             <GuessInput
               ref={inputGuessRef}
               secretPhrase={titleToGuess}
-              onGuess={() => {
-                dispatch(gameActions.setRoundStatus("guessed"));
-              }}
+              onGuess={() => guessed()}
             />
           </MotionWrapper>
         )}

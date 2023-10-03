@@ -1,120 +1,218 @@
 import { Set } from "@/types/databaseTypes";
 import { SongType } from "@/types/musicApi/Song";
-import { Database } from "@/types/supabase";
 import calculatePoints from "@/utils/calculatePoints";
 import getRandomElements from "@/utils/getRandomElements";
-import { PayloadAction, createSlice, current } from "@reduxjs/toolkit";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export interface RoundState {
-  status: "countdown" | "guessing" | "guessed" | "timeout";
-  currentSong?: SongType["data"][0];
-  similarity: number;
-  isInputFocused: boolean;
-  startTime: number;
+type GameStatus = "preparing" | "inprogress" | "ended";
+type RoundStatus = "countdown" | "guessing" | "guessed" | "timeout";
+
+interface GameConfigMutable {
+  rounds: number;
+  time: number;
 }
 
-export interface GameSlice {
-  status: "preparing" | "inprogress" | "ended";
-  maxRounds: number;
-  roundTime: number;
-  currRound: number;
+interface GameConfigNotLoaded extends GameConfigMutable {
+  loaded: false;
   set?: Set;
-  tracks?: SongType["data"];
+  songs?: SongType["data"];
   playlist?: SongType["data"];
-  round: RoundState;
-  points: number;
-  volume: number;
 }
 
-const initialState: GameSlice = {
-  status: "preparing",
-  maxRounds: 5,
-  roundTime: 30,
-  currRound: 0,
-  points: 0,
-  volume: 0.4,
-  round: {
-    status: "countdown",
-    similarity: 0,
-    isInputFocused: false,
-    startTime: new Date().valueOf(),
+interface GameConfigLoaded extends GameConfigMutable {
+  loaded: true;
+  set: Set;
+  songs: SongType["data"];
+  playlist: SongType["data"];
+}
+
+interface Round {
+  status: RoundStatus;
+  current: number;
+  song?: SongType["data"][0];
+  similarity: number;
+}
+
+interface RoundPoints {
+  startTime: number;
+  guessIn: number;
+  gainedPoints: number;
+}
+
+export interface GameProperties {
+  status: GameStatus;
+  config: GameConfigLoaded | GameConfigNotLoaded;
+  round: Round;
+  points: (false | RoundPoints)[];
+  totalPoints: number;
+}
+
+const initialState: GameProperties = {
+  config: {
+    loaded: false,
+    rounds: 5,
+    time: 30,
   },
+  round: {
+    current: 0,
+    similarity: 0,
+    status: "countdown",
+  },
+  status: "preparing",
+  points: [],
+  totalPoints: 0,
 };
 
-export const gameSlice = createSlice({
-  name: "game",
-  initialState,
-  reducers: {
-    loadSet: (
-      state,
-      action: PayloadAction<{ set: Set; tracks: SongType["data"] }>
-    ) => {
-      state.tracks = action.payload.tracks;
-      state.set = action.payload.set;
-    },
-    setRounds: (state, action: PayloadAction<number>) => {
-      state.maxRounds = action.payload;
-      if (!state.tracks) return;
-      state.playlist = getRandomElements(state.tracks, action.payload);
-    },
-    setTimeRound: (state, action: PayloadAction<number>) => {
-      state.roundTime = action.payload;
-    },
-    setGameStatus: (state, action: PayloadAction<GameSlice["status"]>) => {
-      state.status = action.payload;
-    },
-    startGame: (state) => {
-      const { tracks, maxRounds, currRound } = current(state);
-      if (!tracks) return;
-      state.playlist = getRandomElements(tracks, maxRounds);
-      state.round.currentSong = state.playlist![currRound];
-      state.round.status = "countdown";
-      state.status = "inprogress";
-    },
-    setRoundStatus: (state, action: PayloadAction<RoundState["status"]>) => {
-      const { payload: newStatus } = action;
-      if (newStatus === "guessing") {
-        state.round.startTime = new Date().valueOf();
-      }
-      if (newStatus === "guessed") {
-        if (state.round.status === "timeout") return;
-        const { startTime } = state.round;
-        const currentTime = new Date().valueOf();
-        const guessedInSeconds = (currentTime - startTime) / 1000;
-        const gainedPoints = calculatePoints(guessedInSeconds);
-        state.points += gainedPoints;
-      }
-      state.round.status = newStatus;
-    },
-    nextRound: (state) => {
-      const { currRound } = state;
-      const newRound = currRound + 1;
-      if (newRound >= state.maxRounds) {
-        state.status = "ended";
-        return;
-      }
-      state.currRound = newRound;
-      state.round.similarity = 0;
-      state.round.status = "countdown";
-    },
-    loadNextSong: (state) => {
-      const { playlist, currRound } = state;
-      if (playlist) state.round.currentSong = playlist[currRound];
-    },
-    setSimilarity: (state, action: PayloadAction<number>) => {
-      state.round.similarity = action.payload;
-    },
-    setInputFocus: (state, action: PayloadAction<boolean>) => {
-      state.round.isInputFocused = action.payload;
-    },
-    setVolume: (state, action: PayloadAction<number>) => {
-      state.volume = action.payload;
-    },
-    restartState: (state) => {
-      return { ...initialState, volume: state.volume };
-    },
-  },
-});
+export interface GameMethods {
+  loadConfig: (set: Set, songs: SongType["data"]) => void;
+  setConfig: (config: GameConfigMutable) => void;
+  startGame: () => void;
+  nextRound: () => void;
+  beginGuessing: () => void;
+  timeout: () => void;
+  guessed: () => void;
+  setSimilarity: (similarity: number) => void;
+  resetState: () => void;
+}
 
-export const gameActions = gameSlice.actions;
-export default gameSlice.reducer;
+export type GameState = GameProperties & GameMethods;
+
+export const useGameState = create<GameState>()(
+  persist(
+    (set) => ({
+      ...initialState,
+
+      loadConfig: (newSet, newSongs) =>
+        set((state) => {
+          return {
+            ...state,
+            config: {
+              ...state.config,
+              loaded: true,
+              set: newSet,
+              songs: newSongs,
+              playlist: getRandomElements(newSongs, state.config.rounds),
+            },
+          };
+        }),
+
+      setConfig: (newConfig) =>
+        set((state) => {
+          return {
+            ...state,
+            config: {
+              ...state.config,
+              ...newConfig,
+            },
+          };
+        }),
+
+      startGame: () =>
+        set((state) => {
+          if (!state.config.loaded)
+            throw new Error("Game config not loaded, cant start the game");
+
+          const randomizedPlaylist = getRandomElements(
+            state.config.songs,
+            state.config.rounds
+          );
+
+          return {
+            status: "inprogress",
+            config: {
+              ...state.config,
+              playlist: randomizedPlaylist,
+            },
+            round: {
+              current: 0,
+              similarity: 0,
+              status: "countdown",
+              song: randomizedPlaylist[0],
+            },
+          };
+        }),
+
+      nextRound: () =>
+        set((state) => {
+          const newRound = state.round.current + 1;
+          if (newRound >= state.config.rounds) {
+            return { ...state, status: "ended" };
+          }
+
+          const newSong = state.config.playlist?.at(newRound);
+          if (!newSong) throw new Error("Playlist error");
+
+          return {
+            ...state,
+            round: {
+              ...state.round,
+              status: "countdown",
+              current: newRound,
+              similarity: 0,
+              song: newSong,
+            },
+          };
+        }),
+
+      beginGuessing: () =>
+        set((state) => ({
+          ...state,
+          round: { ...state.round, status: "guessing" },
+          points: [
+            ...state.points,
+            { guessIn: 0, gainedPoints: 0, startTime: new Date().getTime() },
+          ],
+        })),
+
+      timeout: () =>
+        set((state) => {
+          const currentRound = state.round.current;
+          const points = state.points;
+          points[currentRound] = false;
+          return {
+            ...state,
+            round: { ...state.round, status: "timeout" },
+            points,
+          };
+        }),
+
+      guessed: () =>
+        set((state) => {
+          const points = state.points as RoundPoints[];
+          const guessedAt = new Date().getTime();
+
+          const currentRound = state.round.current;
+          const { startTime } = points[currentRound];
+          const guessedInSeconds = (guessedAt - startTime) / 1000;
+          const gainedPoints = calculatePoints(guessedInSeconds);
+
+          points[currentRound] = {
+            gainedPoints,
+            guessIn: guessedAt - startTime,
+            startTime,
+          };
+
+          return {
+            ...state,
+            round: { ...state.round, status: "guessed" },
+            points,
+            totalPoints: state.totalPoints + gainedPoints,
+          };
+        }),
+
+      setSimilarity: (newSimilarity) =>
+        set((state) => ({
+          ...state,
+          round: { ...state.round, similarity: newSimilarity },
+        })),
+
+      resetState: () => set(initialState),
+    }),
+    { name: "game-data" }
+  )
+);
+
+// isInputFocused: boolean;
+// startTime: number;
+// points: number;

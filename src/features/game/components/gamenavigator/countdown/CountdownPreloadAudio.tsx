@@ -1,11 +1,11 @@
-import { useAppSelector } from "@/hooks";
+import { useGameState } from "@/features/game/store/gameSlice";
 
 const CountdownPreloadAudio = () => {
-  const { currentSong } = useAppSelector((state) => state.game.round);
+  const song = useGameState((state) => state.round.song);
 
-  if (!currentSong) return null;
+  if (!song) return null;
 
-  const [preview] = currentSong.attributes.previews;
+  const [preview] = song.attributes.previews;
   const { url } = preview;
 
   return <audio src={url} autoPlay muted />;
