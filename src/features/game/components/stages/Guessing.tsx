@@ -7,12 +7,13 @@ import { Heading, MotionWrapper, Paragraph } from "@/components/ui";
 import useCountdown from "@bradgarropy/use-countdown";
 import parseTitleToGuess from "@/utils/parseTitleToGuess";
 import { useGameState } from "../../store/gameSlice";
+import GuessVoiceInput from "../GuessVoiceInput";
 
 const Guessing = () => {
   const inputGuessRef = useRef<HTMLInputElement>(null);
 
   const { song, status } = useGameState((state) => state.round);
-  const { time } = useGameState((state) => state.config);
+  const { time, type } = useGameState((state) => state.config);
   const guessed = useGameState((state) => state.guessed);
 
   useEffect(() => {
@@ -41,10 +42,18 @@ const Guessing = () => {
       className="flex w-full flex-col pt-4 text-center md:max-w-lg md:pt-6"
     >
       <AnimatePresence mode="wait" initial={false}>
-        {status === "guessing" && (
+        {status === "guessing" && type === "classic" && (
           <MotionWrapper key={"guessinput_element"}>
             <GuessInput
               ref={inputGuessRef}
+              secretPhrase={titleToGuess}
+              onGuess={() => guessed()}
+            />
+          </MotionWrapper>
+        )}
+        {status === "guessing" && type === "voice" && (
+          <MotionWrapper key={"guessvoiceinput_element"}>
+            <GuessVoiceInput
               secretPhrase={titleToGuess}
               onGuess={() => guessed()}
             />

@@ -6,7 +6,7 @@ import { RxTrackNext } from "react-icons/rx";
 import { useGameState } from "@/features/game/store/gameSlice";
 
 const GuessingState = () => {
-  const { time, rounds } = useGameState((state) => state.config);
+  const { time, rounds, type } = useGameState((state) => state.config);
   const { current, status } = useGameState((state) => state.round);
 
   const timeout = useGameState((state) => state.timeout);
@@ -25,7 +25,7 @@ const GuessingState = () => {
 
   return (
     <div className="ml-3 flex items-center gap-3">
-      <Similarity />
+      {type === "classic" && <Similarity />}
       <CircleProgress
         percents={((time - seconds + 1) / time) * 100}
         caption={<p className="text-sm">{seconds}</p>}
