@@ -39,7 +39,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
     ref
   ) => {
     const classes = twMerge(
-      "whitespace-nowrap flex items-center justify-center gap-1.5 rounded-lg transition-all duration-300 w-fit",
+      "whitespace-nowrap flex items-center justify-center gap-1.5 rounded-lg transition-all duration-150 w-fit",
       "disabled:opacity-50 border-2 border-transparent",
       variant === "primary" &&
         "bg-indigo-600 text-indigo-100 hover:bg-indigo-700 active:border-indigo-500",
