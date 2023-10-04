@@ -2,7 +2,7 @@
 "use client";
 
 import { SongType } from "@/types/musicApi/Song";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Preparing from "./components/stages/Preparing";
 import InGame from "./components/stages/InGame";
 import Results from "./components/stages/Results";
@@ -24,6 +24,13 @@ const Game = ({ setDetails, songs }: Props) => {
   const { song, status: roundStatus } = useGameState((state) => state.round);
   const loadConfig = useGameState((state) => state.loadConfig);
   const resetState = useGameState((state) => state.resetState);
+
+  // weird workaround to fix next rehydration with persistent zustand state
+  // just ignore it
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    setLoaded(true);
+  }, [status]);
 
   useEffect(() => {
     if (loadedSet && loadedSet.id !== setDetails.id) {
@@ -51,11 +58,14 @@ const Game = ({ setDetails, songs }: Props) => {
         />
       </AnimatePresence>
       <main className="flex h-screen w-screen flex-col items-center justify-center overflow-hidden p-3">
-        <AnimatePresence mode="wait">
-          {status === "preparing" && <Preparing key="preparing_stage" />}
-          {status === "inprogress" && <InGame key="inprogress_stage" />}
-          {status === "ended" && <Results key="ended_stage" />}
-        </AnimatePresence>
+        {!loaded && ""}
+        {loaded && (
+          <AnimatePresence mode="wait">
+            {status === "preparing" && <Preparing key="preparing_stage" />}
+            {status === "inprogress" && <InGame key="inprogress_stage" />}
+            {status === "ended" && <Results key="ended_stage" />}
+          </AnimatePresence>
+        )}
       </main>
     </Motion>
   );
