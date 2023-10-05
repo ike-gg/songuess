@@ -195,7 +195,9 @@ const CheckVoiceCapability = ({ handleState, state, onComplete }: Props) => {
         </>
       )}
       <CardFooter>
-        <Button variant="secondary">Cancel</Button>
+        <Button onClick={() => handleState(false)} variant="secondary">
+          Cancel
+        </Button>
       </CardFooter>
     </Dialog>
   );
