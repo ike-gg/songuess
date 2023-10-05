@@ -36,17 +36,19 @@ interface Round {
   similarity: number;
 }
 
-interface RoundPoints {
-  startTime: number;
-  guessIn: number;
-  gainedPoints: number;
-}
+type RoundPoints =
+  | {
+      startTime: number;
+      guessIn: number;
+      gainedPoints: number;
+    }
+  | false;
 
 export interface GameProperties {
   status: GameStatus;
   config: GameConfigLoaded | GameConfigNotLoaded;
   round: Round;
-  points: (false | RoundPoints)[];
+  points: RoundPoints[];
   totalPoints: number;
 }
 
@@ -186,7 +188,13 @@ export const useGameState = create<GameState>()(
           const guessedAt = new Date().getTime();
 
           const currentRound = state.round.current;
-          const { startTime } = points[currentRound];
+          const currentRoundPoints = points[currentRound];
+
+          if (!currentRoundPoints) {
+            return { ...state };
+          }
+
+          const { startTime } = currentRoundPoints;
           const guessedInSeconds = (guessedAt - startTime) / 1000;
           const gainedPoints = calculatePoints(guessedInSeconds);
 
